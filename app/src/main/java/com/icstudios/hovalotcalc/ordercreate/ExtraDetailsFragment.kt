@@ -16,15 +16,15 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.icstudios.hovalotcalc.R
-import java.util.*
 
 class ExtraDetailsFragment : Fragment() {
 
-    private lateinit var mButtonFinish: Button
     private lateinit var mBoxes: Spinner
     private lateinit var mSuitcases: Spinner
     private lateinit var mGags: Spinner
     private lateinit var mMoreDetails: EditText
+    private lateinit var mButtonNext: Button
+    private lateinit var mButtonPrevious: Button
 
 
     override fun onCreateView(
@@ -39,10 +39,16 @@ class ExtraDetailsFragment : Fragment() {
         mGags = rootView.findViewById(R.id.spinner_bags)
         //mMoreDetails = rootView.findViewById(R.id.home_floor)
 
-        mButtonFinish = rootView.findViewById(R.id.next1)
-        mButtonFinish.setOnClickListener(View.OnClickListener { view ->
+        mButtonNext = rootView.findViewById(R.id.next1)
+        mButtonNext.setOnClickListener(View.OnClickListener { view ->
 
-            (activity as ViewPagerNavigation).onProgress(3)
+            (activity as ViewPagerNavigation).setCurrent(3)
+        })
+
+        mButtonPrevious = rootView.findViewById(R.id.previous)
+        mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
+
+            (activity as ViewPagerNavigation).setCurrent(1)
         })
 
         return rootView

@@ -20,8 +20,8 @@
             </shape>
         </item>
         <item >
-            <bitmap android:gravity="center|right"
-                android:src="@drawable/diary_icon_small" />
+            <bitmap android:gravity="center|left"
+                android:src="@drawable/drop_down_arrow" />
         </item>
     </layer-list></item>
 </selector>

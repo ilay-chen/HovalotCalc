@@ -30,12 +30,10 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         setContentView(R.layout.activity_order_create)
 
         val intent = intent
-        page = intent.getIntExtra("jumpTo", 1);
+        page = intent.getIntExtra("jumpTo", 0);
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager)
-        viewPager.isUserInputEnabled = false // until finish cards
-
 
 //        mSingInOnboardingFragment = SignInFragment()
 //        mSingInOnboardingFragment.setOnSignInListener {
@@ -53,6 +51,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         //Firebase.remoteConfig.fetchAndActivate()
 
         viewPager.setCurrentItem(page, true)
+        onProgress(3)
     }
 
     /**
@@ -61,7 +60,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
      */
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
-        var mProgress = page
+        var mProgress = 3
 
         override fun getItemCount(): Int = mProgress
 
@@ -73,7 +72,6 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
             else if(position == 1)
             {
                 //AnalyticsManager.logPage("mSingInOnboardingFragment")
-
                 return mAddressAndDateFragment
             }
             else if (position == 2){
@@ -110,14 +108,15 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
     }
 
     override fun onProgress(progress: Int) {
-        if (progress > 1)
-        {
-            viewPager.isUserInputEnabled = true //finished cards so can swipe the viewpager
-        }
         pagerAdapter.setProgress(progress)
+    }
+
+    override fun setCurrent(fragment: Int) {
+        viewPager.setCurrentItem(fragment, true)
     }
 }
 
 interface ViewPagerNavigation {
     fun onProgress(progress: Int)
+    fun setCurrent(fragment: Int)
 }

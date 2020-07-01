@@ -25,7 +25,8 @@ private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
 
 class AddressAndDateFragment : Fragment() {
 
-    private lateinit var mButtonFinish: Button
+    private lateinit var mButtonNext: Button
+    private lateinit var mButtonPrevious: Button
     private lateinit var mFromAddress: EditText
     private lateinit var mToAddress: EditText
     private lateinit var mFromStreet: EditText
@@ -54,20 +55,58 @@ class AddressAndDateFragment : Fragment() {
         var rootView = inflater.inflate(R.layout.address_and_date_fragment, container, false)
 
         mFromAddress = rootView.findViewById(R.id.address_from_edit_text)
+        mFromAddress.setOnFocusChangeListener { v, hasFocus ->
+            OrderCreateActivity.newOrder.fromCity = mFromAddress.text.toString()
+        }
         mFromStreet = rootView.findViewById(R.id.street_from_edit_text)
+        mFromStreet.setOnFocusChangeListener { v, hasFocus ->
+            OrderCreateActivity.newOrder.fromStreet = mFromStreet.text.toString()
+        }
         mFromNumber = rootView.findViewById(R.id.home_number)
+        mFromNumber.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.fromNumber = mFromNumber.getChildAt(position).toString()
+        }
         mFromFloor = rootView.findViewById(R.id.home_floor)
+        mFromFloor.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.fromFloor = mFromFloor.getChildAt(position).toString()
+        }
         mFromCrane = rootView.findViewById(R.id.crane)
+        OrderCreateActivity.newOrder.fromCrane = false
+        mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.fromCrane = isChecked
+        }
         mFromElevator = rootView.findViewById(R.id.elevator)
+        OrderCreateActivity.newOrder.fromElevator = false
+        mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.fromElevator = isChecked
+        }
 
         mToAddress = rootView.findViewById(R.id.address_to_edit_text)
+        mToAddress.setOnFocusChangeListener { v, hasFocus ->
+            OrderCreateActivity.newOrder.toCity = mToAddress.text.toString()
+        }
         mToStreet = rootView.findViewById(R.id.street_to_edit_text)
+        mToStreet.setOnFocusChangeListener { v, hasFocus ->
+            OrderCreateActivity.newOrder.toStreet = mToStreet.text.toString()
+        }
         mToNumber = rootView.findViewById(R.id.to_home_number)
+        mToNumber.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.toNumber = mToNumber.getChildAt(position).toString()
+        }
         mToFloor = rootView.findViewById(R.id.to_home_floor)
+        mToFloor.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.toFloor = mToFloor.getChildAt(position).toString()
+        }
         mToCrane = rootView.findViewById(R.id.to_crane)
+        OrderCreateActivity.newOrder.toCrane = false
+        mToCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.toCrane = isChecked
+        }
         mToElevator = rootView.findViewById(R.id.to_elevator)
-
-
+        OrderCreateActivity.newOrder.toElevator = false
+        mToElevator.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.toElevator = isChecked
+        }
 
         mDateEditText = rootView.findViewById(R.id.date_edit_text)
         mDateEditText.setInputType(InputType.TYPE_NULL)
@@ -119,10 +158,16 @@ class AddressAndDateFragment : Fragment() {
 //        })
 //
 
-        mButtonFinish = rootView.findViewById(R.id.next1)
-        mButtonFinish.setOnClickListener(View.OnClickListener { view ->
+        mButtonNext = rootView.findViewById(R.id.next1)
+        mButtonNext.setOnClickListener(View.OnClickListener { view ->
 
-            (activity as ViewPagerNavigation).onProgress(3)
+            (activity as ViewPagerNavigation).setCurrent(2)
+        })
+
+        mButtonPrevious = rootView.findViewById(R.id.previous)
+        mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
+
+            (activity as ViewPagerNavigation).setCurrent(0)
         })
 
         return rootView

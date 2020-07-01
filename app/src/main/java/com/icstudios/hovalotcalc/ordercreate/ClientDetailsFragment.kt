@@ -44,7 +44,7 @@ class ClientDetailsFragment : Fragment() {
             newOrder.email = mClientEmail.text.toString()
             newOrder.phoneNumber = mClientPhone.text.toString()
 
-            (activity as ViewPagerNavigation).onProgress(2)
+            (activity as ViewPagerNavigation).setCurrent(1)
         })
 
 //        mButtonPermission = rootView.findViewById(R.id.button_permissions)

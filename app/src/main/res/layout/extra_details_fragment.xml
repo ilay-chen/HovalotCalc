@@ -105,7 +105,7 @@
             app:layout_constraintStart_toStartOf="@id/spinner_suitcase"
             app:layout_constraintTop_toBottomOf="@id/spinner_suitcase"
 
-            android:text="כמות מזוודות: "
+            android:text="כמות שקיות: "
             android:textSize="15sp"
             android:layout_marginLeft="50dp" />
 
@@ -134,6 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_margin="30dp"
+        android:padding="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,18 +152,33 @@
 
     <Button
         android:id="@+id/next1"
-        android:layout_width="200dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintVertical_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
         android:background="@drawable/next"
         app:srcCompat="@drawable/next" />
+
+    <Button
+        android:id="@+id/previous"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:background="@drawable/back"
+        app:srcCompat="@drawable/back" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
