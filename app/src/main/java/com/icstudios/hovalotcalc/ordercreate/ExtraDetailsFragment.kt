@@ -35,8 +35,19 @@ class ExtraDetailsFragment : Fragment() {
         var rootView = inflater.inflate(R.layout.extra_details_fragment, container, false)
 
         mBoxes = rootView.findViewById(R.id.spinner_boxes)
+        mBoxes.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.boxes = mBoxes.getChildAt(position).toString()
+        }
+
         mSuitcases = rootView.findViewById(R.id.spinner_suitcase)
+        mSuitcases.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.suitcases = mSuitcases.getChildAt(position).toString()
+        }
+
         mGags = rootView.findViewById(R.id.spinner_bags)
+        mGags.setOnItemClickListener { parent, view, position, id ->
+            OrderCreateActivity.newOrder.bags = mGags.getChildAt(position).toString()
+        }
         //mMoreDetails = rootView.findViewById(R.id.home_floor)
 
         mButtonNext = rootView.findViewById(R.id.next1)

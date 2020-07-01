@@ -12,7 +12,7 @@ public class OrderObject {
     Boolean toElevator, toCrane;
     String Date;
     String Hour;
-    int boxes, bags, suitcases;
+    String boxes, bags, suitcases;
     String notes;
     ArrayList<roomItems> roomsAndItems;
 
@@ -157,27 +157,27 @@ public class OrderObject {
         Hour = hour;
     }
 
-    public int getBoxes() {
+    public String getBoxes() {
         return boxes;
     }
 
-    public void setBoxes(int boxes) {
+    public void setBoxes(String boxes) {
         this.boxes = boxes;
     }
 
-    public int getBags() {
+    public String getBags() {
         return bags;
     }
 
-    public void setBags(int bags) {
+    public void setBags(String bags) {
         this.bags = bags;
     }
 
-    public int getSuitcases() {
+    public String getSuitcases() {
         return suitcases;
     }
 
-    public void setSuitcases(int suitcases) {
+    public void setSuitcases(String suitcases) {
         this.suitcases = suitcases;
     }
 
