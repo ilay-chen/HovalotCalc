@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/extra_details_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_box"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:background="@drawable/gray_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/boxes_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintVertical_bias="0.10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+
+            android:text="כמות ארגזים: "
+            android:textSize="15sp"
+            android:layout_marginLeft="50dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_boxes"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/boxes_text_view"
+            app:layout_constraintTop_toBottomOf="@id/boxes_text_view"
+
+            android:prompt="@string/box_prompt"
+            android:entries="@array/numbers_range"
+
+            android:spinnerMode="dropdown"
+            android:padding="10dp"
+            android:background="@drawable/spinner_bg"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/suitcases_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/spinner_boxes"
+            app:layout_constraintTop_toBottomOf="@id/spinner_boxes"
+
+            android:text="כמות מזוודות: "
+            android:textSize="15sp"
+            android:layout_marginLeft="50dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_suitcase"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/suitcases_text_view"
+            app:layout_constraintTop_toBottomOf="@id/suitcases_text_view"
+
+            android:prompt="@string/suitcase_prompt"
+            android:entries="@array/numbers_range"
+
+            android:padding="10dp"
+            android:background="@drawable/spinner_bg"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/bags_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/spinner_suitcase"
+            app:layout_constraintTop_toBottomOf="@id/spinner_suitcase"
+
+            android:text="כמות מזוודות: "
+            android:textSize="15sp"
+            android:layout_marginLeft="50dp" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinner_bags"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/bags_text_view"
+            app:layout_constraintTop_toBottomOf="@id/bags_text_view"
+
+            android:prompt="@string/bags_prompt"
+            android:entries="@array/numbers_range"
+
+            android:padding="10dp"
+            android:background="@drawable/spinner_bg"
+            android:inputType="text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="30dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.65"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:hint="הערות ועצירות נוספות"
+        android:inputType="textMultiLine"
+        android:background="@drawable/round_edit_text">
+
+    </androidx.appcompat.widget.AppCompatEditText>
+
+
+    <Button
+        android:id="@+id/next1"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:background="@drawable/next"
+        app:srcCompat="@drawable/next" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

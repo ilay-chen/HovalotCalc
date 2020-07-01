@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">HovalotCalc</string>
+
+    <string name="box_prompt">אין לי קרטונים - 0</string>
+    <string-array name="numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="numbers_range">
+        <item>אין לי - 0</item>
+        <item>1 - 10</item>
+        <item>10 - 20</item>
+        <item>20 - 30</item>
+        <item>30 - 40</item>
+        <item>40 - 50</item>
+        <item>50 - 60</item>
+        <item>60 - 70</item>
+        <item>70 - 80</item>
+        <item>80 - 90</item>
+        <item>90 - 100</item>
+    </string-array>
+
+    <string name="bags_prompt">אין לי שקיות - 0</string>
+
+    <string name="suitcase_prompt">אין לי מזוודות - 0</string>
+</resources>
