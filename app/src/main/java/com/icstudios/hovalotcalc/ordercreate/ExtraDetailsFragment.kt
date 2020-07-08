@@ -35,18 +35,39 @@ class ExtraDetailsFragment : Fragment() {
         var rootView = inflater.inflate(R.layout.extra_details_fragment, container, false)
 
         mBoxes = rootView.findViewById(R.id.spinner_boxes)
-        mBoxes.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.boxes = mBoxes.getChildAt(position).toString()
+        mBoxes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.boxes = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.boxes = mBoxes.selectedItem.toString()
+            }
+
         }
 
         mSuitcases = rootView.findViewById(R.id.spinner_suitcase)
-        mSuitcases.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.suitcases = mSuitcases.getChildAt(position).toString()
+        mSuitcases.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.suitcases = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.suitcases = mSuitcases.selectedItem.toString()
+            }
+
         }
 
         mGags = rootView.findViewById(R.id.spinner_bags)
-        mGags.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.bags = mGags.getChildAt(position).toString()
+        mGags.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.bags = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.bags = mGags.selectedItem.toString()
+            }
+
         }
         //mMoreDetails = rootView.findViewById(R.id.home_floor)
 

@@ -18,11 +18,6 @@ import androidx.fragment.app.Fragment
 import com.icstudios.hovalotcalc.R
 import java.util.*
 
-
-private const val PERMISSION_OVERLAY_REQUEST_CODE = 10
-private const val PERMISSIONS_REQUEST_CODE = 11
-private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
-
 class AddressAndDateFragment : Fragment() {
 
     private lateinit var mButtonNext: Button
@@ -63,12 +58,26 @@ class AddressAndDateFragment : Fragment() {
             OrderCreateActivity.newOrder.fromStreet = mFromStreet.text.toString()
         }
         mFromNumber = rootView.findViewById(R.id.home_number)
-        mFromNumber.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.fromNumber = mFromNumber.getChildAt(position).toString()
+        mFromNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.fromNumber = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.fromNumber = mFromNumber.selectedItem.toString()
+            }
+
         }
         mFromFloor = rootView.findViewById(R.id.home_floor)
-        mFromFloor.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.fromFloor = mFromFloor.getChildAt(position).toString()
+        mFromFloor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.fromFloor = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.fromFloor = mFromFloor.selectedItem.toString()
+            }
+
         }
         mFromCrane = rootView.findViewById(R.id.crane)
         OrderCreateActivity.newOrder.fromCrane = false
@@ -90,12 +99,26 @@ class AddressAndDateFragment : Fragment() {
             OrderCreateActivity.newOrder.toStreet = mToStreet.text.toString()
         }
         mToNumber = rootView.findViewById(R.id.to_home_number)
-        mToNumber.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.toNumber = mToNumber.getChildAt(position).toString()
+        mToNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.toNumber = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.toNumber = mToNumber.selectedItem.toString();
+            }
+
         }
         mToFloor = rootView.findViewById(R.id.to_home_floor)
-        mToFloor.setOnItemClickListener { parent, view, position, id ->
-            OrderCreateActivity.newOrder.toFloor = mToFloor.getChildAt(position).toString()
+        mToFloor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                OrderCreateActivity.newOrder.toFloor = "0"
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                OrderCreateActivity.newOrder.toFloor = mToFloor.selectedItem.toString()
+            }
+
         }
         mToCrane = rootView.findViewById(R.id.to_crane)
         OrderCreateActivity.newOrder.toCrane = false
@@ -202,31 +225,5 @@ class AddressAndDateFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-    }
-
-    /**
-     * Permission functions
-     */
-
-    fun getPermissions() {
-        requestPermissions(PERMISSIONS_REQUIRED, PERMISSIONS_REQUEST_CODE)
-    }
-
-    /** Convenience method used to check if all permissions required by this app are granted */
-    fun hasPermissions() = PERMISSIONS_REQUIRED.all {
-        ContextCompat.checkSelfPermission(context!!, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun onRequestPermissionsResult(
-            requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSIONS_REQUEST_CODE) {
-            if (grantResults.all { grantResult ->  (PackageManager.PERMISSION_GRANTED == grantResult) }){
-                // Take the user to the success fragment when permission is granted
-                Toast.makeText(activity, "Permission request granted", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(activity, "Permission request denied", Toast.LENGTH_LONG).show()
-            }
-        }
     }
 }
