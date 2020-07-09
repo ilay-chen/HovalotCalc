@@ -23,6 +23,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
     val mClientDetailsFragment = ClientDetailsFragment()
     val mAddressAndDateFragment = AddressAndDateFragment()
     val mExtraDetailsFragment = ExtraDetailsFragment()
+    val mItemsAndRoomsFragment = ItemsAndRoomsFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +52,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         //Firebase.remoteConfig.fetchAndActivate()
 
         viewPager.setCurrentItem(page, true)
-        onProgress(3)
+        onProgress(4)
     }
 
     /**
@@ -60,7 +61,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
      */
     private inner class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
-        var mProgress = 3
+        var mProgress = 4
 
         override fun getItemCount(): Int = mProgress
 
@@ -78,10 +79,10 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
                 //AnalyticsManager.logPage("mVideoExplanationFragment")
                 return mExtraDetailsFragment
             }
-//            else if (position == 3){
-//                //AnalyticsManager.logPage("mPictureSmileExplanationFragment")
-//                return mPictureSmileExplanationFragment
-//            }
+            else if (position == 3){
+                //AnalyticsManager.logPage("mPictureSmileExplanationFragment")
+                return mItemsAndRoomsFragment
+            }
 //            else if (position == 4) {
 ////                AnalyticsManager.logPage("mSmileIntervalOnBoardingFragment")
 ////                AnalyticsManager.logLanguage()
