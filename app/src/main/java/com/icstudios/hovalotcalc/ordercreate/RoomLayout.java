@@ -19,12 +19,11 @@ public class RoomLayout extends LinearLayout{
     View view;
     LinearLayout itemList;
     FloatingActionButton addItem;
-    RoomLayout t;
-    int roomId;
+    RoomLayout thisRoom;
 
     public RoomLayout(final Context context) {
         super(context);
-        t = this;
+        thisRoom = this;
         view = inflate(context, R.layout.room_view, this);
         itemList = view.findViewById(R.id.all_items_of_room);
         mItems = new ArrayList<ItemLayout>();
@@ -44,30 +43,16 @@ public class RoomLayout extends LinearLayout{
         delete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //RemoveItem(t);
-                //(ItemsAndRoomsFragment as removeRoom).onProgress(5)
+                ItemsAndRoomsFragment.Companion.getInn().removeView(thisRoom);
+                ItemsAndRoomsFragment.Companion.getMRooms().remove(thisRoom);
             }
         });
-    }
-
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
-    }
-
-    public int getRoomId() {
-        return roomId;
     }
 
     public void addItem(ItemLayout newItem)
     {
         mItems.add(newItem);
         itemList.addView(newItem);
-    }
-
-    public void RemoveItem(RoomLayout roomLayout)
-    {
-        mItems.remove(roomLayout);
-        itemList.removeView(roomLayout);
     }
 
     public ArrayList<ItemLayout> getItems()

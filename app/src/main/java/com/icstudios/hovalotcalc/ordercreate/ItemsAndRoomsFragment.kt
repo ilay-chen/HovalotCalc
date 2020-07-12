@@ -15,17 +15,24 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.icstudios.hovalotcalc.R
+import com.icstudios.hovalotcalc.ordercreate.OrderCreateActivity.Companion.newOrder
 
 class ItemsAndRoomsFragment : Fragment() , removeRoom{
 
     private lateinit var addRoom : FloatingActionButton
     private lateinit var mButtonNext: Button
     private lateinit var mButtonPrevious: Button
-    private var mRooms : ArrayList<RoomLayout> = ArrayList()
-    private lateinit var inn : LinearLayout
+
+    companion object {
+        @JvmStatic public var mRooms : ArrayList<RoomLayout> = ArrayList()
+        @JvmStatic public lateinit var inn : LinearLayout
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -41,18 +48,18 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
             //container!!.addView(mRooms.get(0))
             inn.addView(mRooms.get(mRooms.size-1))
             mRooms[mRooms.size-1].addItem(ItemLayout(context))
-            mRooms[mRooms.size-1].delete.setOnClickListener {
-                it.parent.parent
-                it.rootView
-                inn.removeView(mRooms[mRooms.size-1])
-                mRooms.remove(mRooms[mRooms.size-1])
-            }
         })
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->
 
-            (activity as ViewPagerNavigation).setCurrent(4)
+            newOrder.roomsAndItems = mRooms
+
+            val ft: FragmentManager = (activity as FragmentActivity).supportFragmentManager
+
+            val newFragment: DialogFragment = makeOffer.newInstance(newOrder)
+            newFragment.isCancelable = false
+            newFragment.show(ft, "signIn")
         })
 
         mButtonPrevious = rootView.findViewById(R.id.previous)

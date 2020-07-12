@@ -1,5 +1,7 @@
 package com.icstudios.hovalotcalc;
 
+import com.icstudios.hovalotcalc.ordercreate.RoomLayout;
+
 import java.util.ArrayList;
 
 public class OrderObject {
@@ -14,7 +16,7 @@ public class OrderObject {
     String Hour;
     String boxes, bags, suitcases;
     String notes;
-    ArrayList<roomItems> roomsAndItems;
+    ArrayList<RoomLayout> roomsAndItems;
 
     public OrderObject()
     {
@@ -189,11 +191,11 @@ public class OrderObject {
         this.notes = notes;
     }
 
-    public ArrayList<roomItems> getRoomsAndItems() {
+    public ArrayList<RoomLayout> getRoomsAndItems() {
         return roomsAndItems;
     }
 
-    public void setRoomsAndItems(ArrayList<roomItems> roomsAndItems) {
+    public void setRoomsAndItems(ArrayList<RoomLayout> roomsAndItems) {
         this.roomsAndItems = roomsAndItems;
     }
 }

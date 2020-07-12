@@ -1,6 +1,10 @@
 package com.icstudios.hovalotcalc.ordercreate
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -32,6 +36,13 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
 
         val intent = intent
         page = intent.getIntExtra("jumpTo", 0);
+
+
+        // Need to ask for write permissions on SDK 23 and up, this is ignored on older versions
+        if (ContextCompat.checkSelfPermission(this@OrderCreateActivity,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this@OrderCreateActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1)
+        }
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager)
