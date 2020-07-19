@@ -55,11 +55,13 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
 
             newOrder.roomsAndItems = mRooms
 
-            val ft: FragmentManager = (activity as FragmentActivity).supportFragmentManager
+            if(newOrder.allSet(context)) {
+                val ft: FragmentManager = (activity as FragmentActivity).supportFragmentManager
 
-            val newFragment: DialogFragment = makeOffer.newInstance(newOrder)
-            newFragment.isCancelable = false
-            newFragment.show(ft, "signIn")
+                val newFragment: DialogFragment = makeOffer.newInstance(newOrder)
+                newFragment.isCancelable = false
+                newFragment.show(ft, "signIn")
+            }
         })
 
         mButtonPrevious = rootView.findViewById(R.id.previous)

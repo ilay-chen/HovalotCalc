@@ -56,47 +56,85 @@ public class MakePDFOffer {
             contentStream = new PDPageContentStream(document, page, true, true);
 
             //name
-            writeOneLine("יוני שוורץ",true,490,815);
+            writeOneLine(orderDetails.getClientName(),true,490,815);
 
             //date and o'clock
-            writeOneLine("5.8.2020", false,440,788);
-            writeOneLine("07:00", false,475,763);
+            writeOneLine(orderDetails.getDate(), false,440,788);
+            writeOneLine(orderDetails.getHour(), false,475,763);
 
             //address from
-            writeOneLine("חדרה", true,510,667);
-            writeOneLine("קוממיות", true,390,667);
-            writeOneLine("9", false,317,667);
+            writeOneLine(orderDetails.getFromCity(), true,510,667);
+            writeOneLine(orderDetails.getFromStreet(), true,390,667);
+            writeOneLine(orderDetails.getFromNumber(), false,317,667);
 
-            writeOneLine("2", false,545,617);
-            writeOneLine("4", false,455,617);
-            writeOneLine("אין", true,350,617);
+            writeOneLine(orderDetails.getFromFloor(), false,545,617);
+            writeOneLine("מספר בית", false,455,617);
+            String isElevator = "יש";
+            if(!orderDetails.getFromElevator()) isElevator = "אין";
+            writeOneLine(isElevator, true,350,617);
 
             //address to
-            writeOneLine("כפר סבא", true,210,667);
-            writeOneLine("המלכים", true,90,667);
-            writeOneLine("3", false,17,667);
+            writeOneLine(orderDetails.getFromCity(), true,210,667);
+            writeOneLine(orderDetails.getFromStreet(), true,90,667);
+            writeOneLine(orderDetails.getFromNumber(), false,17,667);
 
-            writeOneLine("12", false,245,617);
-            writeOneLine("34", false,155,617);
-            writeOneLine("יש", true,50,617);
+            writeOneLine(orderDetails.getFromFloor(), false,245,617);
+            writeOneLine("מספר בית", false,155,617);
+            isElevator = "יש";
+            if(!orderDetails.getFromElevator()) isElevator = "אין";
+            writeOneLine(isElevator, true,50,617);
 
             //all items
-            writeOneLine("כל הפרטים", true,525,560);
+            //writeOneLine("כל הפרטים", true,525,560);
+            String line = "";
+            String roomName = orderDetails.getRoomsAndItems().get(0).roomName.getText().toString();
+            int y = 550;
+            int x = 570;
+            for (RoomLayout roomLayout: orderDetails.getRoomsAndItems()) {
+                if(!roomLayout.roomName.getText().toString().equals(""))
+                {
+                    writeOneItemLine(roomLayout.roomName.getText().toString(),x,y, true);
+                    //writeOneLine(roomLayout.roomName.getText().toString(), true,getXPos(roomLayout.roomName.getText().toString().length()),y);
+                    y-=15;
+                }
+
+                for(ItemLayout itemLayout:roomLayout.mItems)
+                {
+                    String itemName = itemLayout.itemName.getText().toString();
+                    writeOneItemLine(itemName,x,y,false);
+                    y-=15;
+                }
+
+                //roomName = RoomLayout.roomName.getText().toString();
+            }
 
 
             //extra details
-            writeOneLine("10", false,457,155);
-            writeOneLine("40", false,457,122);
-            writeOneLine("30", false,457,90);
+            writeOneLine(orderDetails.getBoxes(), false,457,155);
+            writeOneLine(orderDetails.getSuitcases(), false,457,122);
+            writeOneLine(orderDetails.getBags(), false,457,90);
 
-            writeOneLine("יש", true,342,155);
+//            String isPacking = "יש";
+//            if(!orderDetails.get()) isPacking = "אין";
+            writeOneLine("אין נתונים", true,342,155);
             writeOneLine("25", false,260,122);
             writeOneLine("350", false,255,90);
 
-            writeOneLine("יש כאן עוד משפט ארוך בנודע", true,20,145);
+            String notes = orderDetails.getNotes();
+            y = 145;
+            do {
+
+                String partNote = notes.substring(0,notes.indexOf(" ", 20));
+                notes = notes.replace(partNote, "");
+                writeOneItemLine(partNote,20,y, false);
+                y+=15;
+            }
+            while (notes.length()>0);
+
+            //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
 
             //price
-            writeOneLine("1,250", false,100,45);
+            writeOneLine(orderDetails.getPrice()+"", false,100,45);
 
             //contentStream.endText();
 
@@ -114,13 +152,51 @@ public class MakePDFOffer {
         }
     }
 
+    public int getXPos(int len)
+    {
+        int x = 525;
+        x = x - (len * 10);
+        return x;
+    }
+
     public void writeOneLine(String toWrite, Boolean isReversible, int x, int y) throws IOException {
-        contentStream.beginText();
-        contentStream.setNonStrokingColor(0, 0, 0);
-        contentStream.setFont(font, 15);
-        contentStream.newLineAtOffset(x, y);
-        if(isReversible) toWrite = new StringBuilder(toWrite).reverse().toString();
-        contentStream.showText(toWrite);
-        contentStream.endText();
+        if(toWrite!=null) {
+            contentStream.beginText();
+            contentStream.setNonStrokingColor(0, 0, 0);
+            contentStream.setFont(font, 15);
+            contentStream.newLineAtOffset(x, y);
+            if (isReversible) toWrite = new StringBuilder(toWrite).reverse().toString();
+            contentStream.showText(toWrite);
+            contentStream.endText();
+        }
+    }
+
+    public void writeOneItemLine(String toWrite, int x, int y, Boolean isHeadLine) throws IOException {
+        if(toWrite!=null) {
+            String itemName;
+            contentStream.beginText();
+            int fontSize = 15;
+            if(isHeadLine)
+            {
+                toWrite = new StringBuilder(toWrite + ":").reverse().toString();
+                itemName = toWrite;
+
+                fontSize = 20;
+                contentStream.setNonStrokingColor(0, 100, 0);
+                contentStream.setFont(font, fontSize);
+            }
+            else {
+                toWrite = new StringBuilder(toWrite).reverse().toString();
+                itemName = toWrite;
+
+                fontSize = 15;
+                contentStream.setNonStrokingColor(0, 0, 0);
+                contentStream.setFont(font, fontSize);
+            }
+            float text_width = (font.getStringWidth(itemName) / 1000.0f) * fontSize;
+            contentStream.newLineAtOffset(x-text_width, y);
+            contentStream.showText(itemName);
+            contentStream.endText();
+        }
     }
 }

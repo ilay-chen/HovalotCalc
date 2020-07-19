@@ -1,22 +1,27 @@
 package com.icstudios.hovalotcalc;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.icstudios.hovalotcalc.ordercreate.RoomLayout;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class OrderObject {
     String clientName;
     String phoneNumber;
     String email;
-    String fromCity, fromStreet, fromNumber, fromFloor;
+    String fromCity, fromStreet, fromNumber, fromFloor, fromHome;
     Boolean fromElevator, fromCrane;
-    String toCity, toStreet, toNumber, toFloor;
-    Boolean toElevator, toCrane;
+    String toCity, toStreet, toNumber, toFloor, toHome;
+    Boolean toElevator, toCrane, isPacking;
     String Date;
     String Hour;
     String boxes, bags, suitcases;
     String notes;
     ArrayList<RoomLayout> roomsAndItems;
+    int price;
 
     public OrderObject()
     {
@@ -197,6 +202,28 @@ public class OrderObject {
 
     public void setRoomsAndItems(ArrayList<RoomLayout> roomsAndItems) {
         this.roomsAndItems = roomsAndItems;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public Boolean allSet(Context context)
+    {
+        if(clientName==null||clientName.equals("")) {
+            Toast.makeText(context,"אנא מלא שם לקוח!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(phoneNumber==null||phoneNumber.equals("")) {
+            Toast.makeText(context,"אנא מלא מספר לקוח!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 }
 

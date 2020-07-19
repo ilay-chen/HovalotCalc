@@ -7,4 +7,5 @@
     <dimen name="address_edit_text_box_height">250dp</dimen>
     <dimen name="address_edit_text_height">40dp</dimen>
     <dimen name="address_edit_text_width">130dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
