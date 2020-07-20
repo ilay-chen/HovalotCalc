@@ -5,14 +5,18 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import com.icstudios.hovalotcalc.OrderObject;
+import com.icstudios.hovalotcalc.appData;
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.pdmodel.PDPage;
 import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
 import com.tom_roush.pdfbox.pdmodel.font.PDType0Font;
+import com.tom_roush.pdfbox.rendering.PDFRenderer;
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class MakePDFOffer {
@@ -23,6 +27,7 @@ public class MakePDFOffer {
     PDPageContentStream contentStream;
     PDDocument document;
     PDType0Font font;
+    Bitmap pageImage;
 
     public MakePDFOffer(Context context)
     {
@@ -86,8 +91,8 @@ public class MakePDFOffer {
 
             //all items
             //writeOneLine("כל הפרטים", true,525,560);
-            String line = "";
-            String roomName = orderDetails.getRoomsAndItems().get(0).roomName.getText().toString();
+            //String line = "";
+            //String roomName = orderDetails.getRoomsAndItems().get(0).roomName.getText().toString();
             int y = 550;
             int x = 570;
             for (RoomLayout roomLayout: orderDetails.getRoomsAndItems()) {
@@ -122,14 +127,15 @@ public class MakePDFOffer {
 
             String notes = orderDetails.getNotes();
             y = 145;
-            do {
+
+            while (notes != null && notes.length()>0)
+            {
 
                 String partNote = notes.substring(0,notes.indexOf(" ", 20));
                 notes = notes.replace(partNote, "");
                 writeOneItemLine(partNote,20,y, false);
                 y+=15;
             }
-            while (notes.length()>0);
 
             //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
 
@@ -141,22 +147,30 @@ public class MakePDFOffer {
             // Make sure that the content stream is closed:
             contentStream.close();
 
+            Long tsLong = System.currentTimeMillis()/1000;
+            String ts = tsLong.toString();
+            orderDetails.setId(orderDetails.getClientName().replaceAll(" ", "_") + "_" + ts);
+
             // Save the final pdf document to a file
-            String path = root.getAbsolutePath() + "/filled_offer.pdf";
+            //String yourFilePath = context.getFilesDir() + "/" + folder + "/" + fileName;
+            String path = appData.getFilePath(orderDetails) + appData.pdfFileName;
+
+            appData.makeDir(context, orderDetails.getId());
+
             document.save(path);
+
+            renderFile(document, orderDetails);
+
+            appData.updateOrderList(orderDetails);
+
+            appData.saveData(context);
+
             document.close();
             //tv.setText("Successfully wrote PDF to " + path);
 
         } catch (IOException e) {
-            Log.e("PdfBox-Android-Sample", "Exception thrown while creating PDF", e);
+            Log.e("PdfBox-hovalotCalc", "Exception thrown while creating PDF => ", e);
         }
-    }
-
-    public int getXPos(int len)
-    {
-        int x = 525;
-        x = x - (len * 10);
-        return x;
     }
 
     public void writeOneLine(String toWrite, Boolean isReversible, int x, int y) throws IOException {
@@ -198,5 +212,24 @@ public class MakePDFOffer {
             contentStream.showText(itemName);
             contentStream.endText();
         }
+    }
+
+    /**
+     * Loads an existing PDF and renders it to a Bitmap
+     */
+    public void renderFile(PDDocument document, OrderObject orderObject) throws IOException {
+        // Render the page and save it to an image file
+
+        // Create a renderer for the document
+        PDFRenderer renderer = new PDFRenderer(document);
+        // Render the image to an RGB Bitmap
+        pageImage = renderer.renderImage(0, 1, Bitmap.Config.RGB_565);
+
+        // Save the render result to an image
+        String path = appData.getFilePath(orderObject) + appData.picFileName;
+        File renderFile = new File(path);
+        FileOutputStream fileOut = new FileOutputStream(renderFile);
+        pageImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOut);
+        fileOut.close();
     }
 }

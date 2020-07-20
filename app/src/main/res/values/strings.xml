@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">HovalotCalc</string>
 
-    <string name="box_prompt">אין לי קרטונים - 0</string>
     <string-array name="numbers">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -16,7 +16,7 @@
     </string-array>
 
     <string-array name="numbers_range">
-        <item>אין לי - 0</item>
+        <item>0</item>
         <item>1 - 10</item>
         <item>10 - 20</item>
         <item>20 - 30</item>
@@ -29,7 +29,12 @@
         <item>90 - 100</item>
     </string-array>
 
-    <string name="bags_prompt">אין לי שקיות - 0</string>
+    <string name="box_prompt">0</string>
 
-    <string name="suitcase_prompt">אין לי מזוודות - 0</string>
+    <string name="bags_prompt">0</string>
+
+    <string name="suitcase_prompt">0</string>
+
+    <string name="error_save_files">We were unable to save the files</string>
+    <string name="error_save_files_title">File processing error</string>
 </resources>

@@ -63,6 +63,10 @@ public class makeOffer extends DialogFragment {
                 .setPositiveButton("אישור", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
+
+                        if(input.getText().toString().equals(""))
+                            input.setText("0");
+
                         orderDetails.setPrice(Integer.parseInt(input.getText().toString()));
                         MakePDFOffer PDFMaker = new MakePDFOffer(getContext());
                         PDFMaker.createPdf(orderDetails);

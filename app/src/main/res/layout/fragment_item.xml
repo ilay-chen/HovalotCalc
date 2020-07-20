@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:layoutDirection="rtl">
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/check_complete"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </androidx.appcompat.widget.AppCompatCheckBox>
 
     <TextView
         android:id="@+id/item_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
+        android:text="שם"
+        android:layout_toLeftOf="@+id/check_complete"
         android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
@@ -16,5 +30,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
-</LinearLayout>
+        android:text="מספר"
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_toLeftOf="@+id/item_number"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/more_options"></ImageButton>
+</RelativeLayout>

@@ -6,20 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import com.icstudios.hovalotcalc.dummy.DummyContent.DummyItem;
+import com.icstudios.hovalotcalc.orderListItem.OrderItem;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
+ * {@link RecyclerView.Adapter} that can display a {@link orderListItem}.
  */
-public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecyclerViewAdapter.ViewHolder> {
+public class MyOrderFragmentRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderFragmentRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<OrderItem> mValues;
 
-    public MyOrderRecyclerViewAdapter(List<DummyItem> items) {
+    public MyOrderFragmentRecyclerViewAdapter(List<OrderItem> items) {
         mValues = items;
     }
 
@@ -33,8 +31,8 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText(mValues.get(position).name);
+        holder.mContentView.setText(mValues.get(position).phone);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class MyOrderRecyclerViewAdapter extends RecyclerView.Adapter<MyOrderRecy
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
+        public OrderItem mItem;
 
         public ViewHolder(View view) {
             super(view);

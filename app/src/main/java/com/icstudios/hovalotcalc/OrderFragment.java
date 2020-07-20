@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.icstudios.hovalotcalc.dummy.DummyContent;
+import android.widget.Toast;
 
 /**
  * A fragment representing a list of Items.
@@ -57,14 +57,29 @@ public class OrderFragment extends Fragment {
 
         // Set the adapter
         if (view instanceof RecyclerView) {
-            Context context = view.getContext();
+            final Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyOrderRecyclerViewAdapter(DummyContent.ITEMS));
+            orderListItem.refreshList();
+            recyclerView.setAdapter(new MyOrderFragmentRecyclerViewAdapter(orderListItem.ITEMS));
+            recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
+            recyclerView.addOnItemTouchListener(
+                    new RecyclerItemClickListener(context, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override public void onItemClick(View view, int position) {
+                            // do whatever
+                            Toast.makeText(context,"click" + position, Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override public void onLongItemClick(View view, int position) {
+                            // do whatever
+                        }
+                    })
+            );
         }
         return view;
     }

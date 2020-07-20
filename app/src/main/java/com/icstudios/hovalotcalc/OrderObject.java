@@ -5,10 +5,11 @@ import android.widget.Toast;
 
 import com.icstudios.hovalotcalc.ordercreate.RoomLayout;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-public class OrderObject {
+public class OrderObject implements Serializable {
     String clientName;
     String phoneNumber;
     String email;
@@ -22,6 +23,7 @@ public class OrderObject {
     String notes;
     ArrayList<RoomLayout> roomsAndItems;
     int price;
+    String id;
 
     public OrderObject()
     {
@@ -225,30 +227,12 @@ public class OrderObject {
 
         return true;
     }
-}
 
- class roomItems {
-     ArrayList<String> items;
-     String roomName;
+    public String getId() {
+        return id;
+    }
 
-     public roomItems()
-     {
-
-     }
-
-     public ArrayList<String> getItems() {
-         return items;
-     }
-
-     public void setItems(ArrayList<String> items) {
-         this.items = items;
-     }
-
-     public String getRoomName() {
-         return roomName;
-     }
-
-     public void setRoomName(String roomName) {
-         this.roomName = roomName;
-     }
+    public void setId(String id) {
+        this.id = id;
+    }
 }
