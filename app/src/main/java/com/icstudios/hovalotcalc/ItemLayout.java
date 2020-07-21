@@ -1,4 +1,4 @@
-package com.icstudios.hovalotcalc.ordercreate;
+package com.icstudios.hovalotcalc;
 
 import android.content.Context;
 import android.view.View;
@@ -86,5 +86,15 @@ public class ItemLayout extends LinearLayout {
 
     public void setSubtractSameItem(Button subtractSameItem) {
         this.subtractSameItem = subtractSameItem;
+    }
+
+    public String getName()
+    {
+        return itemName.getText().toString();
+    }
+
+    public String getCounter()
+    {
+        return itemsCounter.getText().toString();
     }
 }

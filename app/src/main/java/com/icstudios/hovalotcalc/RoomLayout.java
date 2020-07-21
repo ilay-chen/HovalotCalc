@@ -1,4 +1,4 @@
-package com.icstudios.hovalotcalc.ordercreate;
+package com.icstudios.hovalotcalc;
 
 import android.content.Context;
 import android.view.View;
@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.icstudios.hovalotcalc.R;
 
 import java.util.ArrayList;
 
@@ -57,6 +56,10 @@ public class RoomLayout extends LinearLayout{
 
     public ArrayList<ItemLayout> getItems()
     {
-       return mItems;
+        return mItems;
+    }
+
+    public String getRoomName() {
+        return roomName.getText().toString();
     }
 }

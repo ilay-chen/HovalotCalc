@@ -1,4 +1,4 @@
-package com.icstudios.hovalotcalc.ordercreate
+package com.icstudios.hovalotcalc
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -11,6 +11,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.icstudios.hovalotcalc.OrderObject
 import com.icstudios.hovalotcalc.R
+import com.icstudios.hovalotcalc.appData
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
@@ -23,6 +24,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
     private lateinit var pagerAdapter: OrderCreateActivity.ScreenSlidePagerAdapter
     lateinit var viewPager: ViewPager2
     var page = 0
+    var id : String? = null
 
     val mClientDetailsFragment = ClientDetailsFragment()
     val mAddressAndDateFragment = AddressAndDateFragment()
@@ -35,7 +37,11 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         setContentView(R.layout.activity_order_create)
 
         val intent = intent
-        page = intent.getIntExtra("jumpTo", 0);
+        id = intent.getStringExtra("id")
+        if(id!=null&& id != "")
+            setCurrentOrder()
+        else
+            newOrder = OrderObject()
 
 
         // Need to ask for write permissions on SDK 23 and up, this is ignored on older versions
@@ -66,6 +72,14 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         onProgress(4)
     }
 
+    fun setCurrentOrder()
+    {
+        for(orderObject in appData.allOrders)
+        {
+            if(orderObject.id == id)
+                newOrder = orderObject
+        }
+    }
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.

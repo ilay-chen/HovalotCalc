@@ -1,19 +1,13 @@
-package com.icstudios.hovalotcalc.ordercreate
+package com.icstudios.hovalotcalc
 
-import android.Manifest
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
+import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import com.icstudios.hovalotcalc.R
 
@@ -43,7 +37,14 @@ class ExtraDetailsFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 OrderCreateActivity.newOrder.boxes = mBoxes.selectedItem.toString()
             }
-
+        }
+        if(OrderCreateActivity.newOrder.boxes!=null)
+        {
+            for (i in 0 until mBoxes.count) {
+                if (mBoxes.getItemAtPosition(i).toString().equals(OrderCreateActivity.newOrder.boxes)) {
+                    mBoxes.setSelection(i)
+                }
+            }
         }
 
         mSuitcases = rootView.findViewById(R.id.spinner_suitcase)
@@ -57,6 +58,14 @@ class ExtraDetailsFragment : Fragment() {
             }
 
         }
+        if(OrderCreateActivity.newOrder.suitcases!=null)
+        {
+            for (i in 0 until mSuitcases.count) {
+                if (mSuitcases.getItemAtPosition(i).toString().equals(OrderCreateActivity.newOrder.suitcases)) {
+                    mSuitcases.setSelection(i)
+                }
+            }
+        }
 
         mGags = rootView.findViewById(R.id.spinner_bags)
         mGags.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -69,7 +78,24 @@ class ExtraDetailsFragment : Fragment() {
             }
 
         }
+        if(OrderCreateActivity.newOrder.boxes!=null)
+        {
+            for (i in 0 until mGags.count) {
+                if (mGags.getItemAtPosition(i).toString().equals(OrderCreateActivity.newOrder.bags)) {
+                    mGags.setSelection(i)
+                }
+            }
+        }
         //mMoreDetails = rootView.findViewById(R.id.home_floor)
+
+        mMoreDetails = rootView.findViewById(R.id.notes)
+        mMoreDetails.setOnFocusChangeListener { v, hasFocus ->
+            OrderCreateActivity.newOrder.notes = mMoreDetails.text.toString()
+        }
+        if(OrderCreateActivity.newOrder.notes!=null)
+        {
+            mMoreDetails.setText(OrderCreateActivity.newOrder.notes)
+        }
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->

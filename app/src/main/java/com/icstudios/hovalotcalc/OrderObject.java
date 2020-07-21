@@ -3,10 +3,7 @@ package com.icstudios.hovalotcalc;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.icstudios.hovalotcalc.ordercreate.RoomLayout;
-
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class OrderObject implements Serializable {
@@ -21,13 +18,14 @@ public class OrderObject implements Serializable {
     String Hour;
     String boxes, bags, suitcases;
     String notes;
-    ArrayList<RoomLayout> roomsAndItems;
+    //ArrayList<RoomLayout> roomsAndItems;
+    ArrayList<roomObject> roomsAndItems;
     int price;
     String id;
 
     public OrderObject()
     {
-
+        roomsAndItems = new ArrayList<>();
     }
 
     public String getClientName() {
@@ -198,11 +196,11 @@ public class OrderObject implements Serializable {
         this.notes = notes;
     }
 
-    public ArrayList<RoomLayout> getRoomsAndItems() {
+    public ArrayList<roomObject> getRoomsAndItems() {
         return roomsAndItems;
     }
 
-    public void setRoomsAndItems(ArrayList<RoomLayout> roomsAndItems) {
+    public void setRoomsAndItems(ArrayList<roomObject> roomsAndItems) {
         this.roomsAndItems = roomsAndItems;
     }
 
@@ -234,5 +232,96 @@ public class OrderObject implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void getAllRoomsDetails(ArrayList<RoomLayout> allRooms)
+    {
+        roomsAndItems = new ArrayList<>();
+        for(RoomLayout room : allRooms) {
+            ArrayList<itemObject> itemsList = new ArrayList<>();
+            for(ItemLayout item : room.getItems())
+                itemsList.add(new itemObject(item.getName(), item.getCounter(), item.getDisassemblyAndAssembly().isChecked()));
+            roomsAndItems.add(new roomObject(room.getRoomName(),itemsList));
+        }
+    }
+}
+
+class roomObject implements Serializable {
+
+    String roomName;
+    ArrayList<itemObject> mItems;
+
+    public roomObject()
+    {
+        mItems = new ArrayList<>();
+    }
+
+    public roomObject(String roomName, ArrayList<itemObject> mItems )
+    {
+        this.roomName = roomName;
+        this.mItems = mItems;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public ArrayList<itemObject> getmItems() {
+        return mItems;
+    }
+
+    public void setmItems(ArrayList<itemObject> mItems) {
+        this.mItems = mItems;
+    }
+
+    public void addItem(itemObject item)
+    {
+        mItems.add(item);
+    }
+}
+
+class itemObject implements Serializable {
+
+    String itemName, itemCounter;
+    Boolean DisassemblyAndAssembly;
+
+    public itemObject()
+    {
+
+    }
+
+    public itemObject(String itemName, String itemCounter, Boolean DisassemblyAndAssembly)
+    {
+        this.itemName = itemName;
+        this.itemCounter = itemCounter;
+        this.DisassemblyAndAssembly = DisassemblyAndAssembly;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    public String getItemCounter() {
+        return itemCounter;
+    }
+
+    public void setItemCounter(String itemCounter) {
+        this.itemCounter = itemCounter;
+    }
+
+    public Boolean getDisassemblyAndAssembly() {
+        return DisassemblyAndAssembly;
+    }
+
+    public void setDisassemblyAndAssembly(Boolean disassemblyAndAssembly) {
+        DisassemblyAndAssembly = disassemblyAndAssembly;
     }
 }

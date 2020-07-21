@@ -1,14 +1,13 @@
-package com.icstudios.hovalotcalc.ordercreate;
+package com.icstudios.hovalotcalc;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
-import com.icstudios.hovalotcalc.OrderObject;
-import com.icstudios.hovalotcalc.appData;
+
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.pdmodel.PDPage;
 import com.tom_roush.pdfbox.pdmodel.PDPageContentStream;
@@ -28,10 +27,12 @@ public class MakePDFOffer {
     PDDocument document;
     PDType0Font font;
     Bitmap pageImage;
+    Activity currentActivity;
 
-    public MakePDFOffer(Context context)
+    public MakePDFOffer(Context context, Activity activity)
     {
         this.context = context;
+        this.currentActivity = activity;
         setup();
     }
 
@@ -95,17 +96,17 @@ public class MakePDFOffer {
             //String roomName = orderDetails.getRoomsAndItems().get(0).roomName.getText().toString();
             int y = 550;
             int x = 570;
-            for (RoomLayout roomLayout: orderDetails.getRoomsAndItems()) {
-                if(!roomLayout.roomName.getText().toString().equals(""))
+            for (roomObject roomLayout: orderDetails.getRoomsAndItems()) {
+                if(!roomLayout.roomName.equals(""))
                 {
-                    writeOneItemLine(roomLayout.roomName.getText().toString(),x,y, true);
+                    writeOneItemLine(roomLayout.roomName,x,y, true);
                     //writeOneLine(roomLayout.roomName.getText().toString(), true,getXPos(roomLayout.roomName.getText().toString().length()),y);
                     y-=15;
                 }
 
-                for(ItemLayout itemLayout:roomLayout.mItems)
+                for(itemObject itemLayout:roomLayout.mItems)
                 {
-                    String itemName = itemLayout.itemName.getText().toString();
+                    String itemName = itemLayout.itemName;
                     writeOneItemLine(itemName,x,y,false);
                     y-=15;
                 }
@@ -130,8 +131,15 @@ public class MakePDFOffer {
 
             while (notes != null && notes.length()>0)
             {
+                int minIndex = 20;
+                int substring = 0;
+                if(notes.length()<20)
+                    minIndex = 0;
+                substring = notes.indexOf(" ", minIndex) + 1;
+                if(substring==-1 || substring == 0)
+                    substring = notes.length();
 
-                String partNote = notes.substring(0,notes.indexOf(" ", 20));
+                String partNote = notes.substring(0,substring);
                 notes = notes.replace(partNote, "");
                 writeOneItemLine(partNote,20,y, false);
                 y+=15;
@@ -167,10 +175,18 @@ public class MakePDFOffer {
 
             document.close();
             //tv.setText("Successfully wrote PDF to " + path);
+            finishAndOpenOrdersPage();
 
         } catch (IOException e) {
             Log.e("PdfBox-hovalotCalc", "Exception thrown while creating PDF => ", e);
         }
+    }
+
+    public void finishAndOpenOrdersPage()
+    {
+        currentActivity.finish();
+        Intent i = new Intent(context, OrdersPage.class);
+        context.startActivity(i);
     }
 
     public void writeOneLine(String toWrite, Boolean isReversible, int x, int y) throws IOException {

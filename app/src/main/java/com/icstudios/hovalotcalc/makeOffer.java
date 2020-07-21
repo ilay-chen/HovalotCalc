@@ -1,35 +1,30 @@
-package com.icstudios.hovalotcalc.ordercreate;
+package com.icstudios.hovalotcalc;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-
-import com.icstudios.hovalotcalc.OrderObject;
-import com.icstudios.hovalotcalc.R;
-
-import org.jetbrains.annotations.Nullable;
 
 public class makeOffer extends DialogFragment {
 
     private static OrderObject orderDetails;
+    static Activity currentActivity;
 
     public makeOffer()
     {
 
     }
 
-    public static makeOffer newInstance(OrderObject orderDetails) {
+    public static makeOffer newInstance(OrderObject orderDetails, Activity activity) {
         // Required empty public constructor
         makeOffer frag = new makeOffer();
         makeOffer.orderDetails = orderDetails;
+        currentActivity = activity;
         return frag;
     }
 
@@ -47,6 +42,10 @@ public class makeOffer extends DialogFragment {
         final EditText input = new EditText(getContext());
         input.setHint("הכנס הצעת מחיר");
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        if(orderDetails.getPrice()!=0)
+        {
+            input.setText(orderDetails.getPrice()+"");
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -68,7 +67,7 @@ public class makeOffer extends DialogFragment {
                             input.setText("0");
 
                         orderDetails.setPrice(Integer.parseInt(input.getText().toString()));
-                        MakePDFOffer PDFMaker = new MakePDFOffer(getContext());
+                        com.icstudios.hovalotcalc.MakePDFOffer PDFMaker = new MakePDFOffer(getContext(), currentActivity);
                         PDFMaker.createPdf(orderDetails);
                     }
                 })

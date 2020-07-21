@@ -1,11 +1,9 @@
-package com.icstudios.hovalotcalc.ordercreate
+package com.icstudios.hovalotcalc
 
-import android.Manifest
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -13,10 +11,10 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.icstudios.hovalotcalc.R
+import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.newOrder
 import java.util.*
+
 
 class AddressAndDateFragment : Fragment() {
 
@@ -51,85 +49,152 @@ class AddressAndDateFragment : Fragment() {
 
         mFromAddress = rootView.findViewById(R.id.address_from_edit_text)
         mFromAddress.setOnFocusChangeListener { v, hasFocus ->
-            OrderCreateActivity.newOrder.fromCity = mFromAddress.text.toString()
+            newOrder.fromCity = mFromAddress.text.toString()
         }
+        if(newOrder.fromCity!=null)
+        {
+            mFromAddress.setText(newOrder.fromCity)
+        }
+
         mFromStreet = rootView.findViewById(R.id.street_from_edit_text)
         mFromStreet.setOnFocusChangeListener { v, hasFocus ->
-            OrderCreateActivity.newOrder.fromStreet = mFromStreet.text.toString()
+            newOrder.fromStreet = mFromStreet.text.toString()
         }
+        if(newOrder.fromStreet!=null)
+        {
+            mFromStreet.setText(newOrder.fromStreet)
+        }
+
         mFromNumber = rootView.findViewById(R.id.home_number)
         mFromNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                OrderCreateActivity.newOrder.fromNumber = "0"
+                newOrder.fromNumber = "0"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                OrderCreateActivity.newOrder.fromNumber = mFromNumber.selectedItem.toString()
+                newOrder.fromNumber = mFromNumber.selectedItem.toString()
             }
 
         }
+        if(newOrder.fromNumber!=null)
+        {
+            mFromNumber.setSelection(Integer.parseInt(newOrder.fromNumber))
+        }
+
         mFromFloor = rootView.findViewById(R.id.home_floor)
         mFromFloor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                OrderCreateActivity.newOrder.fromFloor = "0"
+                newOrder.fromFloor = "0"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                OrderCreateActivity.newOrder.fromFloor = mFromFloor.selectedItem.toString()
+                newOrder.fromFloor = mFromFloor.selectedItem.toString()
             }
 
         }
-        mFromCrane = rootView.findViewById(R.id.crane)
-        OrderCreateActivity.newOrder.fromCrane = false
-        mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
-            OrderCreateActivity.newOrder.fromCrane = isChecked
+        if(newOrder.fromFloor!=null)
+        {
+            mFromFloor.setSelection(Integer.parseInt(newOrder.fromFloor))
         }
-        mFromElevator = rootView.findViewById(R.id.elevator)
-        OrderCreateActivity.newOrder.fromElevator = false
+
+        mFromCrane = rootView.findViewById(R.id.crane)
         mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
-            OrderCreateActivity.newOrder.fromElevator = isChecked
+            newOrder.fromCrane = isChecked
+        }
+        if(newOrder.fromCrane!=null)
+        {
+            mFromCrane.isChecked = newOrder.fromCrane
+        }
+        else {
+            newOrder.fromCrane = false
+        }
+
+        mFromElevator = rootView.findViewById(R.id.elevator)
+        mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+            newOrder.fromElevator = isChecked
+        }
+        if(newOrder.fromElevator!=null)
+        {
+            mFromCrane.isChecked = newOrder.fromElevator
+        }
+        else {
+            newOrder.fromElevator = false
         }
 
         mToAddress = rootView.findViewById(R.id.address_to_edit_text)
         mToAddress.setOnFocusChangeListener { v, hasFocus ->
-            OrderCreateActivity.newOrder.toCity = mToAddress.text.toString()
+            newOrder.toCity = mToAddress.text.toString()
         }
+        if(newOrder.toCity!=null)
+        {
+            mToAddress.setText(newOrder.toCity)
+        }
+
         mToStreet = rootView.findViewById(R.id.street_to_edit_text)
         mToStreet.setOnFocusChangeListener { v, hasFocus ->
-            OrderCreateActivity.newOrder.toStreet = mToStreet.text.toString()
+            newOrder.toStreet = mToStreet.text.toString()
         }
+        if(newOrder.toStreet!=null)
+        {
+            mToStreet.setText(newOrder.toStreet)
+        }
+
         mToNumber = rootView.findViewById(R.id.to_home_number)
         mToNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                OrderCreateActivity.newOrder.toNumber = "0"
+                newOrder.toNumber = "0"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                OrderCreateActivity.newOrder.toNumber = mToNumber.selectedItem.toString();
+                newOrder.toNumber = mToNumber.selectedItem.toString();
             }
 
         }
+        if(newOrder.toNumber!=null)
+        {
+            mToNumber.setSelection(Integer.parseInt(newOrder.toNumber))
+        }
+
         mToFloor = rootView.findViewById(R.id.to_home_floor)
         mToFloor.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                OrderCreateActivity.newOrder.toFloor = "0"
+                newOrder.toFloor = "0"
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                OrderCreateActivity.newOrder.toFloor = mToFloor.selectedItem.toString()
+                newOrder.toFloor = mToFloor.selectedItem.toString()
             }
 
         }
-        mToCrane = rootView.findViewById(R.id.to_crane)
-        OrderCreateActivity.newOrder.toCrane = false
-        mToCrane.setOnCheckedChangeListener { buttonView, isChecked ->
-            OrderCreateActivity.newOrder.toCrane = isChecked
+        if(newOrder.toFloor!=null)
+        {
+            mToFloor.setSelection(Integer.parseInt(newOrder.toFloor))
         }
+
+        mToCrane = rootView.findViewById(R.id.to_crane)
+        mToCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+            newOrder.toCrane = isChecked
+        }
+        if(newOrder.toCrane!=null)
+        {
+            mToCrane.isChecked = newOrder.toCrane
+        }
+        else {
+            newOrder.toCrane = false
+        }
+
         mToElevator = rootView.findViewById(R.id.to_elevator)
-        OrderCreateActivity.newOrder.toElevator = false
         mToElevator.setOnCheckedChangeListener { buttonView, isChecked ->
             OrderCreateActivity.newOrder.toElevator = isChecked
         }
+        if(newOrder.toElevator!=null)
+        {
+            mToElevator.isChecked = newOrder.toElevator
+        }
+        else {
+            OrderCreateActivity.newOrder.toElevator = false
+        }
+
 
         mDateEditText = rootView.findViewById(R.id.date_edit_text)
         mDateEditText.setInputType(InputType.TYPE_NULL)
@@ -141,6 +206,11 @@ class AddressAndDateFragment : Fragment() {
         mDateEditText.setOnClickListener(View.OnClickListener {
             openDatePicker()
         })
+        if(newOrder.date!=null)
+        {
+            mDateEditText.setText(newOrder.date)
+        }
+
 
         mHourEditText = rootView.findViewById(R.id.hour_edit_text)
         mHourEditText.inputType = InputType.TYPE_NULL
@@ -152,34 +222,10 @@ class AddressAndDateFragment : Fragment() {
         mHourEditText.setOnClickListener(View.OnClickListener {
             openClockPicker()
         })
-//        mClientName = rootView.findViewById(R.id.editTextTextPersonName)
-//        mClientPhone = rootView.findViewById(R.id.editTextTextPersonName)
-//        mClientEmail = rootView.findViewById(R.id.editTextTextPersonName)
-
-//        mButtonFinish = rootView.findViewById(R.id.next1)
-//        mButtonFinish.setOnClickListener(View.OnClickListener { view ->
-//            newOrder.clientName = mClientName.text.toString()
-//            newOrder.email = mClientEmail.text.toString()
-//            newOrder.phoneNumber = mClientPhone.text.toString()
-//
-//            (activity as ViewPagerNavigation).onProgress(2)
-//        })
-
-//        mButtonPermission = rootView.findViewById(R.id.button_permissions)
-//        mButtonPermission.setOnClickListener(View.OnClickListener { view ->
-//            getPermissions()
-//        })
-//
-//        mButtonPermissionOverlay = rootView.findViewById(R.id.button_permissions_overlay)
-//        mButtonPermissionOverlay.setOnClickListener(View.OnClickListener { view ->
-//
-//        })
-//
-//        mButtonPermissionSettings = rootView.findViewById(R.id.button_settings_permission)
-//        mButtonPermissionSettings.setOnClickListener(View.OnClickListener { view ->
-//
-//        })
-//
+        if(newOrder.hour!=null)
+        {
+            mHourEditText.setText(newOrder.hour)
+        }
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->
@@ -203,10 +249,11 @@ class AddressAndDateFragment : Fragment() {
         val minutes = cldr[Calendar.MINUTE]
         // time picker dialog
         mHourPickerDialog = TimePickerDialog(context,
-                OnTimeSetListener { tp, sHour, sMinute -> mHourEditText.setText("$sHour:$sMinute") }, hour, minutes, true)
+                OnTimeSetListener {
+                    tp, sHour, sMinute -> mHourEditText.setText("$sHour:$sMinute")
+                    newOrder.hour = mHourEditText.text.toString()
+                }, hour, minutes, true)
         mHourPickerDialog.show()
-
-        OrderCreateActivity.newOrder.hour = mHourEditText.text.toString()
     }
 
     fun openDatePicker()
@@ -217,10 +264,11 @@ class AddressAndDateFragment : Fragment() {
         val year: Int = cldr.get(Calendar.YEAR)
         // date picker dialog
         mDatePickerDialog = DatePickerDialog(this!!.context!!,
-                OnDateSetListener { view, year, monthOfYear, dayOfMonth -> mDateEditText.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year) }, year, month, day)
+                OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    mDateEditText.setText(dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year)
+                    newOrder.date = mDateEditText.text.toString()
+                }, year, month, day)
         mDatePickerDialog.show()
-
-        OrderCreateActivity.newOrder.date = mDateEditText.text.toString()
     }
 
     override fun onResume() {

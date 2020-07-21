@@ -1,4 +1,4 @@
-package com.icstudios.hovalotcalc.ordercreate
+package com.icstudios.hovalotcalc
 
 import android.Manifest
 import android.content.Intent
@@ -14,8 +14,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.icstudios.hovalotcalc.R
-import com.icstudios.hovalotcalc.ordercreate.OrderCreateActivity.Companion.newOrder
+import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.newOrder
 
 private const val PERMISSION_OVERLAY_REQUEST_CODE = 10
 private const val PERMISSIONS_REQUEST_CODE = 11
@@ -35,14 +34,35 @@ class ClientDetailsFragment : Fragment() {
         // Inflate the layout for this fragment
         var rootView = inflater.inflate(R.layout.client_details_layout, container, false)
         mClientName = rootView.findViewById(R.id.editTextTextPersonName)
+        mClientName.setOnFocusChangeListener { v, hasFocus ->
+            newOrder.clientName = mClientName.text.toString()
+        }
+        if(newOrder.clientName!=null)
+        {
+            mClientName.setText(newOrder.clientName)
+        }
+
         mClientPhone = rootView.findViewById(R.id.editTextTextPhone)
+        mClientPhone.setOnFocusChangeListener { v, hasFocus ->
+            newOrder.phoneNumber = mClientPhone.text.toString()
+        }
+        if(newOrder.phoneNumber!=null)
+        {
+            mClientPhone.setText(newOrder.phoneNumber)
+        }
+
         mClientEmail = rootView.findViewById(R.id.editTextTextPersonEmail)
+        mClientEmail.setOnFocusChangeListener { v, hasFocus ->
+            newOrder.email = mClientEmail.text.toString()
+        }
+        if(newOrder.email!=null)
+        {
+            mClientEmail.setText(newOrder.email)
+        }
+
 
         mButtonFinish = rootView.findViewById(R.id.next1)
         mButtonFinish.setOnClickListener(View.OnClickListener { view ->
-            newOrder.clientName = mClientName.text.toString()
-            newOrder.email = mClientEmail.text.toString()
-            newOrder.phoneNumber = mClientPhone.text.toString()
 
             (activity as ViewPagerNavigation).setCurrent(1)
         })

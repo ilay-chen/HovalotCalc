@@ -5,13 +5,14 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.View;
 import android.widget.Button;
-
-import com.icstudios.hovalotcalc.ordercreate.OrderCreateActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         newOrder = (Button)findViewById(R.id.new_order);
         orderPage = (Button)findViewById(R.id.order_page);
+        dairy = (Button)findViewById(R.id.dairy);
 
         newOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +40,20 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), OrdersPage.class);
                 startActivity(i);
+            }
+        });
+
+        dairy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // A date-time specified in milliseconds since the epoch.
+                long startMillis = System.currentTimeMillis();
+                Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+                builder.appendPath("time");
+                ContentUris.appendId(builder, startMillis);
+                Intent intent = new Intent(Intent.ACTION_VIEW)
+                        .setData(builder.build());
+                startActivity(intent);
             }
         });
 

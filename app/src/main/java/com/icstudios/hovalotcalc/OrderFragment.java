@@ -1,6 +1,7 @@
 package com.icstudios.hovalotcalc;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import static com.icstudios.hovalotcalc.appData.allOrders;
 
 /**
  * A fragment representing a list of Items.
@@ -73,6 +76,9 @@ public class OrderFragment extends Fragment {
                         @Override public void onItemClick(View view, int position) {
                             // do whatever
                             Toast.makeText(context,"click" + position, Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(context, OrderCreateActivity.class);
+                            i.putExtra("id", allOrders.get(position).getId());
+                            startActivity(i);
                         }
 
                         @Override public void onLongItemClick(View view, int position) {
