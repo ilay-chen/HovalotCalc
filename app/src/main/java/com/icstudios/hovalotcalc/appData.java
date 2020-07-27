@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class appData extends Application {
 
@@ -50,6 +52,16 @@ public class appData extends Application {
         if(!dir.exists()){
             dir.mkdir();
         }
+    }
+
+    public static void sortOrders()
+    {
+        Collections.sort(allOrders, new Comparator<OrderObject>() {
+            @Override
+            public int compare(OrderObject o1, OrderObject o2) {
+                return o1.getDateTime().compareTo(o2.getDateTime());
+            }
+        });
     }
 
     public static void saveData(Context c)

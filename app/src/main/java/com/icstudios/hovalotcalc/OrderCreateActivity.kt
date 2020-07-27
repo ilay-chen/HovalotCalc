@@ -3,15 +3,13 @@ package com.icstudios.hovalotcalc
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.icstudios.hovalotcalc.OrderObject
-import com.icstudios.hovalotcalc.R
-import com.icstudios.hovalotcalc.appData
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
@@ -139,6 +137,12 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
 
     override fun setCurrent(fragment: Int) {
         viewPager.setCurrentItem(fragment, true)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ItemsAndRoomsFragment.mRooms = ArrayList()
+        ItemsAndRoomsFragment.inn = null
     }
 }
 

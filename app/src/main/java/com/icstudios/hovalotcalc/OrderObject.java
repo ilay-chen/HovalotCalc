@@ -4,7 +4,10 @@ import android.content.Context;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class OrderObject implements Serializable {
     String clientName;
@@ -243,6 +246,18 @@ public class OrderObject implements Serializable {
                 itemsList.add(new itemObject(item.getName(), item.getCounter(), item.getDisassemblyAndAssembly().isChecked()));
             roomsAndItems.add(new roomObject(room.getRoomName(),itemsList));
         }
+    }
+
+    public java.util.Date getDateTime()
+    {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = null;
+        try {
+            date = dateFormat.parse(getDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
     }
 }
 

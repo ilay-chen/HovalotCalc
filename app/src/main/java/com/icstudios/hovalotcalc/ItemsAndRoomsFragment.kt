@@ -1,20 +1,10 @@
 package com.icstudios.hovalotcalc
 
-import android.Manifest
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -22,7 +12,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.newOrder
 
-class ItemsAndRoomsFragment : Fragment() , removeRoom{
+class ItemsAndRoomsFragment : Fragment() , RemoveRoom{
 
     private lateinit var addRoom : FloatingActionButton
     private lateinit var mButtonNext: Button
@@ -30,7 +20,7 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
 
     companion object {
         @JvmStatic public var mRooms : ArrayList<RoomLayout> = ArrayList()
-        @JvmStatic public lateinit var inn : LinearLayout
+        @JvmStatic public var inn : LinearLayout? = null
     }
 
     override fun onCreateView(
@@ -45,7 +35,7 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
         addRoom.setOnClickListener(View.OnClickListener { view ->
             mRooms.add(RoomLayout(context))
             //container!!.addView(mRooms.get(0))
-            inn.addView(mRooms.get(mRooms.size-1).view)
+            inn?.addView(mRooms.get(mRooms.size-1).view)
             mRooms[mRooms.size-1].addItem(ItemLayout(context))
         })
         if(newOrder.roomsAndItems!=null)
@@ -61,7 +51,7 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
 
                     mRooms.get(mRooms.size - 1).addItem(newItem)
                 }
-                inn.addView(mRooms.get(mRooms.size-1).view)
+                inn?.addView(mRooms.get(mRooms.size-1).view)
             }
         }
 
@@ -93,11 +83,11 @@ class ItemsAndRoomsFragment : Fragment() , removeRoom{
     }
 
     override fun onRemove(roomId: Int) {
-        inn.removeView(mRooms[roomId].view)
+        inn?.removeView(mRooms[roomId].view)
         mRooms.remove(mRooms[roomId])
     }
 }
 
-interface removeRoom {
+interface RemoveRoom {
     fun onRemove(progress: Int)
 }

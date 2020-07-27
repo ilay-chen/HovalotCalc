@@ -52,12 +52,12 @@ public class orderListItem {
     public static class OrderItem {
         public final String id;
         public final String name;
-        public final String phone;
+        public final String date;
 
         public OrderItem(String id, OrderObject orderObject) {
             this.id = id;
             this.name = orderObject.clientName;
-            this.phone = orderObject.phoneNumber;
+            this.date = orderObject.getDate();
         }
 
         @Override

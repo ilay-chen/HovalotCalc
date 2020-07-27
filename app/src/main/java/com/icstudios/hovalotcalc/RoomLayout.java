@@ -42,7 +42,7 @@ public class RoomLayout extends LinearLayout{
         delete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                ItemsAndRoomsFragment.Companion.getInn().removeView(thisRoom);
+                ItemsAndRoomsFragment.Companion.getInn().removeView(thisRoom.view);
                 ItemsAndRoomsFragment.Companion.getMRooms().remove(thisRoom);
             }
         });

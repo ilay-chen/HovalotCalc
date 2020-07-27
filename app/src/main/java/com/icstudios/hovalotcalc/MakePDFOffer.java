@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import static com.icstudios.hovalotcalc.appData.sortOrders;
+
 public class MakePDFOffer {
 
     File root;
@@ -74,7 +76,7 @@ public class MakePDFOffer {
             writeOneLine(orderDetails.getFromNumber(), false,317,667);
 
             writeOneLine(orderDetails.getFromFloor(), false,545,617);
-            writeOneLine("מספר בית", false,455,617);
+            writeOneLine("0", false,455,617);
             String isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
             writeOneLine(isElevator, true,350,617);
@@ -85,7 +87,7 @@ public class MakePDFOffer {
             writeOneLine(orderDetails.getFromNumber(), false,17,667);
 
             writeOneLine(orderDetails.getFromFloor(), false,245,617);
-            writeOneLine("מספר בית", false,155,617);
+            writeOneLine("0", false,155,617);
             isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
             writeOneLine(isElevator, true,50,617);
@@ -99,16 +101,29 @@ public class MakePDFOffer {
             for (roomObject roomLayout: orderDetails.getRoomsAndItems()) {
                 if(!roomLayout.roomName.equals(""))
                 {
+                    if(y <= 180) {
+                        y = 560;
+                        x = 290;
+                    }
                     writeOneItemLine(roomLayout.roomName,x,y, true);
                     //writeOneLine(roomLayout.roomName.getText().toString(), true,getXPos(roomLayout.roomName.getText().toString().length()),y);
-                    y-=15;
+                    y-=20;
                 }
 
                 for(itemObject itemLayout:roomLayout.mItems)
                 {
-                    String itemName = itemLayout.itemName;
+                    if(y <= 180) {
+                        y = 560;
+                        x = 290;
+                    }
+
+                    String itemName = itemLayout.itemName + ", " + itemLayout.itemCounter;
+                    if(itemLayout.DisassemblyAndAssembly)
+                    {
+                        itemName += ", כולל פירוק והובלה";
+                    }
                     writeOneItemLine(itemName,x,y,false);
-                    y-=15;
+                    y-=20;
                 }
 
                 //roomName = RoomLayout.roomName.getText().toString();
@@ -120,9 +135,7 @@ public class MakePDFOffer {
             writeOneLine(orderDetails.getSuitcases(), false,457,122);
             writeOneLine(orderDetails.getBags(), false,457,90);
 
-//            String isPacking = "יש";
-//            if(!orderDetails.get()) isPacking = "אין";
-            writeOneLine("אין נתונים", true,342,155);
+            writeOneLine("0", true,342,155);
             writeOneLine("25", false,260,122);
             writeOneLine("350", false,255,90);
 
@@ -171,6 +184,8 @@ public class MakePDFOffer {
 
             appData.updateOrderList(orderDetails);
 
+            sortOrders();
+
             appData.saveData(context);
 
             document.close();
@@ -185,7 +200,7 @@ public class MakePDFOffer {
     public void finishAndOpenOrdersPage()
     {
         currentActivity.finish();
-        Intent i = new Intent(context, OrdersPage.class);
+        Intent i = new Intent(context, MainActivity.class);
         context.startActivity(i);
     }
 
