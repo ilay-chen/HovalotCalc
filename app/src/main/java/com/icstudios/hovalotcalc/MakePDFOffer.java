@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -64,33 +65,33 @@ public class MakePDFOffer {
             contentStream = new PDPageContentStream(document, page, true, true);
 
             //name
-            writeOneLine(orderDetails.getClientName(),true,490,815);
+            writeOneLine(orderDetails.getClientName(),true,550,815);
 
             //date and o'clock
-            writeOneLine(orderDetails.getDate(), false,440,788);
-            writeOneLine(orderDetails.getHour(), false,475,763);
+            writeOneLine(orderDetails.getDate(), false,500,788);
+            writeOneLine(orderDetails.getHour(), false,515,765);
 
             //address from
-            writeOneLine(orderDetails.getFromCity(), true,510,667);
-            writeOneLine(orderDetails.getFromStreet(), true,390,667);
-            writeOneLine(orderDetails.getFromNumber(), false,317,667);
+            writeOneLine(orderDetails.getFromCity(), true,560,667);
+            writeOneLine(orderDetails.getFromStreet(), true,440,667);
+            writeOneLine(orderDetails.getFromNumber(), false,325,667);
 
-            writeOneLine(orderDetails.getFromFloor(), false,545,617);
+            writeOneLine(orderDetails.getFromFloor(), false,560,617);
             writeOneLine("0", false,455,617);
             String isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,350,617);
+            writeOneLine(isElevator, true,365,617);
 
             //address to
-            writeOneLine(orderDetails.getFromCity(), true,210,667);
-            writeOneLine(orderDetails.getFromStreet(), true,90,667);
-            writeOneLine(orderDetails.getFromNumber(), false,17,667);
+            writeOneLine(orderDetails.getFromCity(), true,260,667);
+            writeOneLine(orderDetails.getFromStreet(), true,140,667);
+            writeOneLine(orderDetails.getFromNumber(), false,30,667);
 
-            writeOneLine(orderDetails.getFromFloor(), false,245,617);
-            writeOneLine("0", false,155,617);
+            writeOneLine(orderDetails.getFromFloor(), false,260,617);
+            writeOneLine("0", false,170,617);
             isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,50,617);
+            writeOneLine(isElevator, true,65,617);
 
             //all items
             //writeOneLine("כל הפרטים", true,525,560);
@@ -131,13 +132,13 @@ public class MakePDFOffer {
 
 
             //extra details
-            writeOneLine(orderDetails.getBoxes(), false,457,155);
-            writeOneLine(orderDetails.getSuitcases(), false,457,122);
-            writeOneLine(orderDetails.getBags(), false,457,90);
+            writeOneLine(orderDetails.getBoxes(), false,485,155);
+            writeOneLine(orderDetails.getSuitcases(), false,485,122);
+            writeOneLine(orderDetails.getBags(), false,485,90);
 
-            writeOneLine("0", true,342,155);
-            writeOneLine("25", false,260,122);
-            writeOneLine("350", false,255,90);
+            writeOneLine("0", true,350,155);
+            writeOneLine("25", false,280,122);
+            writeOneLine("350", false,280,90);
 
             String notes = orderDetails.getNotes();
             y = 145;
@@ -154,14 +155,14 @@ public class MakePDFOffer {
 
                 String partNote = notes.substring(0,substring);
                 notes = notes.replace(partNote, "");
-                writeOneItemLine(partNote,20,y, false);
+                writeOneItemLine(partNote,235,y, false);
                 y+=15;
             }
 
             //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
 
             //price
-            writeOneLine(orderDetails.getPrice()+"", false,100,45);
+            writeOneLine(orderDetails.getPrice()+"", false,130,45);
 
             //contentStream.endText();
 
@@ -190,11 +191,34 @@ public class MakePDFOffer {
 
             document.close();
             //tv.setText("Successfully wrote PDF to " + path);
+
+            //sharePDF(path);
+
             finishAndOpenOrdersPage();
 
         } catch (IOException e) {
             Log.e("PdfBox-hovalotCalc", "Exception thrown while creating PDF => ", e);
         }
+    }
+
+    public void  sharePDF(String path)
+    {
+        /*Create an ACTION_SEND Intent*/
+        Intent share = new Intent(android.content.Intent.ACTION_SEND);
+        /*This will be the actual content you wish you share.*/
+//        String shareBody = "Here is the share content body";
+        File outputFile = new File(path);
+        Uri uri = Uri.fromFile(outputFile);
+
+        share.setType("application/pdf");
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+        /*The type of the content is text, obviously.*/
+//        intent.setType("text/plain");
+        /*Applying information Subject and Body.*/
+//        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_subject));
+//        intent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        /*Fire!*/
+        context.startActivity(Intent.createChooser(share, "שתף PDF"));
     }
 
     public void finishAndOpenOrdersPage()
@@ -209,7 +233,8 @@ public class MakePDFOffer {
             contentStream.beginText();
             contentStream.setNonStrokingColor(0, 0, 0);
             contentStream.setFont(font, 15);
-            contentStream.newLineAtOffset(x, y);
+            float text_width = (font.getStringWidth(toWrite) / 1000.0f) * 15;
+            contentStream.newLineAtOffset(x-text_width, y);
             if (isReversible) toWrite = new StringBuilder(toWrite).reverse().toString();
             contentStream.showText(toWrite);
             contentStream.endText();
@@ -260,7 +285,7 @@ public class MakePDFOffer {
         String path = appData.getFilePath(orderObject) + appData.picFileName;
         File renderFile = new File(path);
         FileOutputStream fileOut = new FileOutputStream(renderFile);
-        pageImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOut);
+        pageImage.compress(Bitmap.CompressFormat.PNG, 100, fileOut);
         fileOut.close();
     }
 }
