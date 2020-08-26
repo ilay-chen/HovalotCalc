@@ -1,32 +1,56 @@
 package com.icstudios.hovalotcalc;
 
 import android.content.Context;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import com.icstudios.hovalotcalc.R;
+
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class ItemLayout extends LinearLayout {
 
     EditText itemName, itemsCounter;
     CheckBox DisassemblyAndAssembly;
     Button addSameItem, subtractSameItem;
+    ImageButton menu;
+    View popupView;
 
     public ItemLayout(Context context) {
         super(context);
         inflate(context, R.layout.item_view, this);
 
-        itemsCounter = findViewById(R.id.item_counter);
+        menu = findViewById(R.id.menu_item);
+
+        final LayoutInflater layoutInflater = (LayoutInflater)context
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        popupView = layoutInflater.inflate(R.layout.item_menu_popup, null);
+        final PopupWindow popupMenu = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,true);
+        popupMenu.setAnimationStyle(R.style.Animation);
+
+        menu.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, 200);
+            }
+        });
+
+        itemsCounter = popupView.findViewById(R.id.item_counter);
         itemsCounter.setText(0+"");
 
         itemName = findViewById(R.id.item_name);
 
-        DisassemblyAndAssembly = findViewById(R.id.disassembly_and_assembly);
+        DisassemblyAndAssembly = popupView.findViewById(R.id.disassembly_and_assembly);
 
-        addSameItem = findViewById(R.id.add_item_num);
+        addSameItem = popupView.findViewById(R.id.add_item_num);
         addSameItem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +60,7 @@ public class ItemLayout extends LinearLayout {
             }
         });
 
-        subtractSameItem = findViewById(R.id.subtract_item_num);
+        subtractSameItem = popupView.findViewById(R.id.subtract_item_num);
         subtractSameItem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

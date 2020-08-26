@@ -15,8 +15,8 @@
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/check_complete"
-        android:layout_margin="@dimen/text_margin"
         android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
         android:tag="check_box"
         android:clickable="true"
         android:focusable="true"
@@ -24,35 +24,57 @@
 
     </androidx.appcompat.widget.AppCompatCheckBox>
 
+    <TextView
+        android:id="@+id/item_name"
+        android:tag="click_to_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="שם: "
+        android:textColor="#FF0000"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/check_complete"
+        android:textAppearance="?attr/textAppearanceListItem" />
 
     <TextView
         android:id="@+id/item_number"
         android:tag="click_to_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="15dp"
         android:text="שם"
-        android:layout_toLeftOf="@+id/check_complete"
+        android:layout_toLeftOf="@+id/item_name"
         android:textAppearance="?attr/textAppearanceListItem" />
+
+    <TextView
+        android:id="@+id/item_date"
+        android:tag="click_to_edit"
+        android:textColor="#FF0000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="3dp"
+        android:text="תאריך ההובלה "
+        android:textAppearance="?attr/textAppearanceListItem"
+        android:layout_toLeftOf="@+id/item_number"/>
 
     <TextView
         android:id="@+id/content"
         android:tag="click_to_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="15dp"
         android:text="מספר"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toLeftOf="@+id/item_number"/>
+        android:layout_toLeftOf="@+id/item_date"/>
 
     <ImageButton
         android:id="@+id/menu_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
+        android:layout_marginTop="15dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
         android:tag="menu_item"
         android:clickable="true"
         android:focusable="true"

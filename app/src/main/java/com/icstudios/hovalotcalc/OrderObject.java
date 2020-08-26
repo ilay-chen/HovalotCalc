@@ -250,14 +250,17 @@ public class OrderObject implements Serializable {
 
     public java.util.Date getDateTime()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = null;
-        try {
-            date = dateFormat.parse(getDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(getDate() != null && !getDate().equals("")) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date date = null;
+            try {
+                date = dateFormat.parse(getDate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return date;
         }
-        return date;
+        return null;
     }
 }
 

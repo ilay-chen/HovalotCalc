@@ -22,10 +22,24 @@
 
     <EditText
         android:id="@+id/item_name"
-        android:layout_width="200dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:hint="שם הפריט"/>
 
+    <ImageButton
+        android:id="@+id/menu_item"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:paddingRight="10dp"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toLeftOf="@+id/item_name"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/more_options"/>
+
+    <!--
     <CheckBox
         android:id="@+id/disassembly_and_assembly"
         android:layout_width="30dp"
@@ -49,6 +63,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/minus_icon" />
+        -->
 </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

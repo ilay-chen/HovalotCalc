@@ -6,8 +6,20 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.content.FileProvider;
 
 import com.tom_roush.pdfbox.pdmodel.PDDocument;
 import com.tom_roush.pdfbox.pdmodel.PDPage;
@@ -18,7 +30,10 @@ import com.tom_roush.pdfbox.util.PDFBoxResourceLoader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Objects;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static com.icstudios.hovalotcalc.appData.allOrders;
 import static com.icstudios.hovalotcalc.appData.sortOrders;
 
 public class MakePDFOffer {
@@ -31,6 +46,8 @@ public class MakePDFOffer {
     PDType0Font font;
     Bitmap pageImage;
     Activity currentActivity;
+
+    int ACTIVITY_BACK = 1;
 
     public MakePDFOffer(Context context, Activity activity)
     {
@@ -194,7 +211,7 @@ public class MakePDFOffer {
 
             //sharePDF(path);
 
-            finishAndOpenOrdersPage();
+            finishAndOpenOrdersPage(path, orderDetails);
 
         } catch (IOException e) {
             Log.e("PdfBox-hovalotCalc", "Exception thrown while creating PDF => ", e);
@@ -221,11 +238,90 @@ public class MakePDFOffer {
         context.startActivity(Intent.createChooser(share, "שתף PDF"));
     }
 
-    public void finishAndOpenOrdersPage()
+    public void finishAndOpenOrdersPage(final String path, final OrderObject orderDetails)
     {
-        currentActivity.finish();
-        Intent i = new Intent(context, MainActivity.class);
-        context.startActivity(i);
+//        currentActivity.finish();
+
+        Button shareWhatsapp, shareMail, shareSms;
+
+        final LayoutInflater layoutInflater = (LayoutInflater)context
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        View popupView = layoutInflater.inflate(R.layout.share_popup, null);
+        final PopupWindow popupMenu = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,true);
+        popupMenu.setAnimationStyle(R.style.Animation);
+        popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, 200);
+
+        shareWhatsapp = popupView.findViewById(R.id.send_whatsapp);
+        shareSms = popupView.findViewById(R.id.send_sms);
+        shareMail = popupView.findViewById(R.id.send_email);
+
+
+
+        shareWhatsapp.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+
+
+                File outputFile = new File(path);
+                Uri uri =FileProvider.getUriForFile(Objects.requireNonNull(context.getApplicationContext()),
+                        BuildConfig.APPLICATION_ID + ".provider", outputFile);
+
+                Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "");
+                sendIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                sendIntent.putExtra("jid", orderDetails.getPhoneNumber().replaceFirst("0","972") + "@s.whatsapp.net"); //phone number without "+" prefix
+                sendIntent.setPackage("com.whatsapp");
+
+                currentActivity.startActivityForResult(sendIntent, ACTIVITY_BACK);
+            }
+        });
+
+        shareSms.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                File outputFile = new File(path);
+                Uri uri =FileProvider.getUriForFile(Objects.requireNonNull(context.getApplicationContext()),
+                        BuildConfig.APPLICATION_ID + ".provider", outputFile);
+
+                Uri uriphine = Uri.parse("smsto:" + orderDetails.getPhoneNumber());
+                Intent it = new Intent(Intent.ACTION_SENDTO, uriphine);
+                it.putExtra("sms_body", "");
+                it.putExtra(Intent.EXTRA_STREAM, uri);
+                currentActivity.startActivityForResult(it, ACTIVITY_BACK);
+
+            }
+        });
+
+        shareMail.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                File outputFile = new File(path);
+                Uri uri =FileProvider.getUriForFile(Objects.requireNonNull(context.getApplicationContext()),
+                        BuildConfig.APPLICATION_ID + ".provider", outputFile);
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{orderDetails.getEmail()});
+                i.putExtra(Intent.EXTRA_SUBJECT, "הצעת מחיר הובלות");
+                i.putExtra(Intent.EXTRA_TEXT, "הצעת מחיר הובלות");
+                i.putExtra(Intent.EXTRA_STREAM, uri);
+                try {
+                    currentActivity.startActivityForResult(Intent.createChooser(i, "Send mail"), ACTIVITY_BACK);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(currentActivity, "There are no email applications installed.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+//        Intent i = new Intent(context, MainActivity.class);
+//        context.startActivity(i);
     }
 
     public void writeOneLine(String toWrite, Boolean isReversible, int x, int y) throws IOException {
@@ -273,13 +369,14 @@ public class MakePDFOffer {
     /**
      * Loads an existing PDF and renders it to a Bitmap
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void renderFile(PDDocument document, OrderObject orderObject) throws IOException {
         // Render the page and save it to an image file
 
         // Create a renderer for the document
         PDFRenderer renderer = new PDFRenderer(document);
         // Render the image to an RGB Bitmap
-        pageImage = renderer.renderImage(0, 1, Bitmap.Config.RGB_565);
+        pageImage = renderer.renderImage(0, 1, Bitmap.Config.RGBA_F16);
 
         // Save the render result to an image
         String path = appData.getFilePath(orderObject) + appData.picFileName;

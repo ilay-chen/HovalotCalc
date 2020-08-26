@@ -159,7 +159,7 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
         Button call, sendMessage, watchFile, watchPic, watchVideo, editOrder;
 
         View popupView = layoutInflater.inflate(R.layout.popup_menu, null);
-        final PopupWindow popupMenu = new PopupWindow(popupView,LinearLayout.LayoutParams.MATCH_PARENT,600,true);
+        final PopupWindow popupMenu = new PopupWindow(popupView,LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupMenu.setAnimationStyle(R.style.Animation);
 
         call = popupView.findViewById(R.id.call);

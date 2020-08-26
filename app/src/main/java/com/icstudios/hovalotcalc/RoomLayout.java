@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class RoomLayout extends LinearLayout{
 
-    Button delete;
+    ImageButton delete;
     EditText roomName;
     ArrayList<ItemLayout> mItems;
     View view;
@@ -27,7 +28,6 @@ public class RoomLayout extends LinearLayout{
         itemList = view.findViewById(R.id.all_items_of_room);
         mItems = new ArrayList<ItemLayout>();
 
-        delete = findViewById(R.id.remove_room);
         roomName = findViewById(R.id.room_name);
 
         addItem = view.findViewById(R.id.add_new_item);

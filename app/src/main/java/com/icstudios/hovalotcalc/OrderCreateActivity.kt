@@ -1,9 +1,9 @@
 package com.icstudios.hovalotcalc
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+
 
 class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
 
@@ -144,6 +145,17 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         ItemsAndRoomsFragment.mRooms = ArrayList()
         ItemsAndRoomsFragment.inn = null
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val action = data?.action
+        if (requestCode == 1) {
+            finish();
+            var i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+        }
+    }
+
 }
 
 interface ViewPagerNavigation {

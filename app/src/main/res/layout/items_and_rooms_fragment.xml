@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/extra_details_background">
+    android:background="@drawable/items_background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1">
 
         <LinearLayout
             android:id="@+id/all_items"
@@ -38,8 +38,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        android:background="@drawable/next"
-        app:srcCompat="@drawable/next" />
+        android:background="@drawable/price_enter"
+        app:srcCompat="@drawable/price_enter" />
 
     <Button
         android:id="@+id/previous"
@@ -61,9 +61,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:background="@drawable/plus_icon"
-        app:srcCompat="@drawable/plus_icon"
-
+        android:background="@drawable/add_room"
+        app:srcCompat="@drawable/add_room"
+        android:backgroundTintMode="src_atop"
+        android:backgroundTint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
