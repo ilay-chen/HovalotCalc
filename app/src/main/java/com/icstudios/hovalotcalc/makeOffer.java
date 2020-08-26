@@ -50,25 +50,10 @@ public class makeOffer extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        AlertDialog alert = builder.create();
-
-        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-        nbutton.setBackgroundResource(R.drawable.back_price);
-        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-        pbutton.setBackgroundResource(R.drawable.insert_price);
-
         builder
                 .setView(input)
                 .setMessage("הכנס הצעת מחיר")
-//                .setNegativeButton(R.string.close_validation, new DialogInterface.OnClickListener() {
-//
-//                    @Override
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//                        getActivity().finishAffinity();
-//                    }
-//                })
-
-                .setPositiveButton("אישור", new DialogInterface.OnClickListener() {
+                .setPositiveButton(" ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
 
@@ -80,12 +65,35 @@ public class makeOffer extends DialogFragment {
                         PDFMaker.createPdf(orderDetails);
                     }
                 })
-                .setNeutralButton("חזור", new DialogInterface.OnClickListener() {
+                .setNeutralButton(" ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         dismiss();
                     }
                 });
+
+        AlertDialog alert = builder.create();
+
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {                    //
+                Button positiveButton = ((AlertDialog) dialog)
+                        .getButton(AlertDialog.BUTTON_POSITIVE);
+                positiveButton.setBackgroundResource(R.drawable.insert_price);
+                positiveButton.setHeight(75);
+                positiveButton.setWidth(75);
+
+                Button negativeButton = ((AlertDialog) dialog)
+                        .getButton(AlertDialog.BUTTON_NEUTRAL);
+                negativeButton.setBackgroundDrawable(getResources()
+                        .getDrawable(R.drawable.back_price));
+            }
+        });
+
+//        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEUTRAL);
+//        nbutton.setBackgroundResource(R.drawable.back_price);
+//        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+//        pbutton.setBackgroundResource(R.drawable.insert_price);
 
         return alert;
 

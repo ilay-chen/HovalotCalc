@@ -44,7 +44,7 @@ public class ItemLayout extends LinearLayout {
         });
 
         itemsCounter = popupView.findViewById(R.id.item_counter);
-        itemsCounter.setText(0+"");
+        itemsCounter.setText(1+"");
 
         itemName = findViewById(R.id.item_name);
 
