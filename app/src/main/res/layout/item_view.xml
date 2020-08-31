@@ -17,7 +17,6 @@
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.0"
     android:background="@drawable/round_edit_text"
-
     android:orientation="horizontal">
 
     <EditText
@@ -25,6 +24,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="bottom"
+        android:background="@android:color/transparent"
         android:hint="שם הפריט"/>
 
     <ImageButton

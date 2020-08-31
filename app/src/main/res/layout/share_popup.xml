@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="20sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -38,11 +38,11 @@
             android:id="@+id/send_whatsapp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/whatsapp_icon"
+            android:src="@drawable/send_whatsapp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_margin="20dp"
-            android:background="@drawable/whatsapp_icon">
+            android:background="@drawable/send_whatsapp">
         </Button>
 
         <Button
@@ -52,8 +52,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_margin="20dp"
-            android:src="@drawable/call_icon"
-            android:background="@drawable/call_icon">
+            android:src="@drawable/send_sms"
+            android:background="@drawable/send_sms">
         </Button>
 
         <Button
@@ -63,8 +63,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_margin="20dp"
-            android:src="@drawable/watch_doc_icon"
-            android:background="@drawable/watch_doc_icon">
+            android:src="@drawable/send_email"
+            android:background="@drawable/send_email">
         </Button>
 
     </LinearLayout>

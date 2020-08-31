@@ -1,7 +1,10 @@
 package com.icstudios.hovalotcalc;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -52,6 +55,15 @@ public class RoomLayout extends LinearLayout{
     {
         mItems.add(newItem);
         itemList.addView(newItem);
+
+        newItem.itemName.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
+        imm.showSoftInput(newItem.itemName, InputMethodManager.SHOW_IMPLICIT);
+
+//        if(newItem.itemName.requestFocus()) {
+//            ((Activity)getContext()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//        }
     }
 
     public ArrayList<ItemLayout> getItems()

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/date_time_background">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/address_edit_text_box_height"
         android:background="@drawable/gray_background"
@@ -16,133 +16,112 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="55dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
         <TextView
             android:id="@+id/from_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintVertical_bias="0.10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            android:text="כתובת נוכחית: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+android:visibility="gone"
+            android:layout_weight="1"
+            android:hint="כתובת נוכחית"
+            android:textSize="15sp" />
 
         <EditText
             android:id="@+id/address_from_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/address_edit_text_height"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/from_address"
-            app:layout_constraintTop_toBottomOf="@id/from_address"
-
+            android:layout_weight="1"
+            android:hint="כתובת נוכחית: "
             android:padding="10dp"
             android:background="@drawable/round_edit_text"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/from_street"
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_weight="1">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/address_from_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/address_from_edit_text"
+            <TextView
+                android:id="@+id/from_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:visibility="gone"
+                android:text="רחוב: "
+                android:textSize="15sp" />
 
-            android:text="רחוב: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            <EditText
+                android:id="@+id/street_from_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="1"
+                android:hint="רחוב"
+                android:paddingRight="5dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/street_from_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
-            android:layout_height="@dimen/address_edit_text_height"
+            <TextView
+                android:id="@+id/textView_home_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="1"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/from_street"
-            app:layout_constraintTop_toBottomOf="@id/from_street"
+                android:text=" מס"
+                android:textSize="15sp" />
 
-            android:padding="10dp"
-            android:background="@drawable/round_edit_text"
-            android:inputType="text" />
+            <Spinner
+                android:id="@+id/home_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
 
-        <TextView
-            android:id="@+id/textView_home_number"
-            android:layout_width="wrap_content"
+                android:background="@drawable/round_edit_text" />
+
+            <TextView
+                android:id="@+id/textView_home_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="1"
+
+                android:text=" קומה"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/home_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
+
+                android:background="@drawable/round_edit_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/street_from_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/from_street"
-
-            android:text="מס"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
-
-        <Spinner
-            android:id="@+id/home_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_home_number"
-            app:layout_constraintTop_toBottomOf="@id/from_street"
-            android:entries="@array/numbers"
-            android:background="@drawable/round_edit_text" />
-
-        <TextView
-            android:id="@+id/textView_home_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/home_number"
-            app:layout_constraintTop_toBottomOf="@id/from_street"
-
-            android:text="קומה"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
-
-        <Spinner
-            android:id="@+id/home_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_home_floor"
-            app:layout_constraintTop_toBottomOf="@id/from_street"
-            android:entries="@array/numbers"
-            android:background="@drawable/round_edit_text"/>
+            android:layout_weight="1">
 
         <TextView
             android:id="@+id/textView_elevator"
@@ -150,27 +129,17 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.03"
-            app:layout_constraintStart_toStartOf="@id/street_from_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/street_from_edit_text"
+            android:layout_weight="1"
+
 
             android:text="מעלית"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/elevator"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_elevator"
-            app:layout_constraintTop_toBottomOf="@id/street_from_edit_text" />
+            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/textView_crane"
@@ -178,32 +147,40 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.03"
-            app:layout_constraintStart_toEndOf="@id/elevator"
-            app:layout_constraintTop_toBottomOf="@id/street_from_edit_text"
+            android:layout_weight="1"
+
 
             android:text="מנוף"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/crane"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_crane"
-            app:layout_constraintTop_toBottomOf="@id/street_from_edit_text" />
+            android:layout_weight="1" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView_packing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+
+            android:layout_weight="1"
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+            android:text="מנוף"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/packing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/address_edit_text_box_height"
         android:background="@drawable/gray_background"
@@ -212,191 +189,365 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="55dp">
 
-        <TextView
-            android:id="@+id/to_address"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_weight="1">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintVertical_bias="0.10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            <TextView
+                android:id="@+id/to_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:layout_weight="1"
+                android:hint="כתובת נוכחית"
+                android:textSize="15sp" />
 
-            android:text="כתובת חדשה: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            <EditText
+                android:id="@+id/address_to_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/address_edit_text_height"
 
-        <EditText
-            android:id="@+id/address_to_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
-            android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="1"
+                android:hint="כתובת למעבר: "
+                android:padding="10dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/to_address"
-            app:layout_constraintTop_toBottomOf="@id/to_address"
+        </LinearLayout>
 
-            android:padding="10dp"
-            android:background="@drawable/round_edit_text"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/to_street"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_weight="1">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/address_to_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/address_to_edit_text"
+            <TextView
+                android:id="@+id/to_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:visibility="gone"
+                android:text="רחוב: "
+                android:textSize="15sp" />
 
-            android:text="רחוב: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            <EditText
+                android:id="@+id/street_to_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="1"
+                android:hint="רחוב"
+                android:paddingRight="5dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
 
-        <EditText
-            android:id="@+id/street_to_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
-            android:layout_height="@dimen/address_edit_text_height"
+            <TextView
+                android:id="@+id/textView_to_home_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="1"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/to_street"
-            app:layout_constraintTop_toBottomOf="@id/to_street"
+                android:text=" מס"
+                android:textSize="15sp" />
 
-            android:padding="10dp"
-            android:background="@drawable/round_edit_text"
-            android:inputType="text" />
+            <Spinner
+                android:id="@+id/to_home_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
 
-        <TextView
-            android:id="@+id/textView_to_home_number"
-            android:layout_width="wrap_content"
+                android:background="@drawable/round_edit_text" />
+
+            <TextView
+                android:id="@+id/textView_to_home_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="1"
+
+                android:text=" קומה"
+                android:textSize="15sp" />
+
+            <Spinner
+                android:id="@+id/to_home_floor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
+
+                android:background="@drawable/round_edit_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:layout_weight="1">
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/street_to_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/to_street"
+            <TextView
+                android:id="@+id/textView_to_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
 
-            android:text="מס"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+                android:layout_weight="1"
 
-        <Spinner
-            android:id="@+id/to_home_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_to_home_number"
-            app:layout_constraintTop_toBottomOf="@id/to_street"
-            android:entries="@array/numbers"
-            android:background="@drawable/round_edit_text"/>
 
-        <TextView
-            android:id="@+id/textView_to_home_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
+                android:text="מעלית"
+                android:textSize="15sp" />
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/to_home_number"
-            app:layout_constraintTop_toBottomOf="@id/to_street"
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-            android:text="קומה"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            <TextView
+                android:id="@+id/textView_to_crane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
 
-        <Spinner
-            android:id="@+id/to_home_floor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_to_home_floor"
-            app:layout_constraintTop_toBottomOf="@id/to_street"
-            android:entries="@array/numbers"
-            android:background="@drawable/round_edit_text"/>
+                android:layout_weight="1"
 
-        <TextView
-            android:id="@+id/textView_to_elevator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.03"
-            app:layout_constraintStart_toStartOf="@id/street_to_edit_text"
-            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"
+                android:text="מנוף"
+                android:textSize="15sp" />
 
-            android:text="מעלית"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_crane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/to_elevator"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_to_elevator"
-            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />
+            <TextView
+                android:id="@+id/textView_to_packing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
 
-        <TextView
-            android:id="@+id/textView_to_crane"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
+                android:layout_weight="1"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.03"
-            app:layout_constraintStart_toEndOf="@id/to_elevator"
-            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"
 
-            android:text="מנוף"
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+                android:text="מנוף"
+                android:textSize="15sp" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/to_crane"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toEndOf="@id/textView_to_crane"
-            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_packing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+        </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/address_edit_text_box_height"-->
+<!--        android:background="@drawable/gray_background"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/to_address"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.15"-->
+<!--            app:layout_constraintVertical_bias="0.10"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+
+<!--            android:text="כתובת חדשה: "-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/address_to_edit_text"-->
+<!--            android:layout_width="@dimen/address_edit_text_width"-->
+<!--            android:layout_height="@dimen/address_edit_text_height"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/to_address"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_address"-->
+
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/round_edit_text"-->
+<!--            android:inputType="text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/to_street"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/address_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/address_to_edit_text"-->
+
+<!--            android:text="רחוב: "-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/street_to_edit_text"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="@dimen/address_edit_text_height"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/to_street"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/round_edit_text"-->
+<!--            android:inputType="text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_home_number"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/street_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:text="מס"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/to_home_number"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_home_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+<!--            android:entries="@array/numbers"-->
+<!--            android:background="@drawable/round_edit_text"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_home_floor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/to_home_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:text="קומה"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/to_home_floor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_home_floor"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+<!--            android:entries="@array/numbers"-->
+<!--            android:background="@drawable/round_edit_text"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_elevator"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.03"-->
+<!--            app:layout_constraintStart_toStartOf="@id/street_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"-->
+
+<!--            android:text="מעלית"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--            android:id="@+id/to_elevator"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_elevator"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_crane"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.03"-->
+<!--            app:layout_constraintStart_toEndOf="@id/to_elevator"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"-->
+
+<!--            android:text="מנוף"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--            android:id="@+id/to_crane"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_crane"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -428,7 +579,7 @@
 
         <EditText
             android:id="@+id/date_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
+            android:layout_width="125dp"
             android:layout_height="@dimen/address_edit_text_height"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -441,7 +592,7 @@
             android:paddingRight="10dp"
             android:drawablePadding="10dp"
             android:background="@drawable/round_edit_text"
-            android:drawableRight="@drawable/diary_icon_small"
+            android:drawableRight="@drawable/diary_icon_small_v2"
             android:inputType="date" />
 
         <TextView
@@ -463,7 +614,7 @@
 
         <EditText
             android:id="@+id/hour_edit_text"
-            android:layout_width="@dimen/address_edit_text_width"
+            android:layout_width="125dp"
             android:layout_height="@dimen/address_edit_text_height"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -483,7 +634,7 @@
 
     <Button
         android:id="@+id/next1"
-        android:layout_width="150dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -498,7 +649,7 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="150dp"
+        android:layout_width="125dp"
         android:layout_height="50dp"
 
         app:layout_constraintBottom_toBottomOf="parent"

@@ -37,6 +37,11 @@ class ItemsAndRoomsFragment : Fragment() , RemoveRoom{
             //container!!.addView(mRooms.get(0))
             inn?.addView(mRooms.get(mRooms.size-1).view)
             mRooms[mRooms.size-1].addItem(ItemLayout(context))
+
+//            mRooms[mRooms.size-1].items
+//            if(myEditText.requestFocus()) {
+//                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//            }
         })
         if(newOrder.roomsAndItems!=null)
         {

@@ -5,44 +5,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/extra_details_background">
+    android:background="@drawable/main_activity">
 
     <Button
         android:id="@+id/new_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="הזמנה חדשה"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:background="@drawable/make_offer"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.20"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/order_page"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="תיק הזמנות"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/clients_icon"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.10"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintVertical_bias="0.40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/new_order" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/dairy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="יומן"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/dairy_icon"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.10"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.40"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/order_page" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
