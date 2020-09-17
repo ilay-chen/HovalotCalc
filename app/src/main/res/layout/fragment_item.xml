@@ -55,7 +55,7 @@
         android:layout_marginRight="3dp"
         android:text="תאריך ההובלה "
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toLeftOf="@+id/item_number"/>
+        android:layout_toRightOf="@+id/content"/>
 
     <TextView
         android:id="@+id/content"
@@ -63,9 +63,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:layout_marginLeft="100px"
         android:text="מספר"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_toLeftOf="@+id/item_date"/>
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
         android:id="@+id/menu_item"

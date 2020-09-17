@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -66,6 +67,18 @@ class ClientDetailsFragment : Fragment() {
 
             (activity as ViewPagerNavigation).setCurrent(1)
         })
+
+        mButtonFinish.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mButtonFinish.startAnimation(OrderCreateActivity.zoomin)
+                }
+                MotionEvent.ACTION_UP -> {
+                    mButtonFinish.startAnimation(OrderCreateActivity.zoomout)
+                }
+            }
+            false
+        }
 
 //        mButtonPermission = rootView.findViewById(R.id.button_permissions)
 //        mButtonPermission.setOnClickListener(View.OnClickListener { view ->

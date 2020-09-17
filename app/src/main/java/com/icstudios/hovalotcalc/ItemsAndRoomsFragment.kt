@@ -2,6 +2,7 @@ package com.icstudios.hovalotcalc
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -74,11 +75,37 @@ class ItemsAndRoomsFragment : Fragment() , RemoveRoom{
             }
         })
 
+        mButtonNext.setOnTouchListener { v, event ->
+            mButtonPrevious.clearAnimation()
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mButtonNext.startAnimation(OrderCreateActivity.zoomin)
+                }
+                MotionEvent.ACTION_UP -> {
+                    mButtonNext.startAnimation(OrderCreateActivity.zoomout)
+                }
+            }
+            false
+        }
+
         mButtonPrevious = rootView.findViewById(R.id.previous)
         mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
 
             (activity as ViewPagerNavigation).setCurrent(2)
         })
+
+        mButtonPrevious.setOnTouchListener { v, event ->
+            mButtonNext.clearAnimation()
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mButtonPrevious.startAnimation(OrderCreateActivity.zoomin)
+                }
+                MotionEvent.ACTION_UP -> {
+                    mButtonPrevious.startAnimation(OrderCreateActivity.zoomout)
+                }
+            }
+            false
+        }
 
         return rootView
     }

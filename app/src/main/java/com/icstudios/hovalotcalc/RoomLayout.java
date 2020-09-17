@@ -16,12 +16,12 @@ import java.util.ArrayList;
 
 public class RoomLayout extends LinearLayout{
 
-    ImageButton delete;
+    Button delete;
     EditText roomName;
     ArrayList<ItemLayout> mItems;
     View view;
     LinearLayout itemList;
-    FloatingActionButton addItem;
+    static FloatingActionButton addItem;
     RoomLayout thisRoom;
 
     public RoomLayout(final Context context) {

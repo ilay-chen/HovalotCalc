@@ -12,16 +12,16 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
-    <ImageButton
+    <Button
         android:id="@+id/remove_room"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginLeft="10dp"
-        android:visibility="gone"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/more_options"/>
+        android:background="@drawable/substract_item_count"
+        android:src="@drawable/substract_item_count"
+        android:foreground="?android:attr/selectableItemBackground"/>
 
     <EditText
         android:id="@+id/room_name"
@@ -52,6 +52,7 @@
         android:focusable="true"
         android:background="@drawable/add_item"
         app:srcCompat="@drawable/add_item"
+        android:foreground="?android:attr/selectableItemBackground"
         android:backgroundTintMode="src_atop"
         android:backgroundTint="#ffffff"
         />

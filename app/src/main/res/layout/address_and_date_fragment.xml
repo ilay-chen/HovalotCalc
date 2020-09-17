@@ -10,11 +10,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/address_edit_text_box_height"
-        android:background="@drawable/gray_background"
+        android:background="@drawable/gray_background_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
@@ -168,11 +168,11 @@ android:visibility="gone"
             android:layout_weight="1"
 
 
-            android:text="מנוף"
+            android:text="אריזה"
             android:textSize="15sp" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/packing"
+            android:id="@+id/from_packing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -183,11 +183,11 @@ android:visibility="gone"
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/address_edit_text_box_height"
-        android:background="@drawable/gray_background"
+        android:background="@drawable/gray_background_2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.65"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical"
@@ -341,7 +341,7 @@ android:visibility="gone"
                 android:layout_weight="1"
 
 
-                android:text="מנוף"
+                android:text="אריזה"
                 android:textSize="15sp" />
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -552,11 +552,11 @@ android:visibility="gone"
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:background="@drawable/gray_background"
+        android:background="@drawable/gray_background_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.80"
+        app:layout_constraintVertical_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -568,7 +568,7 @@ android:visibility="gone"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.125"
             app:layout_constraintVertical_bias="0.10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -579,7 +579,7 @@ android:visibility="gone"
 
         <EditText
             android:id="@+id/date_edit_text"
-            android:layout_width="125dp"
+            android:layout_width="145dp"
             android:layout_height="@dimen/address_edit_text_height"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -603,7 +603,7 @@ android:visibility="gone"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintVertical_bias="0.10"
             app:layout_constraintStart_toEndOf="@+id/date_edit_text"
             app:layout_constraintTop_toTopOf="parent"
@@ -612,9 +612,9 @@ android:visibility="gone"
             android:textSize="15sp"
             android:layout_marginLeft="50dp" />
 
-        <EditText
+        <Spinner
             android:id="@+id/hour_edit_text"
-            android:layout_width="125dp"
+            android:layout_width="145dp"
             android:layout_height="@dimen/address_edit_text_height"
 
             app:layout_constraintBottom_toBottomOf="parent"
@@ -624,9 +624,11 @@ android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/text_view_hour"
             app:layout_constraintTop_toBottomOf="@id/text_view_date"
 
-            android:paddingRight="10dp"
+            android:entries="@array/hours_range"
+
+            android:paddingRight="25dp"
             android:drawablePadding="10dp"
-            android:background="@drawable/round_edit_text"
+            android:background="@drawable/spinner_hour_bg"
             android:drawableRight="@drawable/clock_icon_small"
             android:inputType="date" />
 
@@ -634,13 +636,13 @@ android:visibility="gone"
 
     <Button
         android:id="@+id/next1"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
@@ -649,13 +651,13 @@ android:visibility="gone"
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="125dp"
-        android:layout_height="50dp"
+        android:layout_width="175dp"
+        android:layout_height="75dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 

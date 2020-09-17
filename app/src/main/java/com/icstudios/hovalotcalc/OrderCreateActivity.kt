@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,6 +20,8 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
     companion object {
         @JvmStatic
         var newOrder = OrderObject()
+        lateinit var zoomin : Animation
+        lateinit var zoomout : Animation
     }
 
     private lateinit var pagerAdapter: OrderCreateActivity.ScreenSlidePagerAdapter
@@ -34,6 +38,9 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_create)
+
+        zoomin = AnimationUtils.loadAnimation(this, R.anim.zoom_in)
+        zoomout = AnimationUtils.loadAnimation(this, R.anim.zoom_out)
 
         val intent = intent
         id = intent.getStringExtra("id")

@@ -1,6 +1,7 @@
 package com.icstudios.hovalotcalc;
 
 import android.content.Context;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -14,9 +15,9 @@ public class OrderObject implements Serializable {
     String phoneNumber;
     String email;
     String fromCity, fromStreet, fromNumber, fromFloor, fromHome;
-    Boolean fromElevator, fromCrane;
+    Boolean fromElevator, fromCrane, fromPacking;
     String toCity, toStreet, toNumber, toFloor, toHome;
-    Boolean toElevator, toCrane, isPacking;
+    Boolean toElevator, toCrane, toPacking;
     String Date;
     String Hour;
     String boxes, bags, suitcases;
@@ -207,6 +208,22 @@ public class OrderObject implements Serializable {
         this.roomsAndItems = roomsAndItems;
     }
 
+    public Boolean getFromPacking() {
+        return fromPacking;
+    }
+
+    public Boolean getToPacking() {
+        return toPacking;
+    }
+
+    public Boolean isPacking() {
+        return fromPacking || toPacking;
+    }
+
+    public Boolean isCrane() {
+        return fromCrane || toCrane;
+    }
+
     public int getPrice() {
         return price;
     }
@@ -223,6 +240,14 @@ public class OrderObject implements Serializable {
         }
         else if(phoneNumber==null||phoneNumber.equals("")) {
             Toast.makeText(context,"אנא מלא מספר לקוח!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(Date==null||Date.equals("")) {
+            Toast.makeText(context,"אנא מלא תאריך!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if(Hour==null||Hour.equals("")||Hour.equals("בחר שעה")) {
+            Toast.makeText(context,"אנא מלא שעת משלוח!", Toast.LENGTH_LONG).show();
             return false;
         }
 

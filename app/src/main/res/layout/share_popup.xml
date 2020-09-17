@@ -35,34 +35,37 @@
         android:orientation="horizontal">
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/send_whatsapp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:src="@drawable/send_whatsapp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_margin="2dp"
             android:background="@drawable/send_whatsapp">
         </Button>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/send_sms"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_margin="20dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_margin="2dp"
             android:src="@drawable/send_sms"
             android:background="@drawable/send_sms">
         </Button>
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/send_email"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_margin="20dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_margin="2dp"
             android:src="@drawable/send_email"
             android:background="@drawable/send_email">
         </Button>

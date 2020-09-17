@@ -3,16 +3,19 @@ package com.icstudios.hovalotcalc
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
-import android.app.TimePickerDialog.OnTimeSetListener
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.*
+import android.widget.AdapterView.OnItemSelectedListener
 import androidx.fragment.app.Fragment
 import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.newOrder
+import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.zoomin
+import com.icstudios.hovalotcalc.OrderCreateActivity.Companion.zoomout
 import java.util.*
 
 
@@ -32,11 +35,13 @@ class AddressAndDateFragment : Fragment() {
     private lateinit var mToCrane: CheckBox
     private lateinit var mFromElevator: CheckBox
     private lateinit var mToElevator: CheckBox
+    private lateinit var mFromPacking: CheckBox
+    private lateinit var mToPacking: CheckBox
 
 
     private lateinit var mDateEditText: EditText
     private lateinit var mDatePickerDialog: DatePickerDialog
-    private lateinit var mHourEditText: EditText
+    private lateinit var mHourEditText: Spinner
     private lateinit var mHourPickerDialog: TimePickerDialog
 
 
@@ -110,15 +115,27 @@ class AddressAndDateFragment : Fragment() {
         }
 
         mFromElevator = rootView.findViewById(R.id.elevator)
-        mFromCrane.setOnCheckedChangeListener { buttonView, isChecked ->
+        mFromElevator.setOnCheckedChangeListener { buttonView, isChecked ->
             newOrder.fromElevator = isChecked
         }
         if(newOrder.fromElevator!=null)
         {
-            mFromCrane.isChecked = newOrder.fromElevator
+            mFromElevator.isChecked = newOrder.fromElevator
         }
         else {
             newOrder.fromElevator = false
+        }
+
+        mFromPacking = rootView.findViewById(R.id.from_packing)
+        mFromPacking.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.fromPacking = isChecked
+        }
+        if(newOrder.fromPacking!=null)
+        {
+            mFromPacking.isChecked = newOrder.fromPacking
+        }
+        else {
+            OrderCreateActivity.newOrder.fromPacking = false
         }
 
         mToAddress = rootView.findViewById(R.id.address_to_edit_text)
@@ -195,6 +212,18 @@ class AddressAndDateFragment : Fragment() {
             OrderCreateActivity.newOrder.toElevator = false
         }
 
+        mToPacking = rootView.findViewById(R.id.to_packing)
+        mToPacking.setOnCheckedChangeListener { buttonView, isChecked ->
+            OrderCreateActivity.newOrder.toPacking = isChecked
+        }
+        if(newOrder.toPacking!=null)
+        {
+            mToPacking.isChecked = newOrder.toPacking
+        }
+        else {
+            OrderCreateActivity.newOrder.toPacking = false
+        }
+
 
         mDateEditText = rootView.findViewById(R.id.date_edit_text)
         mDateEditText.setInputType(InputType.TYPE_NULL)
@@ -213,19 +242,35 @@ class AddressAndDateFragment : Fragment() {
 
 
         mHourEditText = rootView.findViewById(R.id.hour_edit_text)
-        mHourEditText.inputType = InputType.TYPE_NULL
-        mHourEditText.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                openClockPicker()
+        mHourEditText.setOnItemSelectedListener(object : OnItemSelectedListener {
+            override fun onItemSelected(arg0: AdapterView<*>?, arg1: View, arg2: Int, arg3: Long) {
+                val items: String = mHourEditText.getSelectedItem().toString()
+                newOrder.hour = items
             }
-        })
-        mHourEditText.setOnClickListener(View.OnClickListener {
-            openClockPicker()
+
+            override fun onNothingSelected(arg0: AdapterView<*>?) {
+                val items: String = mHourEditText.getSelectedItem().toString()
+                newOrder.hour = items
+            }
         })
         if(newOrder.hour!=null)
         {
-            mHourEditText.setText(newOrder.hour)
+            mHourEditText.setSelection((mHourEditText.getAdapter() as ArrayAdapter<String?>).getPosition(newOrder.hour))
         }
+
+//        mHourEditText.inputType = InputType.TYPE_NULL
+//        mHourEditText.setOnFocusChangeListener(OnFocusChangeListener { v, hasFocus ->
+//            if (hasFocus) {
+//                openClockPicker()
+//            }
+//        })
+//        mHourEditText.setOnClickListener(View.OnClickListener {
+//            openClockPicker()
+//        })
+//        if(newOrder.hour!=null)
+//        {
+//            mHourEditText.setText(newOrder.hour)
+//        }
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->
@@ -233,28 +278,54 @@ class AddressAndDateFragment : Fragment() {
             (activity as ViewPagerNavigation).setCurrent(2)
         })
 
+        mButtonNext.setOnTouchListener { v, event ->
+            mButtonPrevious.clearAnimation()
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mButtonNext.startAnimation(zoomin)
+                }
+                MotionEvent.ACTION_UP -> {
+                    mButtonNext.startAnimation(zoomout)
+                }
+            }
+            false
+        }
+
         mButtonPrevious = rootView.findViewById(R.id.previous)
         mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
 
             (activity as ViewPagerNavigation).setCurrent(0)
         })
 
+        mButtonPrevious.setOnTouchListener { v, event ->
+            mButtonNext.clearAnimation()
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    mButtonPrevious.startAnimation(zoomin)
+                }
+                MotionEvent.ACTION_UP -> {
+                    mButtonPrevious.startAnimation(zoomout)
+                }
+            }
+            false
+        }
+
         return rootView
     }
 
-    fun openClockPicker()
-    {
-        val cldr = Calendar.getInstance()
-        val hour = cldr[Calendar.HOUR_OF_DAY]
-        val minutes = cldr[Calendar.MINUTE]
-        // time picker dialog
-        mHourPickerDialog = TimePickerDialog(context,
-                OnTimeSetListener {
-                    tp, sHour, sMinute -> mHourEditText.setText("$sHour:$sMinute")
-                    newOrder.hour = mHourEditText.text.toString()
-                }, hour, minutes, true)
-        mHourPickerDialog.show()
-    }
+//    fun openClockPicker()
+//    {
+//        val cldr = Calendar.getInstance()
+//        val hour = cldr[Calendar.HOUR_OF_DAY]
+//        val minutes = cldr[Calendar.MINUTE]
+//        // time picker dialog
+//        mHourPickerDialog = TimePickerDialog(context,
+//                OnTimeSetListener {
+//                    tp, sHour, sMinute -> mHourEditText.setText("$sHour:$sMinute")
+//                    newOrder.hour = mHourEditText.text.toString()
+//                }, hour, minutes, true)
+//        mHourPickerDialog.show()
+//    }
 
     fun openDatePicker()
     {

@@ -2,14 +2,18 @@ package com.icstudios.hovalotcalc;
 
 import android.content.Context;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.icstudios.hovalotcalc.R;
 
@@ -23,7 +27,7 @@ public class ItemLayout extends LinearLayout {
     ImageButton menu;
     View popupView;
 
-    public ItemLayout(Context context) {
+    public ItemLayout(final Context context) {
         super(context);
         inflate(context, R.layout.item_view, this);
 
@@ -39,7 +43,9 @@ public class ItemLayout extends LinearLayout {
         menu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, 200);
+                int[] location = new int[2];
+                menu.getLocationInWindow(location);
+                popupMenu.showAtLocation(popupView, Gravity.NO_GRAVITY, location[0] + 25, location[1] + 75);
             }
         });
 
@@ -47,6 +53,26 @@ public class ItemLayout extends LinearLayout {
         itemsCounter.setText(1+"");
 
         itemName = findViewById(R.id.item_name);
+
+        itemName.setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        // Identifier of the action. This will be either the identifier you supplied,
+                        // or EditorInfo.IME_NULL if being called due to the enter key being pressed.
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH
+                                || actionId == EditorInfo.IME_ACTION_NEXT
+                                || actionId == EditorInfo.IME_ACTION_DONE
+                                || event.getAction() == KeyEvent.ACTION_DOWN
+                                && event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            Toast.makeText(context, "נוסף פריט בחדר",Toast.LENGTH_SHORT).show();
+                            RoomLayout.addItem.performClick();
+                            return true;
+                        }
+                        // Return true if you have consumed the action, else false.
+                        return false;
+                    }
+                });
 
         DisassemblyAndAssembly = popupView.findViewById(R.id.disassembly_and_assembly);
 
@@ -66,7 +92,10 @@ public class ItemLayout extends LinearLayout {
             public void onClick(View v) {
                 if(itemsCounter.getText() == null || itemsCounter.getText().toString().equals("")) itemsCounter.setText(0+"");
                 int counter = Integer.parseInt(itemsCounter.getText().toString())-1;
-                if(counter<0) counter=0;
+                if(counter<=0){
+                    counter=0;
+                    //remove item
+                }
                 itemsCounter.setText(counter+"");
             }
         });

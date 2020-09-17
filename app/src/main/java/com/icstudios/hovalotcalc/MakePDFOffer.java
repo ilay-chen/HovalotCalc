@@ -100,14 +100,14 @@ public class MakePDFOffer {
             writeOneLine(isElevator, true,365,617);
 
             //address to
-            writeOneLine(orderDetails.getFromCity(), true,260,667);
-            writeOneLine(orderDetails.getFromStreet(), true,140,667);
-            writeOneLine(orderDetails.getFromNumber(), false,30,667);
+            writeOneLine(orderDetails.getToCity(), true,260,667);
+            writeOneLine(orderDetails.getToStreet(), true,140,667);
+            writeOneLine(orderDetails.getToNumber(), false,30,667);
 
-            writeOneLine(orderDetails.getFromFloor(), false,260,617);
+            writeOneLine(orderDetails.getToFloor(), false,260,617);
             writeOneLine("0", false,170,617);
             isElevator = "יש";
-            if(!orderDetails.getFromElevator()) isElevator = "אין";
+            if(!orderDetails.getToElevator()) isElevator = "אין";
             writeOneLine(isElevator, true,65,617);
 
             //all items
@@ -153,11 +153,18 @@ public class MakePDFOffer {
             writeOneLine(orderDetails.getSuitcases(), false,485,122);
             writeOneLine(orderDetails.getBags(), false,485,90);
 
-            writeOneLine("0", true,350,155);
+            String packing = "יש";
+            if(!orderDetails.isPacking()) packing = "אין";
+            writeOneItemLine(packing,350,155, false);
+
+            if(orderDetails.isPacking())
             writeOneLine("25", false,280,122);
-            writeOneLine("350", false,280,90);
+
+            if(orderDetails.isCrane())
+                writeOneLine("350", false,280,90);
 
             String notes = orderDetails.getNotes();
+            notes = notes.replace("\n", "").replace("\r", "");
             y = 145;
 
             while (notes != null && notes.length()>0)
@@ -173,7 +180,7 @@ public class MakePDFOffer {
                 String partNote = notes.substring(0,substring);
                 notes = notes.replace(partNote, "");
                 writeOneItemLine(partNote,235,y, false);
-                y+=15;
+                y-=15;
             }
 
             //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
