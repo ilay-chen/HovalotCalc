@@ -6,13 +6,15 @@
     android:name="com.icstudios.hovalotcalc.OrderFragmentFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/clients_page_back"
     android:orientation="vertical">
+
+<!--    android:background="@drawable/top_background"-->
+<!--    android:background="@drawable/clients_background"-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/top_background"
         android:id="@+id/search_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +39,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_weight="1"
-        android:background="@drawable/clients_background"
         app:layoutManager="LinearLayoutManager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

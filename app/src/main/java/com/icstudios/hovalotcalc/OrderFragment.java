@@ -4,7 +4,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Rect;
+import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.ParcelFileDescriptor;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,10 +202,43 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
                 View popupView = layoutInflater.inflate(R.layout.image_popup, null);
                 final PopupWindow popupImage = new PopupWindow(popupView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,true);
                 PhotoView image = popupView.findViewById(R.id.imageView);
-                String path = appData.getFilePath(allOrders.get(position)) + appData.picFileName;
-                File renderFile = new File(path);
-                image.setImageBitmap(BitmapFactory.decodeFile(renderFile.getAbsolutePath()));
+//                String path = appData.getFilePath(allOrders.get(position)) + appData.picFileName;
+//                File renderFile = new File(path);
+//                image.setImageBitmap(BitmapFactory.decodeFile(renderFile.getAbsolutePath()));
                 popupImage.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                try {
+                    int REQ_WIDTH = 1;
+                    int REQ_HEIGHT = 1;
+                    REQ_WIDTH = 600;
+                    REQ_HEIGHT = 850;
+
+                    Bitmap bitmap = Bitmap.createBitmap(REQ_WIDTH, REQ_HEIGHT, Bitmap.Config.ARGB_8888);
+
+                    String path1 = appData.getFilePath(allOrders.get(position)) + appData.pdfFileName;
+
+                    File file = new File(path1);
+
+                    PdfRenderer renderer = new PdfRenderer(ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY));
+
+//                    if (currentPage < 0) {
+//                        currentPage = 0;
+//                    } else if (currentPage > renderer.getPageCount()) {
+//                        currentPage = renderer.getPageCount() - 1;
+//                    }
+
+                    Matrix matrix = image.getImageMatrix();
+                    Rect rect = new Rect(0, 0, REQ_WIDTH, REQ_HEIGHT);
+
+                    renderer.openPage(0).render(bitmap, rect, matrix, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+                    image.setImageMatrix(matrix);
+                    image.setImageBitmap(bitmap);
+                    image.invalidate();
+                    renderer.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -242,6 +280,10 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
 //                pwindo.dismiss();
 //            }
 //        });
+    }
+
+    private void render() {
+
     }
 
     @Override

@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -74,6 +76,7 @@ public class MakePDFOffer {
     public void createPdf(OrderObject orderDetails) {
         try {
             document = PDDocument.load(assetManager.open("empty_offer.pdf"));
+            font = PDType0Font.load(document, assetManager.open("assistant-regular.ttf"));
             font = PDType0Font.load(document, assetManager.open("nachlieli_light.ttf"));
             PDPage page = document.getPage(0);
             //document.addPage(page);
@@ -82,33 +85,33 @@ public class MakePDFOffer {
             contentStream = new PDPageContentStream(document, page, true, true);
 
             //name
-            writeOneLine(orderDetails.getClientName(),true,550,815);
+            writeOneLine(orderDetails.getClientName(),true,548,820);
 
             //date and o'clock
-            writeOneLine(orderDetails.getDate(), false,500,788);
-            writeOneLine(orderDetails.getHour(), false,515,765);
+            writeOneLine(orderDetails.getDate(), false,510,785);
+            writeOneLine(orderDetails.getHour(), false,528,760);
 
             //address from
-            writeOneLine(orderDetails.getFromCity(), true,560,667);
-            writeOneLine(orderDetails.getFromStreet(), true,440,667);
-            writeOneLine(orderDetails.getFromNumber(), false,325,667);
+            writeOneLine(orderDetails.getFromCity(), true,563,670);
+            writeOneLine(orderDetails.getFromStreet(), true,430,670);
+            writeOneLine(orderDetails.getFromNumber(), false,325,670);
 
-            writeOneLine(orderDetails.getFromFloor(), false,560,617);
-            writeOneLine("0", false,455,617);
+            writeOneLine(orderDetails.getFromFloor(), false,553,620);
+            writeOneLine("0", false,440,620);
             String isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,365,617);
+            writeOneLine(isElevator, true,330,620);
 
             //address to
-            writeOneLine(orderDetails.getToCity(), true,260,667);
-            writeOneLine(orderDetails.getToStreet(), true,140,667);
-            writeOneLine(orderDetails.getToNumber(), false,30,667);
+            writeOneLine(orderDetails.getToCity(), true,265,670);
+            writeOneLine(orderDetails.getToStreet(), true,130,670);
+            writeOneLine(orderDetails.getToNumber(), false,22,670);
 
-            writeOneLine(orderDetails.getToFloor(), false,260,617);
-            writeOneLine("0", false,170,617);
+            writeOneLine(orderDetails.getToFloor(), false,252,620);
+            writeOneLine("0", false,143,620);
             isElevator = "יש";
             if(!orderDetails.getToElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,65,617);
+            writeOneLine(isElevator, true,30,620);
 
             //all items
             //writeOneLine("כל הפרטים", true,525,560);
@@ -135,10 +138,10 @@ public class MakePDFOffer {
                         x = 290;
                     }
 
-                    String itemName = itemLayout.itemName + ", " + itemLayout.itemCounter;
+                    String itemName = itemLayout.itemName + ", )כמות: " + itemLayout.itemCounter + "(";
                     if(itemLayout.DisassemblyAndAssembly)
                     {
-                        itemName += ", כולל פירוק והובלה";
+                        itemName += ", כולל פירוק והרכבה";
                     }
                     writeOneItemLine(itemName,x,y,false);
                     y-=20;
@@ -149,44 +152,45 @@ public class MakePDFOffer {
 
 
             //extra details
-            writeOneLine(orderDetails.getBoxes(), false,485,155);
-            writeOneLine(orderDetails.getSuitcases(), false,485,122);
-            writeOneLine(orderDetails.getBags(), false,485,90);
+            writeOneLine(orderDetails.getBoxes(), false,470,150);
+            writeOneLine(orderDetails.getSuitcases(), false,470,120);
+            writeOneLine(orderDetails.getBags(), false,470,85);
 
             String packing = "יש";
             if(!orderDetails.isPacking()) packing = "אין";
-            writeOneItemLine(packing,350,155, false);
+            writeOneItemLine(packing,335,150, false);
 
             if(orderDetails.isPacking())
-            writeOneLine("25", false,280,122);
+            writeOneLine("25", false,260,118);
 
             if(orderDetails.isCrane())
-                writeOneLine("350", false,280,90);
+                writeOneLine("350", false,260,85);
 
             String notes = orderDetails.getNotes();
-            notes = notes.replace("\n", "").replace("\r", "");
-            y = 145;
+            if(notes != null) {
+                notes = notes.replace("\n", "").replace("\r", "");
+                y = 140;
 
-            while (notes != null && notes.length()>0)
-            {
-                int minIndex = 20;
-                int substring = 0;
-                if(notes.length()<20)
-                    minIndex = 0;
-                substring = notes.indexOf(" ", minIndex) + 1;
-                if(substring==-1 || substring == 0)
-                    substring = notes.length();
+                while (notes != null && notes.length() > 0) {
+                    int minIndex = 20;
+                    int substring = 0;
+                    if (notes.length() < 20)
+                        minIndex = 0;
+                    substring = notes.indexOf(" ", minIndex) + 1;
+                    if (substring == -1 || substring == 0)
+                        substring = notes.length();
 
-                String partNote = notes.substring(0,substring);
-                notes = notes.replace(partNote, "");
-                writeOneItemLine(partNote,235,y, false);
-                y-=15;
+                    String partNote = notes.substring(0, substring);
+                    notes = notes.replace(partNote, "");
+                    writeOneItemLine(partNote, 200, y, false);
+                    y -= 15;
+                }
             }
 
             //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
 
             //price
-            writeOneLine(orderDetails.getPrice()+"", false,130,45);
+            writePrice(orderDetails.getPrice()+"", 120,35);
 
             //contentStream.endText();
 
@@ -205,7 +209,7 @@ public class MakePDFOffer {
 
             document.save(path);
 
-            renderFile(document, orderDetails);
+//            renderFile(document, orderDetails, path);
 
             appData.updateOrderList(orderDetails);
 
@@ -335,10 +339,23 @@ public class MakePDFOffer {
         if(toWrite!=null) {
             contentStream.beginText();
             contentStream.setNonStrokingColor(0, 0, 0);
-            contentStream.setFont(font, 15);
+            contentStream.setFont(font, 14);
             float text_width = (font.getStringWidth(toWrite) / 1000.0f) * 15;
             contentStream.newLineAtOffset(x-text_width, y);
             if (isReversible) toWrite = new StringBuilder(toWrite).reverse().toString();
+            contentStream.showText(toWrite);
+            contentStream.endText();
+        }
+    }
+
+    public void writePrice(String toWrite, int x, int y) throws IOException {
+        if(toWrite!=null) {
+            contentStream.beginText();
+            int fontSize = 16;
+            contentStream.setNonStrokingColor(143, 26, 32);
+            contentStream.setFont(font, fontSize);
+            float text_width = (font.getStringWidth(toWrite) / 1000.0f) * 15;
+            contentStream.newLineAtOffset(x-text_width, y);
             contentStream.showText(toWrite);
             contentStream.endText();
         }
@@ -354,15 +371,15 @@ public class MakePDFOffer {
                 toWrite = new StringBuilder(toWrite + ":").reverse().toString();
                 itemName = toWrite;
 
-                fontSize = 20;
-                contentStream.setNonStrokingColor(0, 100, 0);
+                fontSize = 16;
+                contentStream.setNonStrokingColor(143, 26, 32);
                 contentStream.setFont(font, fontSize);
             }
             else {
                 toWrite = new StringBuilder(toWrite).reverse().toString();
                 itemName = toWrite;
 
-                fontSize = 15;
+                fontSize = 14;
                 contentStream.setNonStrokingColor(0, 0, 0);
                 contentStream.setFont(font, fontSize);
             }
@@ -380,16 +397,57 @@ public class MakePDFOffer {
     public void renderFile(PDDocument document, OrderObject orderObject) throws IOException {
         // Render the page and save it to an image file
 
+//        File renderFile = new File(path);
+//
+//        ParcelFileDescriptor pfd = ParcelFileDescriptor.open(renderFile, ParcelFileDescriptor.MODE_READ_ONLY);
+//
+//        PdfRenderer renderer = new PdfRenderer(pfd);
+//
+//        Bitmap bitmap = Bitmap.createBitmap(100,100,Bitmap.Config.ARGB_4444);
+//
+//        Renderer page = renderer.openPage(0);
+//
+//        page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+//
+//        page.close();
+//        renderer.close();
+
+
+
+//        // create a new renderer
+//        PdfRenderer renderer = new PdfRenderer(document);
+//
+//        // let us just render all pages
+//        final int pageCount = renderer.getPageCount();
+//        for (int i = 0; i < pageCount; i++) {
+//            Page page = renderer.openPage(i);
+//
+//            // say we render for showing on the screen
+//            page.render(mBitmap, null, null, Page.RENDER_MODE_FOR_DISPLAY);
+//
+//            // do stuff with the bitmap
+//
+//            // close the page
+//            page.close();
+//        }
+
+//        // close the renderer
+//        renderer.close();
+
         // Create a renderer for the document
         PDFRenderer renderer = new PDFRenderer(document);
         // Render the image to an RGB Bitmap
         pageImage = renderer.renderImage(0, 1, Bitmap.Config.RGBA_F16);
+//        Bitmap b = renderer.renderImage(0);
+//        PDPage pdpage = (PDPage) document.getDocumentCatalog().
+//        Bitmap bitmap = pdpage.convertToImage(Config.RGB_565, 256);
+//        imageView.setImageBitmap(bitmap);
 
         // Save the render result to an image
         String path = appData.getFilePath(orderObject) + appData.picFileName;
         File renderFile = new File(path);
         FileOutputStream fileOut = new FileOutputStream(renderFile);
-        pageImage.compress(Bitmap.CompressFormat.PNG, 100, fileOut);
+        pageImage.compress(Bitmap.CompressFormat.JPEG, 100, fileOut);
         fileOut.close();
     }
 }
