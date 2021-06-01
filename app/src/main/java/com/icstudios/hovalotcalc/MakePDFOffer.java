@@ -5,17 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -35,7 +34,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
-import static com.icstudios.hovalotcalc.appData.allOrders;
+import static com.icstudios.hovalotcalc.appData.saveOrder;
 import static com.icstudios.hovalotcalc.appData.sortOrders;
 
 public class MakePDFOffer {
@@ -84,66 +83,87 @@ public class MakePDFOffer {
             // Define a content stream for adding to the PDF
             contentStream = new PDPageContentStream(document, page, true, true);
 
+            
             //name
-            writeOneLine(orderDetails.getClientName(),true,548,820);
+            writeOneLine(orderDetails.getClientName(),false,551,820);
 
             //date and o'clock
-            writeOneLine(orderDetails.getDate(), false,510,785);
-            writeOneLine(orderDetails.getHour(), false,528,760);
+            writeDate(orderDetails.getDate(), true,513,765);
+            writeDate(orderDetails.getHour(), true,528,749);
 
             //address from
-            writeOneLine(orderDetails.getFromCity(), true,563,670);
-            writeOneLine(orderDetails.getFromStreet(), true,430,670);
+            writeOneLine(orderDetails.getFromCity(), false,561,670);
+            writeOneLine(orderDetails.getFromStreet(), false,428,670);
             writeOneLine(orderDetails.getFromNumber(), false,325,670);
 
-            writeOneLine(orderDetails.getFromFloor(), false,553,620);
-            writeOneLine("0", false,440,620);
+//            writeOneLine("0", false,553,620);
+            writeOneLine(orderDetails.getFromFloor(), false,549,620);
             String isElevator = "יש";
             if(!orderDetails.getFromElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,330,620);
+            writeOneLine(isElevator, false,415,620);
 
             //address to
-            writeOneLine(orderDetails.getToCity(), true,265,670);
-            writeOneLine(orderDetails.getToStreet(), true,130,670);
-            writeOneLine(orderDetails.getToNumber(), false,22,670);
+            writeOneLine(orderDetails.getToCity(), false,265,670);
+            writeOneLine(orderDetails.getToStreet(), false,130,670);
+            writeOneLine(orderDetails.getToNumber(), false,25,670);
 
+//            writeOneLine("0", false,252,620);
             writeOneLine(orderDetails.getToFloor(), false,252,620);
-            writeOneLine("0", false,143,620);
             isElevator = "יש";
             if(!orderDetails.getToElevator()) isElevator = "אין";
-            writeOneLine(isElevator, true,30,620);
+            writeOneLine(isElevator, false,118,620);
 
             //all items
             //writeOneLine("כל הפרטים", true,525,560);
             //String line = "";
             //String roomName = orderDetails.getRoomsAndItems().get(0).roomName.getText().toString();
             int y = 550;
-            int x = 570;
+            int x = 580;
             for (roomObject roomLayout: orderDetails.getRoomsAndItems()) {
                 if(!roomLayout.roomName.equals(""))
                 {
-                    if(y <= 180) {
+                    if(y <= 190) {
                         y = 560;
                         x = 290;
                     }
-                    writeOneItemLine(roomLayout.roomName,x,y, true);
+
+                    y-=10;
+                    writeRoomLine(roomLayout.roomName,x,y);
                     //writeOneLine(roomLayout.roomName.getText().toString(), true,getXPos(roomLayout.roomName.getText().toString().length()),y);
                     y-=20;
                 }
 
                 for(itemObject itemLayout:roomLayout.mItems)
                 {
-                    if(y <= 180) {
+                    if(y <= 190) {
                         y = 560;
                         x = 290;
                     }
 
-                    String itemName = itemLayout.itemName + ", )כמות: " + itemLayout.itemCounter + "(";
+                    String itemName = itemLayout.itemName;
+
+                    String extraDetails = "";
+                    if(Integer.parseInt(itemLayout.itemCounter) > 1)
+                        extraDetails += "כמות " + itemLayout.itemCounter;
+
                     if(itemLayout.DisassemblyAndAssembly)
                     {
-                        itemName += ", כולל פירוק והרכבה";
+                        if(extraDetails.length() !=0) extraDetails += " ,";
+                        extraDetails += "פירוק והרכבה";
                     }
-                    writeOneItemLine(itemName,x,y,false);
+                    if(itemLayout.Disassembly)
+                    {
+                        if(extraDetails.length() !=0) extraDetails += " ,";
+                        extraDetails += "פירוק";
+                    }
+
+                    if(itemLayout.Assembly)
+                    {
+                        if(extraDetails.length() !=0) extraDetails += " ,";
+                        extraDetails += "הרכבה";
+                    }
+
+                    writeItemLine(itemName,x,y,extraDetails);
                     y-=20;
                 }
 
@@ -152,9 +172,9 @@ public class MakePDFOffer {
 
 
             //extra details
-            writeOneLine(orderDetails.getBoxes(), false,470,150);
-            writeOneLine(orderDetails.getSuitcases(), false,470,120);
-            writeOneLine(orderDetails.getBags(), false,470,85);
+            writeOneLine(orderDetails.getBoxes(), true,470,150);
+            writeOneLine(orderDetails.getSuitcases(), true,470,120);
+            writeOneLine(orderDetails.getBags(), true,470,85);
 
             String packing = "יש";
             if(!orderDetails.isPacking()) packing = "אין";
@@ -164,17 +184,17 @@ public class MakePDFOffer {
             writeOneLine("25", false,260,118);
 
             if(orderDetails.isCrane())
-                writeOneLine("350", false,260,85);
+                writeOneLine("300", false,260,85);
 
             String notes = orderDetails.getNotes();
             if(notes != null) {
                 notes = notes.replace("\n", "").replace("\r", "");
-                y = 140;
+                y = 128;
 
                 while (notes != null && notes.length() > 0) {
                     int minIndex = 20;
                     int substring = 0;
-                    if (notes.length() < 20)
+                    if (notes.length() < 5)
                         minIndex = 0;
                     substring = notes.indexOf(" ", minIndex) + 1;
                     if (substring == -1 || substring == 0)
@@ -182,7 +202,7 @@ public class MakePDFOffer {
 
                     String partNote = notes.substring(0, substring);
                     notes = notes.replace(partNote, "");
-                    writeOneItemLine(partNote, 200, y, false);
+                    writeNoteLine(partNote, 198, y);
                     y -= 15;
                 }
             }
@@ -190,33 +210,33 @@ public class MakePDFOffer {
             //writeOneLine("יש כאן עוד משפט ארוך בנודע" + "" + "שורה שנייה של משפט", true,20,145);
 
             //price
-            writePrice(orderDetails.getPrice()+"", 120,35);
+            writePrice(orderDetails.getPrice()+"", 125,33);
 
             //contentStream.endText();
 
+            saveOrder(orderDetails, context);
+
+//            Long tsLong = System.currentTimeMillis()/1000;
+//            String ts = tsLong.toString();
+//            orderDetails.setId(orderDetails.getClientName().replaceAll(" ", "_") + "_" + ts);
+//
+//            // Save the final pdf document to a file
+//            //String yourFilePath = context.getFilesDir() + "/" + folder + "/" + fileName;
+//
+//            appData.makeDir(context, orderDetails.getId());
+//
+////            renderFile(document, orderDetails, path);
+//
+//            appData.updateOrderList(orderDetails);
+//
+//            sortOrders();
+//
+//            appData.saveData(context);
+
+            String path = appData.getFilePath(orderDetails) + appData.pdfFileName;
             // Make sure that the content stream is closed:
             contentStream.close();
-
-            Long tsLong = System.currentTimeMillis()/1000;
-            String ts = tsLong.toString();
-            orderDetails.setId(orderDetails.getClientName().replaceAll(" ", "_") + "_" + ts);
-
-            // Save the final pdf document to a file
-            //String yourFilePath = context.getFilesDir() + "/" + folder + "/" + fileName;
-            String path = appData.getFilePath(orderDetails) + appData.pdfFileName;
-
-            appData.makeDir(context, orderDetails.getId());
-
             document.save(path);
-
-//            renderFile(document, orderDetails, path);
-
-            appData.updateOrderList(orderDetails);
-
-            sortOrders();
-
-            appData.saveData(context);
-
             document.close();
             //tv.setText("Successfully wrote PDF to " + path);
 
@@ -226,6 +246,15 @@ public class MakePDFOffer {
 
         } catch (IOException e) {
             Log.e("PdfBox-hovalotCalc", "Exception thrown while creating PDF => ", e);
+        }
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
         }
     }
 
@@ -253,15 +282,18 @@ public class MakePDFOffer {
     {
 //        currentActivity.finish();
 
-        Button shareWhatsapp, shareMail, shareSms;
+        final Button shareWhatsapp, shareMail, shareSms;
 
         final LayoutInflater layoutInflater = (LayoutInflater)context
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
 
         View popupView = layoutInflater.inflate(R.layout.share_popup, null);
-        final PopupWindow popupMenu = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,true);
+        final PopupWindow popupMenu = new PopupWindow(popupView, 1000, LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupMenu.setAnimationStyle(R.style.Animation);
-        popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, 200);
+        popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, 100);
+
+        InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, InputMethodManager.RESULT_HIDDEN);
 
         shareWhatsapp = popupView.findViewById(R.id.send_whatsapp);
         shareSms = popupView.findViewById(R.id.send_sms);
@@ -286,9 +318,28 @@ public class MakePDFOffer {
                 sendIntent.putExtra("jid", orderDetails.getPhoneNumber().replaceFirst("0","972") + "@s.whatsapp.net"); //phone number without "+" prefix
                 sendIntent.setPackage("com.whatsapp");
 
-                currentActivity.startActivityForResult(sendIntent, ACTIVITY_BACK);
+                ((Activity)context).startActivityForResult(sendIntent, ACTIVITY_BACK);
             }
         });
+
+        shareWhatsapp.setOnTouchListener(new View.OnTouchListener()
+    {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            shareSms.clearAnimation();
+            shareMail.clearAnimation();
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN :
+                    shareWhatsapp.startAnimation(OrderCreateActivity.zoomin);
+                break;
+                case MotionEvent.ACTION_UP :
+                    shareWhatsapp.startAnimation(OrderCreateActivity.zoomout);
+                break;
+            }
+            return false;
+        }
+    });
+
 
         shareSms.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -302,8 +353,25 @@ public class MakePDFOffer {
                 Intent it = new Intent(Intent.ACTION_SENDTO, uriphine);
                 it.putExtra("sms_body", "");
                 it.putExtra(Intent.EXTRA_STREAM, uri);
-                currentActivity.startActivityForResult(it, ACTIVITY_BACK);
+                ((Activity)context).startActivityForResult(it, ACTIVITY_BACK);
+            }
+        });
 
+        shareSms.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                shareWhatsapp.clearAnimation();
+                shareMail.clearAnimation();
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        shareSms.startAnimation(OrderCreateActivity.zoomin);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        shareSms.startAnimation(OrderCreateActivity.zoomout);
+                        break;
+                }
+                return false;
             }
         });
 
@@ -322,10 +390,28 @@ public class MakePDFOffer {
                 i.putExtra(Intent.EXTRA_TEXT, "הצעת מחיר הובלות");
                 i.putExtra(Intent.EXTRA_STREAM, uri);
                 try {
-                    currentActivity.startActivityForResult(Intent.createChooser(i, "Send mail"), ACTIVITY_BACK);
+                    ((Activity)context).startActivityForResult(Intent.createChooser(i, "Send mail"), ACTIVITY_BACK);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(currentActivity, "There are no email applications installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(((Activity)context), "There are no email applications installed.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        shareMail.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                shareSms.clearAnimation();
+                shareWhatsapp.clearAnimation();
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        shareMail.startAnimation(OrderCreateActivity.zoomin);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        shareMail.startAnimation(OrderCreateActivity.zoomout);
+                        break;
+                }
+                return false;
             }
         });
 
@@ -335,14 +421,31 @@ public class MakePDFOffer {
 //        context.startActivity(i);
     }
 
-    public void writeOneLine(String toWrite, Boolean isReversible, int x, int y) throws IOException {
+    public void writeOneLine(String toWrite,boolean disable, int x, int y) throws IOException {
         if(toWrite!=null) {
             contentStream.beginText();
             contentStream.setNonStrokingColor(0, 0, 0);
-            contentStream.setFont(font, 14);
-            float text_width = (font.getStringWidth(toWrite) / 1000.0f) * 15;
+            int fontsize = 14;
+            contentStream.setFont(font, fontsize);
+            float text_width = (font.getStringWidth(toWrite) / 1000.0f) * fontsize;
             contentStream.newLineAtOffset(x-text_width, y);
-            if (isReversible) toWrite = new StringBuilder(toWrite).reverse().toString();
+
+            if (!isNumeric(toWrite) && !disable) toWrite = new StringBuilder(toWrite).reverse().toString();
+            contentStream.showText(toWrite);
+            contentStream.endText();
+        }
+    }
+
+    public void writeDate(String toWrite,boolean disable, int x, int y) throws IOException {
+        if(toWrite!=null) {
+            contentStream.beginText();
+            contentStream.setNonStrokingColor(0, 0, 0);
+            int fontsize = 12;
+            contentStream.setFont(font, fontsize);
+            float text_width = (font.getStringWidth(toWrite) / 1000.0f) * fontsize;
+            contentStream.newLineAtOffset(x-text_width, y);
+
+            if (!isNumeric(toWrite) && !disable) toWrite = new StringBuilder(toWrite).reverse().toString();
             contentStream.showText(toWrite);
             contentStream.endText();
         }
@@ -352,13 +455,104 @@ public class MakePDFOffer {
         if(toWrite!=null) {
             contentStream.beginText();
             int fontSize = 16;
-            contentStream.setNonStrokingColor(143, 26, 32);
+            contentStream.setNonStrokingColor(0, 0, 0);
             contentStream.setFont(font, fontSize);
             float text_width = (font.getStringWidth(toWrite) / 1000.0f) * 15;
             contentStream.newLineAtOffset(x-text_width, y);
             contentStream.showText(toWrite);
             contentStream.endText();
         }
+    }
+
+    public void writeRoomLine(String toWrite, int x, int y) throws IOException {
+        if(toWrite!=null) {
+            String itemName;
+            contentStream.beginText();
+            int fontSize = 16;
+            toWrite = new StringBuilder(toWrite + ":").reverse().toString();
+            itemName = toWrite;
+
+            contentStream.setNonStrokingColor(46, 204, 94);
+            contentStream.setFont(font, fontSize);
+
+            float text_width = (font.getStringWidth(itemName) / 1000.0f) * fontSize;
+            contentStream.newLineAtOffset(x-text_width, y);
+            contentStream.showText(itemName);
+            contentStream.endText();
+        }
+    }
+
+    public void writeNoteLine(String toWrite, int x, int y) throws IOException {
+        if(toWrite!=null) {
+            String itemName;
+            contentStream.beginText();
+            int fontSize = 14;
+                toWrite = new StringBuilder(toWrite).reverse().toString();
+                itemName = toWrite;
+
+                contentStream.setNonStrokingColor(255, 255, 255);
+                contentStream.setFont(font, fontSize);
+
+            float text_width = (font.getStringWidth(itemName) / 1000.0f) * fontSize;
+            contentStream.newLineAtOffset(x-text_width, y);
+            contentStream.showText(itemName);
+            contentStream.endText();
+        }
+    }
+
+    public void writeItemLine(String toWrite, int x, int y, String extraDetail) throws IOException {
+        if(toWrite!=null) {
+            String itemName;
+            contentStream.beginText();
+            int fontSize = 15;
+
+            toWrite = new StringBuilder(toWrite).reverse().toString();
+            itemName = toWrite;
+
+            fontSize = 14;
+            contentStream.setNonStrokingColor(0, 0, 0);
+            contentStream.setFont(font, fontSize);
+
+            float text_width = (font.getStringWidth(itemName) / 1000.0f) * fontSize;
+            contentStream.newLineAtOffset(x-text_width, y);
+            contentStream.showText(itemName);
+            contentStream.endText();
+
+            if (extraDetail.length() > 0) {
+
+                printDetail (")" , x-text_width, y);
+
+                String itemDetails;
+                fontSize = 11;
+                contentStream.beginText();
+                contentStream.setFont(font, fontSize);
+                extraDetail = new StringBuilder(extraDetail).reverse().toString();
+                itemDetails = extraDetail;
+
+                contentStream.setNonStrokingColor(206, 27, 27);
+                contentStream.setFont(font, fontSize);
+
+                float new_text_width = (font.getStringWidth(itemDetails) / 1000.0f) * fontSize;
+                contentStream.newLineAtOffset(x-text_width - new_text_width - 4, y);
+                contentStream.showText(itemDetails);
+                contentStream.endText();
+
+                printDetail ("(" , x-text_width - new_text_width - 1, y);
+            }
+        }
+    }
+
+    public void printDetail(String print, float x, float y) throws IOException {
+        int fontSize = 10;
+        contentStream.beginText();
+
+        contentStream.setNonStrokingColor(0, 0, 0);
+        contentStream.setFont(font, fontSize);
+
+        float new_text_width = (font.getStringWidth(print) / 1000.0f) * fontSize;
+        contentStream.newLineAtOffset(x- new_text_width - 2, y);
+        contentStream.showText(print);
+        contentStream.endText();
     }
 
     public void writeOneItemLine(String toWrite, int x, int y, Boolean isHeadLine) throws IOException {
@@ -372,7 +566,7 @@ public class MakePDFOffer {
                 itemName = toWrite;
 
                 fontSize = 16;
-                contentStream.setNonStrokingColor(143, 26, 32);
+                contentStream.setNonStrokingColor(206, 27, 27);
                 contentStream.setFont(font, fontSize);
             }
             else {
