@@ -14,14 +14,13 @@
 
     <Button
         android:id="@+id/remove_room"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/substract_item_count"
-        android:src="@drawable/substract_item_count"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:src="@drawable/substract_item_count" />
 
     <EditText
         android:id="@+id/room_name"
@@ -29,7 +28,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_edit_text"
         android:padding="5dp"
-        android:hint="שם החדר"/>
+        android:hint="שם החדר"
+        android:autofillHints="" />
 
     </LinearLayout>
 
@@ -41,20 +41,14 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/add_new_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:clickable="true"
         android:focusable="true"
         android:background="@drawable/add_item"
-        app:srcCompat="@drawable/add_item"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:backgroundTintMode="src_atop"
-        android:backgroundTint="#ffffff"
-        />
+        app:srcCompat="@drawable/add_item" />
 
 </LinearLayout>

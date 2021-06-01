@@ -28,7 +28,7 @@
 
     <Button
         android:id="@+id/next1"
-        android:layout_width="150dp"
+        android:layout_width="175dp"
         android:layout_height="75dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,21 +57,25 @@
         android:background="@drawable/back"
         app:srcCompat="@drawable/back"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:background="@drawable/add_room"
-        app:srcCompat="@drawable/add_room"
-        android:backgroundTintMode="src_atop"
-        android:backgroundTint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
-        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintVertical_bias="0.80"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    android:backgroundTintMode="src_atop"-->
+<!--    android:backgroundTint="@android:color/transparent"-->
+<!--    app:borderWidth="0dp"-->
+<!--    app:elevation="1dp"-->
+<!--    android:clickable="true"-->
+    <!--    android:background="@drawable/add_room"-->
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

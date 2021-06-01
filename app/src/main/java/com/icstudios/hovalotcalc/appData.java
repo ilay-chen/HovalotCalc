@@ -21,9 +21,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Locale;
 
 public class appData extends Application {
 
@@ -44,6 +47,30 @@ public class appData extends Application {
     public static String getFilePath(OrderObject orderObject)
     {
         return rootPath + "/" + orderObject.getId() + "/";
+    }
+
+    public static void saveOrder(OrderObject orderDetails, Context context) {
+        Long tsLong = System.currentTimeMillis()/1000;
+        String ts = tsLong.toString();
+        orderDetails.setId(orderDetails.getClientName().replaceAll(" ", "_") + "_" + ts);
+
+        // Save the final pdf document to a file
+        //String yourFilePath = context.getFilesDir() + "/" + folder + "/" + fileName;
+
+        appData.makeDir(context, orderDetails.getId());
+
+//            renderFile(document, orderDetails, path);
+
+        appData.updateOrderList(orderDetails);
+
+        if(orderDetails.getDate()==null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            String currentDateandTime = sdf.format(new Date());
+            orderDetails.setDate(currentDateandTime);
+        }
+        sortOrders();
+
+        saveData(context);
     }
 
     public static void makeDir(Context context, String folderName)
@@ -94,6 +121,17 @@ public class appData extends Application {
             }
         }
         allOrders.add(i, newOrder);
+    }
+
+    public static void removeOrder(OrderObject order)
+    {
+        int i = 0;
+        for (;i < allOrders.size(); i++) {
+            if (allOrders.get(i).getId().equals(order.getId())) {
+                allOrders.remove(i);
+                break;
+            }
+        }
     }
 
     public static void readData(Context c)

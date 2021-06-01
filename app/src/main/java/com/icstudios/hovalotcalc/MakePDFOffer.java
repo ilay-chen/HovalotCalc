@@ -82,7 +82,6 @@ public class MakePDFOffer {
 
             // Define a content stream for adding to the PDF
             contentStream = new PDPageContentStream(document, page, true, true);
-
             
             //name
             writeOneLine(orderDetails.getClientName(),false,551,820);

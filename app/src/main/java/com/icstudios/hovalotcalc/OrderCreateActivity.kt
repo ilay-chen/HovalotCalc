@@ -1,11 +1,23 @@
 package com.icstudios.hovalotcalc
 
 import android.Manifest
+import android.app.AlertDialog
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Process
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -26,6 +38,7 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
 
     private lateinit var pagerAdapter: OrderCreateActivity.ScreenSlidePagerAdapter
     lateinit var viewPager: ViewPager2
+    var popupMenu : PopupWindow? = null
     var page = 0
     var id : String? = null
 
@@ -97,6 +110,10 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
         override fun getItemCount(): Int = mProgress
 
         override fun createFragment(position: Int): Fragment {
+
+            if(newOrder.getClientName()!=null && !newOrder.getClientName().equals(""))
+                appData.saveOrder(newOrder, applicationContext)
+
             if (position == 0) {
                 //AnalyticsManager.logPage("IntroOnboardingFragment")
                 return mClientDetailsFragment
@@ -160,6 +177,51 @@ class OrderCreateActivity : FragmentActivity(), ViewPagerNavigation {
             finish();
             var i = Intent(this, MainActivity::class.java)
             startActivity(i)
+        }
+    }
+
+//    override fun onBackPressed() {
+//        val ab: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@OrderCreateActivity)
+//        ab.setTitle("יציאה מהזמנה")
+//        ab.setMessage("אתה בטוח שאתה רוצה לצאת מההזמנה?")
+//        ab.setPositiveButton("כן", DialogInterface.OnClickListener { dialog, which ->
+//            dialog.dismiss()
+//            super.onBackPressed()
+//            //if you want to kill app . from other then your main avtivity.(Launcher)
+//            Process.killProcess(Process.myPid())
+//            System.exit(1)
+//
+//            //if you want to finish just current activity
+//            this@OrderCreateActivity.finish()
+//        })
+//        ab.setNegativeButton("לא", DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+//        ab.show()
+//    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    override fun onBackPressed() {
+        if (popupMenu != null && popupMenu!!.isShowing()) {
+            popupMenu!!.dismiss()
+        } else {
+            val layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val popupView = layoutInflater.inflate(R.layout.alert_out, null)
+            popupMenu = PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true)
+            popupMenu!!.setAnimationStyle(R.style.Animation)
+            val yes = popupView.findViewById<View>(R.id.yes_button) as Button
+            val no = popupView.findViewById<View>(R.id.no_button) as Button
+
+            //Close the popup when touch outside
+            popupMenu!!.setOutsideTouchable(false)
+            popupMenu!!.setFocusable(false)
+
+//            popupMenu.setTouchModal(false);
+            yes.setOnClickListener { // TODO Auto-generated method stub
+                super.onBackPressed()
+            }
+            no.setOnClickListener { // TODO Auto-generated method stub
+                popupMenu!!.dismiss()
+            }
+            popupMenu!!.showAtLocation(popupView, Gravity.CENTER, 0, -200)
         }
     }
 

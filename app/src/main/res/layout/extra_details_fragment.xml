@@ -133,16 +133,16 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/notes"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="60dp"
         android:layout_margin="30dp"
         android:padding="10dp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/first_box"
 
         android:hint="הערות ועצירות נוספות"
         android:inputType="textMultiLine"
@@ -153,8 +153,8 @@
 
     <Button
         android:id="@+id/next1"
-        android:layout_width="175dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_hight"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -168,8 +168,8 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="175dp"
-        android:layout_height="75dp"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_hight"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

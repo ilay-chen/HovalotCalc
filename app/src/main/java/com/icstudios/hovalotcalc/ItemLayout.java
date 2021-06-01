@@ -1,17 +1,22 @@
 package com.icstudios.hovalotcalc;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,8 +26,9 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 public class ItemLayout extends LinearLayout {
 
-    EditText itemName, itemsCounter;
-    CheckBox DisassemblyAndAssembly;
+    EditText itemName;
+    Spinner itemsCounter;
+    CheckBox DisassemblyAndAssembly, Assembly, Disassembly;
     Button addSameItem, subtractSameItem;
     ImageButton menu;
     View popupView;
@@ -36,21 +42,41 @@ public class ItemLayout extends LinearLayout {
         final LayoutInflater layoutInflater = (LayoutInflater)context
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager()
+                .getDefaultDisplay()
+                .getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        int width = displayMetrics.widthPixels;
+
         popupView = layoutInflater.inflate(R.layout.item_menu_popup, null);
-        final PopupWindow popupMenu = new PopupWindow(popupView, LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT,true);
+//        final PopupWindow popupMenu = new PopupWindow(popupView, 730,LayoutParams.WRAP_CONTENT,true);
+        if(width >= 1200) {
+            width = (int)(width*0.40);
+        }
+        else width = 730;
+
+        final PopupWindow popupMenu = new PopupWindow(popupView,width,LayoutParams.WRAP_CONTENT,true);
         popupMenu.setAnimationStyle(R.style.Animation);
 
         menu.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 int[] location = new int[2];
+
+//                InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+//                inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, InputMethodManager.RESULT_UNCHANGED_HIDDEN);
+
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+
                 menu.getLocationInWindow(location);
                 popupMenu.showAtLocation(popupView, Gravity.NO_GRAVITY, location[0] + 25, location[1] + 75);
             }
         });
 
         itemsCounter = popupView.findViewById(R.id.item_counter);
-        itemsCounter.setText(1+"");
+//        itemsCounter.setText(1+"");
 
         itemName = findViewById(R.id.item_name);
 
@@ -75,30 +101,59 @@ public class ItemLayout extends LinearLayout {
                 });
 
         DisassemblyAndAssembly = popupView.findViewById(R.id.disassembly_and_assembly);
+        Disassembly = popupView.findViewById(R.id.disassembly);
+        Assembly = popupView.findViewById(R.id.assembly);
 
-        addSameItem = popupView.findViewById(R.id.add_item_num);
-        addSameItem.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemsCounter.getText() == null || itemsCounter.getText().toString().equals("")) itemsCounter.setText(0+"");
-                int counter = Integer.parseInt(itemsCounter.getText().toString())+1;
-                itemsCounter.setText(counter+"");
-            }
-        });
 
-        subtractSameItem = popupView.findViewById(R.id.subtract_item_num);
-        subtractSameItem.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(itemsCounter.getText() == null || itemsCounter.getText().toString().equals("")) itemsCounter.setText(0+"");
-                int counter = Integer.parseInt(itemsCounter.getText().toString())-1;
-                if(counter<=0){
-                    counter=0;
-                    //remove item
-                }
-                itemsCounter.setText(counter+"");
-            }
-        });
+//        itemsCounter.OnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                int counter = Integer.parseInt(itemsCounter.getSelectedItem().toString());
+////                itemsCounter.setText(counter+"");
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+
+
+//                (object : OnItemSelectedListener {
+//            override fun onItemSelected(arg0: AdapterView<*>?, arg1: View, arg2: Int, arg3: Long) {
+//                val items: String = mHourEditText.getSelectedItem().toString()
+//                newOrder.hour = items
+//            }
+//
+//            override fun onNothingSelected(arg0: AdapterView<*>?) {
+//                val items: String = mHourEditText.getSelectedItem().toString()
+//                newOrder.hour = items
+//            }
+//        })
+
+//        addSameItem = popupView.findViewById(R.id.add_item_num);
+//        addSameItem.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(itemsCounter.getText() == null || itemsCounter.getText().toString().equals("")) itemsCounter.setText(0+"");
+//                int counter = Integer.parseInt(itemsCounter.getText().toString())+1;
+//                itemsCounter.setText(counter+"");
+//            }
+//        });
+//
+//        subtractSameItem = popupView.findViewById(R.id.subtract_item_num);
+//        subtractSameItem.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(itemsCounter.getText() == null || itemsCounter.getText().toString().equals("")) itemsCounter.setText(0+"");
+//                int counter = Integer.parseInt(itemsCounter.getText().toString())-1;
+//                if(counter<=0){
+//                    counter=0;
+//                    //remove item
+//                }
+//                itemsCounter.setText(counter+"");
+//            }
+//        });
     }
 
     public EditText getItemName() {
@@ -109,11 +164,11 @@ public class ItemLayout extends LinearLayout {
         this.itemName = itemName;
     }
 
-    public EditText getItemsCounter() {
+    public Spinner getItemsCounter() {
         return itemsCounter;
     }
 
-    public void setItemsCounter(EditText itemsCounter) {
+    public void setItemsCounter(Spinner itemsCounter) {
         this.itemsCounter = itemsCounter;
     }
 
@@ -123,6 +178,22 @@ public class ItemLayout extends LinearLayout {
 
     public void setDisassemblyAndAssembly(CheckBox disassemblyAndAssembly) {
         DisassemblyAndAssembly = disassemblyAndAssembly;
+    }
+
+    public CheckBox getAssembly() {
+        return Assembly;
+    }
+
+    public void setAssembly(CheckBox Assembly) {
+        this.Assembly = Assembly;
+    }
+
+    public CheckBox getDisassembly() {
+        return Disassembly;
+    }
+
+    public void setDisassembly(CheckBox disassembly) {
+        Disassembly = disassembly;
     }
 
     public Button getAddSameItem() {
@@ -148,6 +219,6 @@ public class ItemLayout extends LinearLayout {
 
     public String getCounter()
     {
-        return itemsCounter.getText().toString();
+        return itemsCounter.getSelectedItem().toString();
     }
 }

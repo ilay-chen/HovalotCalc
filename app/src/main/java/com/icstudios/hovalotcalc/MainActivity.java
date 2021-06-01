@@ -1,26 +1,38 @@
 package com.icstudios.hovalotcalc;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentUris;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 public class MainActivity extends AppCompatActivity {
 
     Button newOrder, orderPage, dairy;
+    PopupWindow popupMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +170,62 @@ public class MainActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @Override
+    public void onBackPressed() {
+
+        if (popupMenu != null && popupMenu.isShowing()) {
+            popupMenu.dismiss();
+        } else {
+
+
+            final LayoutInflater layoutInflater = (LayoutInflater)
+                    getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            View popupView = layoutInflater.inflate(R.layout.alert_out, null);
+            popupMenu = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            popupMenu.setAnimationStyle(R.style.Animation);
+
+            Button yes = (Button) popupView.findViewById(R.id.yes_button);
+            Button no = (Button) popupView.findViewById(R.id.no_button);
+
+            //Close the popup when touch outside
+            popupMenu.setOutsideTouchable(false);
+            popupMenu.setFocusable(false);
+
+//            popupMenu.setTouchModal(false);
+
+            yes.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    popupMenu.dismiss();
+                    //if you want to kill app . from other then your main avtivity.(Launcher)
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+
+                    //if you want to finish just current activity
+
+                    MainActivity.this.finish();
+                }
+
+            });
+
+            no.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // TODO Auto-generated method stub
+                    popupMenu.dismiss();
+                }
+            });
+
+            popupMenu.showAtLocation(popupView, Gravity.CENTER, 0, -200);
         }
     }
 }

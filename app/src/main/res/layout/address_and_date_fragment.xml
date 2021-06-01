@@ -21,33 +21,44 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="30dp"
-        android:paddingBottom="55dp">
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
+            <EditText
+                android:id="@+id/address_from_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="3"
+                android:hint="מהיכן? "
+                android:padding="10dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
+
         <TextView
-            android:id="@+id/from_address"
-            android:layout_width="wrap_content"
+            android:id="@+id/place_holder1"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-android:visibility="gone"
+            android:visibility="invisible"
             android:layout_weight="1"
-            android:hint="כתובת נוכחית"
+            android:layout_marginRight="5dp"
+            android:hint="כתובת "
             android:textSize="15sp" />
 
-        <EditText
-            android:id="@+id/address_from_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/address_edit_text_height"
-
-            android:layout_weight="1"
-            android:hint="כתובת נוכחית: "
-            android:padding="10dp"
-            android:background="@drawable/round_edit_text"
-            android:inputType="text" />
+            <TextView
+                android:id="@+id/place_holder2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -70,49 +81,32 @@ android:visibility="gone"
                 android:id="@+id/street_from_edit_text"
                 android:layout_width="150dp"
                 android:layout_height="@dimen/address_edit_text_height"
-                android:layout_weight="1"
-                android:hint="רחוב"
-                android:paddingRight="5dp"
+                android:layout_weight="3"
+                android:hint="רחוב?"
+                android:paddingRight="10dp"
+                android:paddingBottom="1dp"
                 android:background="@drawable/round_edit_text"
                 android:inputType="text" />
 
-            <TextView
-                android:id="@+id/textView_home_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_weight="1"
-
-                android:text=" מס"
-                android:textSize="15sp" />
-
             <Spinner
                 android:id="@+id/home_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
                 android:entries="@array/numbers"
                 android:layout_weight="1"
-
-                android:background="@drawable/round_edit_text" />
-
-            <TextView
-                android:id="@+id/textView_home_floor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_weight="1"
-
-                android:text=" קומה"
-                android:textSize="15sp" />
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
+                android:background="@drawable/round_edit_text_right" />
 
             <Spinner
                 android:id="@+id/home_floor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/numbers"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers_floor"
                 android:layout_weight="1"
-
-                android:background="@drawable/round_edit_text"/>
+                android:layout_marginLeft="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/round_edit_text_left"/>
 
         </LinearLayout>
 
@@ -121,6 +115,7 @@ android:visibility="gone"
             android:layout_marginRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:layout_weight="1">
 
         <TextView
@@ -128,7 +123,7 @@ android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-
+android:visibility="gone"
             android:layout_weight="1"
 
 
@@ -139,14 +134,25 @@ android:visibility="gone"
             android:id="@+id/elevator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_right_selector"
+            android:button="@null"
+            android:text="מעלית"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
 
         <TextView
             android:id="@+id/textView_crane"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-
+android:visibility="gone"
             android:layout_weight="1"
 
 
@@ -157,14 +163,25 @@ android:visibility="gone"
             android:id="@+id/crane"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_selector"
+            android:button="@null"
+            android:text="מנוף"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
 
         <TextView
             android:id="@+id/textView_packing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-
+                android:visibility="gone"
             android:layout_weight="1"
 
 
@@ -175,7 +192,18 @@ android:visibility="gone"
             android:id="@+id/from_packing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_left_selector"
+            android:button="@null"
+            android:text="אריזה"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -194,33 +222,44 @@ android:visibility="gone"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="30dp"
-        android:paddingBottom="55dp">
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/to_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:visibility="gone"
-                android:layout_weight="1"
-                android:hint="כתובת נוכחית"
-                android:textSize="15sp" />
-
             <EditText
                 android:id="@+id/address_to_edit_text"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="@dimen/address_edit_text_height"
-
-                android:layout_weight="1"
-                android:hint="כתובת למעבר: "
+                android:layout_weight="3"
+                android:hint="להיכן? "
                 android:padding="10dp"
                 android:background="@drawable/round_edit_text"
                 android:inputType="text" />
+
+            <TextView
+                android:id="@+id/place_holder3"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/place_holder4"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -243,49 +282,39 @@ android:visibility="gone"
                 android:id="@+id/street_to_edit_text"
                 android:layout_width="150dp"
                 android:layout_height="@dimen/address_edit_text_height"
-                android:layout_weight="1"
-                android:hint="רחוב"
-                android:paddingRight="5dp"
+                android:layout_weight="3"
+                android:hint="רחוב?"
+                android:paddingRight="10dp"
+                android:paddingBottom="1dp"
+
                 android:background="@drawable/round_edit_text"
                 android:inputType="text" />
 
-            <TextView
-                android:id="@+id/textView_to_home_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_weight="1"
-
-                android:text=" מס"
-                android:textSize="15sp" />
 
             <Spinner
                 android:id="@+id/to_home_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
                 android:entries="@array/numbers"
                 android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
 
-                android:background="@drawable/round_edit_text" />
 
-            <TextView
-                android:id="@+id/textView_to_home_floor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_weight="1"
-
-                android:text=" קומה"
-                android:textSize="15sp" />
+                android:background="@drawable/round_edit_text_right" />
 
             <Spinner
                 android:id="@+id/to_home_floor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/numbers"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers_floor"
                 android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:textAlignment="center"
 
-                android:background="@drawable/round_edit_text"/>
+
+
+                android:background="@drawable/round_edit_text_left"/>
 
         </LinearLayout>
 
@@ -294,6 +323,7 @@ android:visibility="gone"
             android:layout_marginRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             android:layout_weight="1">
 
             <TextView
@@ -301,7 +331,7 @@ android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-
+android:visibility="gone"
                 android:layout_weight="1"
 
 
@@ -312,7 +342,18 @@ android:visibility="gone"
                 android:id="@+id/to_elevator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_right_selector"
+                android:button="@null"
+                android:text="מעלית"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
 
             <TextView
                 android:id="@+id/textView_to_crane"
@@ -321,7 +362,7 @@ android:visibility="gone"
                 android:textStyle="bold"
 
                 android:layout_weight="1"
-
+android:visibility="gone"
 
                 android:text="מנוף"
                 android:textSize="15sp" />
@@ -330,14 +371,25 @@ android:visibility="gone"
                 android:id="@+id/to_crane"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_selector"
+                android:button="@null"
+                android:text="מנוף"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
 
             <TextView
                 android:id="@+id/textView_to_packing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-
+                android:visibility="gone"
                 android:layout_weight="1"
 
 
@@ -348,7 +400,18 @@ android:visibility="gone"
                 android:id="@+id/to_packing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_left_selector"
+                android:button="@null"
+                android:text="אריזה"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -552,7 +615,6 @@ android:visibility="gone"
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="125dp"
-        android:background="@drawable/gray_background_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -560,77 +622,41 @@ android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/text_view_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.125"
-            app:layout_constraintVertical_bias="0.10"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            android:text="תאריך: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="34dp">
 
         <EditText
             android:id="@+id/date_edit_text"
             android:layout_width="145dp"
             android:layout_height="@dimen/address_edit_text_height"
+            android:layout_weight="1"
+            android:textColorHint="#000000"
+            android:textSize="15dp"
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/text_view_date"
-            app:layout_constraintTop_toBottomOf="@id/text_view_date"
-
-            android:paddingRight="10dp"
-            android:drawablePadding="10dp"
-            android:background="@drawable/round_edit_text"
-            android:drawableRight="@drawable/diary_icon_small_v2"
+            android:textAlignment="center"
+            android:hint="תאריך ההובלה?"
+            android:background="@drawable/round_edit_text_right"
             android:inputType="date" />
 
-        <TextView
-            android:id="@+id/text_view_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
+<!--            android:drawableRight="@drawable/diary_icon_small_v2"-->
 
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintVertical_bias="0.10"
-            app:layout_constraintStart_toEndOf="@+id/date_edit_text"
-            app:layout_constraintTop_toTopOf="parent"
-
-            android:text="שעה: "
-            android:textSize="15sp"
-            android:layout_marginLeft="50dp" />
 
         <Spinner
             android:id="@+id/hour_edit_text"
             android:layout_width="145dp"
             android:layout_height="@dimen/address_edit_text_height"
-
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="0.0"
-            app:layout_constraintStart_toStartOf="@id/text_view_hour"
-            app:layout_constraintTop_toBottomOf="@id/text_view_date"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            android:paddingBottom="2px"
 
             android:entries="@array/hours_range"
 
-            android:paddingRight="25dp"
-            android:drawablePadding="10dp"
-            android:background="@drawable/spinner_hour_bg"
-            android:drawableRight="@drawable/clock_icon_small"
+            android:background="@drawable/round_edit_text_left"
             android:inputType="date" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

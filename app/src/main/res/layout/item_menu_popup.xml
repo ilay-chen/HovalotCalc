@@ -3,87 +3,164 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
+    android:layout_margin="50dp"
     android:layout_marginRight="10dp"
+    android:paddingRight="15dp"
     android:layout_marginLeft="10dp"
-    android:background="@drawable/menu_background">
+    android:background="@drawable/back_item">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:tag="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
         app:layout_constraintVertical_bias="0.0"
-
-        android:orientation="horizontal">
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="30dp"
-            android:paddingTop="20dp">
-
-    <CheckBox
-        android:id="@+id/disassembly_and_assembly"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/cb_background" />
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="פ.ר.">
+                android:textColor="#ffffff"
+                android:text="כמות מוצר">
+
+            </TextView>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/item_counter"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/boxes_text_view"
+                app:layout_constraintTop_toBottomOf="@id/boxes_text_view"
+
+                android:entries="@array/numbers_count"
+
+                android:spinnerMode="dropdown"
+                android:padding="10dp"
+                android:background="@drawable/spinner_bg"
+                android:inputType="text" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:tag="1"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/disassembly"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginRight="0dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+
+                android:layout_marginRight="5dp"
+                android:text="פירוק">
 
             </TextView>
 
         </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="30dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/assembly"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginRight="0dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+                android:layout_marginRight="5dp"
+                android:text="הרכבה">
+
+            </TextView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/add_item_num"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/app_item_count" />
-
-            <EditText
-                android:id="@+id/item_counter"
-                android:layout_width="30dp"
-                android:layout_height="60dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="number" />
-
-            <Button
-                android:id="@+id/subtract_item_num"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/substract_item_count"/>
-            </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="כמות">
+            android:layout_margin="0dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:paddingTop="0dp">
 
-        </TextView>
+            <CheckBox
+                android:id="@+id/disassembly_and_assembly"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:buttonTint="#FFFFFF"
+                android:layout_marginRight="0dp" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="#ffffff"
+
+
+                android:layout_marginRight="5dp"
+                android:text="פירוק והרכבה">
+
+            </TextView>
+
+        </LinearLayout>
 
     </LinearLayout>
 

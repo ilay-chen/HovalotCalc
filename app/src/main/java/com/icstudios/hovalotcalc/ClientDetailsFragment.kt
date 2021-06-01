@@ -1,11 +1,8 @@
 package com.icstudios.hovalotcalc
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -37,6 +34,10 @@ class ClientDetailsFragment : Fragment() {
         mClientName = rootView.findViewById(R.id.editTextTextPersonName)
         mClientName.setOnFocusChangeListener { v, hasFocus ->
             newOrder.clientName = mClientName.text.toString()
+
+            //contentStream.endText();
+            if(newOrder.getClientName()!=null && !newOrder.getClientName().equals(""))
+                appData.saveOrder(newOrder, context)
         }
         if(newOrder.clientName!=null)
         {
@@ -64,6 +65,8 @@ class ClientDetailsFragment : Fragment() {
 
         mButtonFinish = rootView.findViewById(R.id.next1)
         mButtonFinish.setOnClickListener(View.OnClickListener { view ->
+            if(newOrder.getClientName()!=null && !newOrder.getClientName().equals(""))
+                appData.saveOrder(newOrder, context)
 
             (activity as ViewPagerNavigation).setCurrent(1)
         })

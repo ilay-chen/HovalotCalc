@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <dimen name="edit_text_box_height">110dp</dimen>
+    <dimen name="edit_text_height">50dp</dimen>
+    <dimen name="edit_text_width">400dp</dimen>
+
+    <dimen name="address_edit_text_box_height">280dp</dimen>
+    <dimen name="address_edit_text_height">60dp</dimen>
+    <dimen name="address_edit_text_width">300dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="design_fab_image_size" tools:override="true">56dp</dimen>
+
+    <dimen name="buttons_width">210dp</dimen>
+    <dimen name="buttons_hight">85dp</dimen>
+
+    <dimen name="pop_up_button">100dp</dimen>
+
+    <dimen name="share_pop_up_button">100dp</dimen>
+
+</resources>

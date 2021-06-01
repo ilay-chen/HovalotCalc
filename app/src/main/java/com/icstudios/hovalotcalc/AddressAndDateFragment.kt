@@ -4,7 +4,9 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -61,6 +63,18 @@ class AddressAndDateFragment : Fragment() {
             mFromAddress.setText(newOrder.fromCity)
         }
 
+        mFromAddress.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int,
+                                       arg3: Int) {
+            }
+
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int,
+                                           arg2: Int, arg3: Int) {
+            }
+
+            override fun afterTextChanged(et: Editable) {newOrder.fromCity = mFromAddress.text.toString()}
+        })
+
         mFromStreet = rootView.findViewById(R.id.street_from_edit_text)
         mFromStreet.setOnFocusChangeListener { v, hasFocus ->
             newOrder.fromStreet = mFromStreet.text.toString()
@@ -69,6 +83,18 @@ class AddressAndDateFragment : Fragment() {
         {
             mFromStreet.setText(newOrder.fromStreet)
         }
+
+        mFromStreet.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int,
+                                       arg3: Int) {
+            }
+
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int,
+                                           arg2: Int, arg3: Int) {
+            }
+
+            override fun afterTextChanged(et: Editable) {newOrder.fromStreet = mFromStreet.text.toString()}
+        })
 
         mFromNumber = rootView.findViewById(R.id.home_number)
         mFromNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -83,6 +109,7 @@ class AddressAndDateFragment : Fragment() {
         }
         if(newOrder.fromNumber!=null)
         {
+            if(newOrder.fromNumber.equals("מס")) newOrder.fromNumber = "0";
             mFromNumber.setSelection(Integer.parseInt(newOrder.fromNumber))
         }
 
@@ -99,7 +126,14 @@ class AddressAndDateFragment : Fragment() {
         }
         if(newOrder.fromFloor!=null)
         {
-            mFromFloor.setSelection(Integer.parseInt(newOrder.fromFloor))
+            if(newOrder.fromFloor.equals("קומה"))
+                mFromFloor.setSelection(0)
+            else if (newOrder.fromFloor.equals("קרקע")) {
+                mFromFloor.setSelection(3)
+            }
+            else {
+                mFromFloor.setSelection(Integer.parseInt(newOrder.fromFloor) + 1)
+            }
         }
 
         mFromCrane = rootView.findViewById(R.id.crane)
@@ -147,6 +181,18 @@ class AddressAndDateFragment : Fragment() {
             mToAddress.setText(newOrder.toCity)
         }
 
+        mToAddress.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int,
+                                       arg3: Int) {
+            }
+
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int,
+                                           arg2: Int, arg3: Int) {
+            }
+
+            override fun afterTextChanged(et: Editable) {newOrder.toCity = mToAddress.text.toString()}
+        })
+
         mToStreet = rootView.findViewById(R.id.street_to_edit_text)
         mToStreet.setOnFocusChangeListener { v, hasFocus ->
             newOrder.toStreet = mToStreet.text.toString()
@@ -155,6 +201,18 @@ class AddressAndDateFragment : Fragment() {
         {
             mToStreet.setText(newOrder.toStreet)
         }
+
+        mToStreet.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(arg0: CharSequence, arg1: Int, arg2: Int,
+                                       arg3: Int) {
+            }
+
+            override fun beforeTextChanged(arg0: CharSequence, arg1: Int,
+                                           arg2: Int, arg3: Int) {
+            }
+
+            override fun afterTextChanged(et: Editable) {newOrder.toStreet = mToStreet.text.toString()}
+        })
 
         mToNumber = rootView.findViewById(R.id.to_home_number)
         mToNumber.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -169,6 +227,7 @@ class AddressAndDateFragment : Fragment() {
         }
         if(newOrder.toNumber!=null)
         {
+            if(newOrder.toNumber.equals("מס")) newOrder.toNumber = "0";
             mToNumber.setSelection(Integer.parseInt(newOrder.toNumber))
         }
 
@@ -185,7 +244,14 @@ class AddressAndDateFragment : Fragment() {
         }
         if(newOrder.toFloor!=null)
         {
-            mToFloor.setSelection(Integer.parseInt(newOrder.toFloor))
+            if(newOrder.toFloor.equals("קומה"))
+                mToFloor.setSelection(0)
+            else if (newOrder.toFloor.equals("קרקע")) {
+                mToFloor.setSelection(3)
+            }
+            else {
+                mToFloor.setSelection(Integer.parseInt(newOrder.toFloor) + 1)
+            }
         }
 
         mToCrane = rootView.findViewById(R.id.to_crane)
@@ -274,6 +340,8 @@ class AddressAndDateFragment : Fragment() {
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->
+            if(newOrder.getClientName()!=null && !newOrder.getClientName().equals(""))
+                appData.saveOrder(newOrder, context)
 
             (activity as ViewPagerNavigation).setCurrent(2)
         })
@@ -293,6 +361,8 @@ class AddressAndDateFragment : Fragment() {
 
         mButtonPrevious = rootView.findViewById(R.id.previous)
         mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
+            if(newOrder.getClientName()!=null && !newOrder.getClientName().equals(""))
+                appData.saveOrder(newOrder, context)
 
             (activity as ViewPagerNavigation).setCurrent(0)
         })

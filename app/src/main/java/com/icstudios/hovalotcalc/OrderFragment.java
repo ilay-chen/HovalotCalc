@@ -5,13 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.CalendarContract;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,25 +30,16 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.ParcelFileDescriptor;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.SearchView;
-import android.widget.Toast;
-
 import com.github.chrisbanes.photoview.PhotoView;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 import static com.icstudios.hovalotcalc.appData.allOrders;
+import static com.icstudios.hovalotcalc.appData.removeOrder;
+import static com.icstudios.hovalotcalc.appData.sortOrders;
 
 /**
  * A fragment representing a list of Items.
@@ -50,6 +52,8 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
     private int mColumnCount = 1;
     private int PERMISSIONS_REQUEST_PHONE_CALL = 1001;
     private int posClick = -1;
+    RecyclerView recyclerView;
+    MyOrderFragmentRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -81,7 +85,7 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.list);
+        recyclerView = view.findViewById(R.id.list);
         SearchView searchView = view.findViewById(R.id.search_box);
 
         // Set the adapter
@@ -99,7 +103,7 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
 //            adapter.setClickListener(this);
 //            recyclerView.setAdapter(adapter);
 
-            final MyOrderFragmentRecyclerViewAdapter adapter = new MyOrderFragmentRecyclerViewAdapter(orderListItem.ITEMS);
+            adapter = new MyOrderFragmentRecyclerViewAdapter(orderListItem.ITEMS);
             adapter.setClickListener(this);
             recyclerView.setAdapter(adapter);
 
@@ -161,11 +165,129 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
         final LayoutInflater layoutInflater = (LayoutInflater)context
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
 
-        Button call, sendMessage, watchFile, watchPic, watchVideo, editOrder;
+        Button call, sendMessage, watchFile, watchPic, watchVideo, editOrder, deleteOrder, makeEvent;
 
         View popupView = layoutInflater.inflate(R.layout.popup_menu, null);
         final PopupWindow popupMenu = new PopupWindow(popupView,LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT,true);
         popupMenu.setAnimationStyle(R.style.Animation);
+
+        makeEvent = popupView.findViewById(R.id.event);
+        makeEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String path1 = appData.getFilePath(allOrders.get(position)) + appData.pdfFileName;
+                Uri pdf = Uri.parse(path1);
+                File f = new File(path1);
+                String det = "";
+
+                String fromAddress = allOrders.get(position).fromCity;
+
+                if(allOrders.get(position).fromStreet != null &&
+                        allOrders.get(position).fromStreet != "" &&
+                        allOrders.get(position).fromStreet !="רחוב")
+                {
+                    fromAddress += ", " + allOrders.get(position).fromStreet;
+                    if(allOrders.get(position).fromNumber != null &&
+                            allOrders.get(position).fromNumber != "" &&
+                            !allOrders.get(position).fromNumber.equals("מס"))
+                    {
+                        fromAddress += ", " + allOrders.get(position).fromNumber;
+                    }
+                }
+
+                String toAddress = allOrders.get(position).toCity;
+                if(allOrders.get(position).toStreet != null &&
+                        allOrders.get(position).toStreet != "" &&
+                        allOrders.get(position).toStreet !="רחוב")
+                {
+                    toAddress += ", " + allOrders.get(position).toStreet;
+                    if(allOrders.get(position).toNumber != null &&
+                            allOrders.get(position).toNumber != "" &&
+                            !allOrders.get(position).toNumber.equals("מס"))
+                    {
+                        toAddress += ", " + allOrders.get(position).toNumber;
+                    }
+                }
+
+                Date OrderDate= allOrders.get(position).getDateTime();
+
+                det += "כתובת מוצא: " + "\n" + fromAddress + ".\n" + "כתובת יעד: " + "\n" + toAddress + ".\n";
+
+                        det += "\n" + "רשימת פריטים:" + "\n";
+                for(int i = 0; i < allOrders.get(position).getRoomsAndItems().size(); i++) {
+                    det += "\n";
+                    if(!allOrders.get(position).getRoomsAndItems().get(i).roomName.equals(""))
+                        det += allOrders.get(position).getRoomsAndItems().get(i).roomName + ":\n\n";
+                    for (int j = 0; j < allOrders.get(position).getRoomsAndItems().get(i).mItems.size(); j++) {
+                        itemObject thisItem = allOrders.get(position).getRoomsAndItems().get(i).mItems.get(j);
+                        det += "- " + thisItem.itemName + " ";
+
+                        String extraDetails = "";
+                        if(Integer.parseInt(thisItem.itemCounter) > 1)
+                            extraDetails += "(כמות: " + thisItem.itemCounter;
+
+                        if(thisItem.DisassemblyAndAssembly)
+                        {
+                            if(extraDetails.length() !=0) extraDetails += " ,";
+                            else extraDetails += "(";
+                            extraDetails += "פירוק והרכבה";
+                        }
+                        if(thisItem.Disassembly)
+                        {
+                            if(extraDetails.length() !=0) extraDetails += " ,";
+                            else extraDetails += "(";
+                            extraDetails += "פירוק";
+                        }
+
+                        if(thisItem.Assembly)
+                        {
+                            if(extraDetails.length() !=0) extraDetails += " ,";
+                            else extraDetails += "(";
+                            extraDetails += "הרכבה";
+                        }
+
+                        if (extraDetails.length()>0) extraDetails += ")";
+
+                        det += extraDetails  + "\n";
+                    }
+                }
+
+                det += "\n" + "ארגזים: " + allOrders.get(position).boxes + "\n";
+                det += "שקיות: " + allOrders.get(position).bags + "\n";
+                det += "מזוודות: " + allOrders.get(position).suitcases + "\n" + "\n";
+
+                if (allOrders.get(position).notes != null)
+                    det += "הערות: " + "\n" + allOrders.get(position).notes + "\n" + "\n";
+
+                det += "מחיר: " + allOrders.get(position).price + " שקלים." + "\n";
+
+                Calendar beginTime = Calendar.getInstance();
+                beginTime.setTime(OrderDate);
+
+                int startHour = 8;
+                try {
+                    startHour = allOrders.get(position).getHourInDay();
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                beginTime.set(Calendar.HOUR_OF_DAY, startHour);
+                Calendar endTime = Calendar.getInstance();
+                endTime.setTime(OrderDate);
+                endTime.set(Calendar.HOUR_OF_DAY, startHour+1);
+                Intent intent = new Intent(Intent.ACTION_INSERT)
+                        .setData(CalendarContract.Events.CONTENT_URI)
+                        .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+                        .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                        .putExtra(CalendarContract.Events.TITLE,  "הובלה, " + allOrders.get(position).getPhoneNumber())
+                        .putExtra(CalendarContract.Events.DESCRIPTION, det)
+                        .putExtra(CalendarContract.Events.EVENT_LOCATION, fromAddress);
+//                        .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY)
+//                        .putExtra(Intent.EXTRA_EMAIL, "rowan@example.com,trevor@example.com");
+                startActivity(intent);
+            }
+        });
 
         call = popupView.findViewById(R.id.call);
         call.setOnClickListener(new View.OnClickListener() {
@@ -267,6 +389,46 @@ public class OrderFragment extends Fragment implements MyOrderFragmentRecyclerVi
                 i.putExtra("id", allOrders.get(position).getId());
                 startActivity(i);
                 popupMenu.dismiss();
+            }
+        });
+
+
+        deleteOrder = popupView.findViewById(R.id.delete);
+        deleteOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "delete " + position, Toast.LENGTH_SHORT).show();
+
+                removeOrder(allOrders.get(position));
+
+                sortOrders();
+
+                appData.saveData(context);
+
+                orderListItem.refreshList();
+
+                recyclerView.removeViewAt(position);
+                adapter.notifyItemRemoved(position);
+                adapter.notifyItemRangeChanged(position, orderListItem.ITEMS.size());
+
+                adapter.notifyDataSetChanged();
+
+//                adapter = new MyOrderFragmentRecyclerViewAdapter(orderListItem.ITEMS);
+//                recyclerView.setAdapter(adapter);
+
+                popupMenu.dismiss();
+            }
+        });
+
+
+        sendMessage = popupView.findViewById(R.id.send_message);
+        sendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://api.whatsapp.com/send?phone="+allOrders.get(position).getPhoneNumber().replaceFirst("0","972");
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
             }
         });
 

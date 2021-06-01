@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/date_time_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/address_edit_text_box_height"
+        android:background="@drawable/gray_background_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/address_from_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="3"
+                android:hint="מהיכן? "
+                android:padding="10dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
+
+        <TextView
+            android:id="@+id/place_holder1"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp"
+            android:hint="כתובת "
+            android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/place_holder2"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/from_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:visibility="gone"
+                android:text="רחוב: "
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/street_from_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="3"
+                android:hint="רחוב?"
+                android:paddingRight="10dp"
+                android:paddingBottom="1dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
+
+            <Spinner
+                android:id="@+id/home_number"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
+                android:background="@drawable/round_edit_text_right" />
+
+            <Spinner
+                android:id="@+id/home_floor"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers_floor"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:textAlignment="center"
+                android:background="@drawable/round_edit_text_left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/textView_elevator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+android:visibility="gone"
+            android:layout_weight="1"
+
+
+            android:text="מעלית"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/elevator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_right_selector"
+            android:button="@null"
+            android:text="מעלית"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
+
+        <TextView
+            android:id="@+id/textView_crane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+android:visibility="gone"
+            android:layout_weight="1"
+
+
+            android:text="מנוף"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/crane"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_selector"
+            android:button="@null"
+            android:text="מנוף"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
+
+        <TextView
+            android:id="@+id/textView_packing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+                android:visibility="gone"
+            android:layout_weight="1"
+
+
+            android:text="אריזה"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/from_packing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/checkbox_left_selector"
+            android:button="@null"
+            android:text="אריזה"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="@color/button_text_color"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/address_edit_text_box_height"
+        android:background="@drawable/gray_background_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.60"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:paddingLeft="70dp"
+        android:paddingRight="70dp"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/address_to_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="3"
+                android:hint="להיכן? "
+                android:padding="10dp"
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/place_holder3"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/place_holder4"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:hint="כתובת "
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/to_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_weight="0.5"
+                android:visibility="gone"
+                android:text="רחוב: "
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/street_to_edit_text"
+                android:layout_width="150dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:layout_weight="3"
+                android:hint="רחוב?"
+                android:paddingRight="10dp"
+                android:paddingBottom="1dp"
+
+                android:background="@drawable/round_edit_text"
+                android:inputType="text" />
+
+
+            <Spinner
+                android:id="@+id/to_home_number"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:textAlignment="center"
+
+
+                android:background="@drawable/round_edit_text_right" />
+
+            <Spinner
+                android:id="@+id/to_home_floor"
+                android:layout_width="50dp"
+                android:layout_height="@dimen/address_edit_text_height"
+                android:entries="@array/numbers_floor"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:textAlignment="center"
+
+
+
+                android:background="@drawable/round_edit_text_left"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textView_to_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+android:visibility="gone"
+                android:layout_weight="1"
+
+
+                android:text="מעלית"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_elevator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_right_selector"
+                android:button="@null"
+                android:text="מעלית"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
+
+            <TextView
+                android:id="@+id/textView_to_crane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+
+                android:layout_weight="1"
+android:visibility="gone"
+
+                android:text="מנוף"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_crane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_selector"
+                android:button="@null"
+                android:text="מנוף"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
+
+            <TextView
+                android:id="@+id/textView_to_packing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:layout_weight="1"
+
+
+                android:text="אריזה"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/to_packing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/checkbox_left_selector"
+                android:button="@null"
+                android:text="אריזה"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textColor="@color/button_text_color"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/address_edit_text_box_height"-->
+<!--        android:background="@drawable/gray_background"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintVertical_bias="0.6"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/to_address"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.15"-->
+<!--            app:layout_constraintVertical_bias="0.10"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+
+<!--            android:text="כתובת חדשה: "-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/address_to_edit_text"-->
+<!--            android:layout_width="@dimen/address_edit_text_width"-->
+<!--            android:layout_height="@dimen/address_edit_text_height"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/to_address"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_address"-->
+
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/round_edit_text"-->
+<!--            android:inputType="text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/to_street"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/address_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/address_to_edit_text"-->
+
+<!--            android:text="רחוב: "-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/street_to_edit_text"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="@dimen/address_edit_text_height"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="@id/to_street"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:padding="10dp"-->
+<!--            android:background="@drawable/round_edit_text"-->
+<!--            android:inputType="text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_home_number"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/street_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:text="מס"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/to_home_number"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_home_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+<!--            android:entries="@array/numbers"-->
+<!--            android:background="@drawable/round_edit_text"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_home_floor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.1"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/to_home_number"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+
+<!--            android:text="קומה"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/to_home_floor"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_home_floor"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/to_street"-->
+<!--            android:entries="@array/numbers"-->
+<!--            android:background="@drawable/round_edit_text"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_elevator"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.03"-->
+<!--            app:layout_constraintStart_toStartOf="@id/street_to_edit_text"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"-->
+
+<!--            android:text="מעלית"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--            android:id="@+id/to_elevator"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_elevator"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView_to_crane"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textStyle="bold"-->
+
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.03"-->
+<!--            app:layout_constraintStart_toEndOf="@id/to_elevator"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text"-->
+
+<!--            android:text="מנוף"-->
+<!--            android:textSize="15sp"-->
+<!--            android:layout_marginLeft="50dp" />-->
+
+<!--        <androidx.appcompat.widget.AppCompatCheckBox-->
+<!--            android:id="@+id/to_crane"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintVertical_bias="0.0"-->
+<!--            app:layout_constraintStart_toEndOf="@id/textView_to_crane"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/street_to_edit_text" />-->
+
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.85"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="24dp">
+
+        <EditText
+            android:id="@+id/date_edit_text"
+            android:layout_width="145dp"
+            android:layout_height="@dimen/address_edit_text_height"
+            android:layout_weight="1"
+            android:textColorHint="#000000"
+            android:textSize="15dp"
+            android:paddingBottom="0px"
+
+            android:textAlignment="center"
+            android:hint="תאריך ההובלה?"
+            android:background="@drawable/round_edit_text_right"
+            android:inputType="date" />
+
+<!--            android:drawableRight="@drawable/diary_icon_small_v2"-->
+
+
+        <Spinner
+            android:id="@+id/hour_edit_text"
+            android:layout_width="145dp"
+            android:layout_height="@dimen/address_edit_text_height"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:textAlignment="center"
+            android:paddingBottom="2dp"
+
+            android:entries="@array/hours_range"
+
+            android:background="@drawable/round_edit_text_left"
+            android:inputType="date" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/next1"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_hight"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:background="@drawable/next"
+        app:srcCompat="@drawable/next" />
+
+    <Button
+        android:id="@+id/previous"
+        android:layout_width="@dimen/buttons_width"
+        android:layout_height="@dimen/buttons_hight"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        android:background="@drawable/back"
+        app:srcCompat="@drawable/back" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

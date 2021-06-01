@@ -100,6 +100,8 @@ class ExtraDetailsFragment : Fragment() {
 
         mButtonNext = rootView.findViewById(R.id.next1)
         mButtonNext.setOnClickListener(View.OnClickListener { view ->
+            if(OrderCreateActivity.newOrder.getClientName()!=null && !OrderCreateActivity.newOrder.getClientName().equals(""))
+                appData.saveOrder(OrderCreateActivity.newOrder, context)
 
             (activity as ViewPagerNavigation).setCurrent(3)
         })
@@ -119,6 +121,8 @@ class ExtraDetailsFragment : Fragment() {
 
         mButtonPrevious = rootView.findViewById(R.id.previous)
         mButtonPrevious.setOnClickListener(View.OnClickListener { view ->
+            if(OrderCreateActivity.newOrder.getClientName()!=null && !OrderCreateActivity.newOrder.getClientName().equals(""))
+                appData.saveOrder(OrderCreateActivity.newOrder, context)
 
             (activity as ViewPagerNavigation).setCurrent(1)
         })

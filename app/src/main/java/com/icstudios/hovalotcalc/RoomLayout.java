@@ -2,6 +2,7 @@ package com.icstudios.hovalotcalc;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -21,7 +22,7 @@ public class RoomLayout extends LinearLayout{
     ArrayList<ItemLayout> mItems;
     View view;
     LinearLayout itemList;
-    static FloatingActionButton addItem;
+    static Button addItem;
     RoomLayout thisRoom;
 
     public RoomLayout(final Context context) {
@@ -34,6 +35,21 @@ public class RoomLayout extends LinearLayout{
         roomName = findViewById(R.id.room_name);
 
         addItem = view.findViewById(R.id.add_new_item);
+//        addItem.setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                switch (motionEvent.getAction()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        addItem.startAnimation(OrderCreateActivity.zoomin);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        addItem.startAnimation(OrderCreateActivity.zoomout);
+//                        break;
+//                }
+//                return false;
+//            }
+//        });
+
         addItem.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

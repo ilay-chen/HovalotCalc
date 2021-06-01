@@ -3,9 +3,12 @@ package com.icstudios.hovalotcalc;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -48,6 +51,7 @@ public class makeOffer extends DialogFragment {
             input.setText(orderDetails.getPrice()+"");
         }
 
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         builder
@@ -56,6 +60,9 @@ public class makeOffer extends DialogFragment {
                 .setPositiveButton(" ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
+
+                        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
                         if(input.getText().toString().equals(""))
                             input.setText("0");
@@ -90,42 +97,7 @@ public class makeOffer extends DialogFragment {
             }
         });
 
-//        Button nbutton = alert.getButton(DialogInterface.BUTTON_NEUTRAL);
-//        nbutton.setBackgroundResource(R.drawable.back_price);
-//        Button pbutton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-//        pbutton.setBackgroundResource(R.drawable.insert_price);
-
         return alert;
-
-//        return builder
-//                .setView(input)
-//                .setMessage("הכנס הצעת מחיר")
-////                .setNegativeButton(R.string.close_validation, new DialogInterface.OnClickListener() {
-////
-////                    @Override
-////                    public void onClick(DialogInterface arg0, int arg1) {
-////                        getActivity().finishAffinity();
-////                    }
-////                })
-//
-//                .setPositiveButton("אישור", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//
-//                        if(input.getText().toString().equals(""))
-//                            input.setText("0");
-//
-//                        orderDetails.setPrice(Integer.parseInt(input.getText().toString()));
-//                        com.icstudios.hovalotcalc.MakePDFOffer PDFMaker = new MakePDFOffer(getContext(), currentActivity);
-//                        PDFMaker.createPdf(orderDetails);
-//                    }
-//                })
-//                .setNeutralButton("חזור", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//                        dismiss();
-//                    }
-//                }).create();
 
 
     }

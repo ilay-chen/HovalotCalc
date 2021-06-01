@@ -4,11 +4,15 @@ import android.content.Context;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+
+import static com.icstudios.hovalotcalc.appData.allOrders;
 
 public class OrderObject implements Serializable {
     String clientName;
@@ -238,6 +242,22 @@ public class OrderObject implements Serializable {
             Toast.makeText(context,"אנא מלא שם לקוח!", Toast.LENGTH_LONG).show();
             return false;
         }
+        if(fromCity==null||fromCity.equals("")) {
+            Toast.makeText(context,"אנא מלא עיר מוצא!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+//        if(fromStreet==null||fromStreet.equals("")) {
+//            Toast.makeText(context,"אנא מלא רחוב מוצא!", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+        if(toCity==null||toCity.equals("")) {
+            Toast.makeText(context,"אנא מלא עיר יעד!", Toast.LENGTH_LONG).show();
+            return false;
+        }
+//        if(toStreet==null||toStreet.equals("")) {
+//            Toast.makeText(context,"אנא מלא רחוב יעד!", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
         else if(phoneNumber==null||phoneNumber.equals("")) {
             Toast.makeText(context,"אנא מלא מספר לקוח!", Toast.LENGTH_LONG).show();
             return false;
@@ -268,7 +288,8 @@ public class OrderObject implements Serializable {
         for(RoomLayout room : allRooms) {
             ArrayList<itemObject> itemsList = new ArrayList<>();
             for(ItemLayout item : room.getItems())
-                itemsList.add(new itemObject(item.getName(), item.getCounter(), item.getDisassemblyAndAssembly().isChecked()));
+                itemsList.add(new itemObject(item.getName(), item.getCounter(), item.getDisassemblyAndAssembly().isChecked()
+                ,item.getDisassembly().isChecked(),item.getAssembly().isChecked()));
             roomsAndItems.add(new roomObject(room.getRoomName(),itemsList));
         }
     }
@@ -286,6 +307,12 @@ public class OrderObject implements Serializable {
             return date;
         }
         return null;
+    }
+
+    public int getHourInDay() {
+        String startHour = this.getHour();
+
+        return Integer.parseInt(startHour.substring(0,2));
     }
 }
 
@@ -330,18 +357,21 @@ class roomObject implements Serializable {
 class itemObject implements Serializable {
 
     String itemName, itemCounter;
-    Boolean DisassemblyAndAssembly;
+    Boolean DisassemblyAndAssembly, Assembly, Disassembly;
 
     public itemObject()
     {
 
     }
 
-    public itemObject(String itemName, String itemCounter, Boolean DisassemblyAndAssembly)
+    public itemObject(String itemName, String itemCounter, Boolean DisassemblyAndAssembly,
+                      Boolean Disassembly,Boolean Assembly)
     {
         this.itemName = itemName;
         this.itemCounter = itemCounter;
         this.DisassemblyAndAssembly = DisassemblyAndAssembly;
+        this.Disassembly = Disassembly;
+        this.Assembly = Assembly;
     }
 
     public String getItemName() {

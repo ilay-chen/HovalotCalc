@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<shape xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:shape="rectangle">-->
+
+<!--    <corners android:radius="0dp"/>-->
+<!--    <stroke android:width="2dp"-->
+<!--        android:color="#0a92b6"/>-->
+
+<!--</shape>-->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+<item>
+    <shape android:shape="rectangle">
+        <solid android:color="#0a92b6" />  <!-- this is stroke color-->
+    </shape>
+</item>
+
+<item android:bottom="1dp" android:top="1dp">
+    <shape android:shape="rectangle">
+        <solid android:color="#eef0f1" />  <!-- this is main color-->
+    </shape>
+</item>
+
+</layer-list>
